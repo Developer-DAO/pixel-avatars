@@ -1,0 +1,21 @@
+{
+  "name": "dao-pixelart-previewer",
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview"
+  },
+  "dependencies": {
+    "@tailwindcss/forms": "^0.3.3",
+    "autoprefixer": "^10.3.4",
+    "postcss": "^8.3.6",
+    "tailwindcss": "^2.2.15",
+    "vue": "^3.2.6"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^1.6.1",
+    "@vue/compiler-sfc": "^3.2.6",
+    "vite": "^2.5.4"
+  }
+}

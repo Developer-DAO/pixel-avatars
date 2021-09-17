@@ -1,1 +1,2 @@
-# Pixel Avatars NFT
+# Pixel Art Previewer
+
