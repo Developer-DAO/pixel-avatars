@@ -17,7 +17,7 @@ yarn build # Creates a dist folder
 ```
 
 ## Assets
-NFT assets should be located in the `public/nft-assets` folder and adhere to the following file structure:
+NFT assets should be located in the `assets/traits` folder and adhere to the following file structure:
 
 ```
 clothing/blackedout.svg
