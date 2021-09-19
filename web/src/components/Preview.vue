@@ -14,9 +14,5 @@ const props = defineProps({
                 :src="layer"
             />
         </div>
-
-<!--        <div class="mt-4" v-else>-->
-<!--            NOT FOUND-->
-<!--        </div>-->
     </div>
 </template>

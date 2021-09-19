@@ -1,5 +1,4 @@
 <script setup>
-// import Filenames from "./components/Filenames.vue"
 import DaoLogo from "./components/DaoLogo.vue";
 import Preview from "./components/Preview.vue"
 import PreviewControls from "./components/PreviewControls.vue";
@@ -20,8 +19,6 @@ const previewState = usePreviewState()
         </div>
 
         <div class="sm:w-3/5 bg-gray-100 border-l border-gray-200 flex items-center justify-center">
-<!--            <Filenames />-->
-
             <Preview
                 :state="previewState"
                 class="w-full max-w-md"

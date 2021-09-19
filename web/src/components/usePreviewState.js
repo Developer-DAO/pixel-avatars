@@ -19,15 +19,9 @@ export default function usePreviewState() {
     function updateDeveloper() {
         // Loop through all developers until a full trait match is found
         const _developer = dataDevelopers.find(_developer => {
-            let match = true
-
-            dataTraits.forEach(trait => {
-                if (match && _getTraitSlugFromName(trait, _developer[trait.id]) !== traits[trait.slug]) {
-                    match = false
-                }
+            return dataTraits.every(trait => {
+                return _getTraitSlugFromName(trait, _developer[trait.id]) === traits[trait.slug]
             })
-
-            return match
         })
 
         // Apply developer id. Otherwise reset.
