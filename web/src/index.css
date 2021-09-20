@@ -1,0 +1,10 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.input-text,
+.input-select {
+    @apply w-full rounded-none py-2 px-4 bg-transparent border-l-0 border-t-0 border-r-0 border-b-4 border-gray-200 focus:outline-none focus:border-blue-300;
+
+    box-shadow: none !important;
+}
