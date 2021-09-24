@@ -24,7 +24,7 @@
 #### What Next
 * Completion of the remaining traits - language and clothing
 
-### ADMIN
+### ADMIN (Project Lead - goldzulu)
 #### Achievements
 * Kick-off meeting done and inital goals defined
 * Github repo created
