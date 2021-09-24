@@ -4,6 +4,9 @@
 The Derivatives project, originally known as the pixel-avatars project is created initially to allow the minting of a derived Pixel Avatar ERC721 NFT token generated based on the traits of the original DeveloperDAO genesis NFTs. ; similar to how Loot has its own derivatives projects
 
 It was later renamed to a derivatives project to include initiatives that will form a roadmap beyond the initial pixel avatars token.
+
+## Historical notes
+User by the name of Neoc id the DeveloperDao Discord was offering to do an avatar versions of the developer dao NFT genesis token. Another user [goldzulu](https://github.com/goldzulu) spotted the potential and suggested a project which upon some initial concensus was put to lead the project. Officially the project kicked off on the 12th September 2021 via an online discord meeting hosted by goldzulu.
 ## Areas Of Interest
 There are three different areas in which devs can be actively involed in
 ### Backend
@@ -31,4 +34,4 @@ The first kickoff meeting was recorded on 12th September 2021 UTC 1700 and can b
 * [YouTube Recording](https://youtu.be/EiGaJDYyfhw)
 * [Presentation](https://prezi.com/view/qHW7XIO3JeHdKxhMAZrr/)
 
-Unfortunately no notes are available at this time.
+Meeting notes will be provided in future meetings.
