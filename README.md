@@ -1,139 +1,34 @@
-# Pixel Art Previewer
+# Derivatives Project
 
-## App
+## Project
+The Derivatives project, originally known as the pixel-avatars project is created initially to allow the minting of a derived Pixel Avatar ERC721 NFT token generated based on the traits of the original DeveloperDAO genesis NFTs. ; similar to how Loot has its own derivatives projects
 
-### Local development
+It was later renamed to a derivatives project to include initiatives that will form a roadmap beyond the initial pixel avatars token.
+## Areas Of Interest
+There are three different areas in which devs can be actively involed in
+### Backend
+This is where solidity smart contracts are being planned, created, tested and deployed. It also covers IPFS, Oracles and generally, anything that is supporting the Web3 frontends
 
-```shell
-yarn install
-yarn dev # Starts a server on localhost:3000
-```
+### Frontend
+The web3 front end that will support users in minting, [previewing](./web-previewer/README.md) and other utilities and apps further down in the roadmap including possibly NFT Games and Metaverses.
+### Graphics Design
 
-### Production
+Where the artwork design and generation is being done. Initially it will be a unique artwork "component" for each of the different possible traits.
 
-```shell
-yarn install
-yarn build # Creates a dist folder
-```
+## Active Projects
 
-## Assets
-NFT assets should be located in the `assets/traits` folder and adhere to the following file structure:
+* [Derived NFT Previewer](./web-previewer/README.md)
+* [Derivatives Minting Contract](https://rinkeby.etherscan.io/address/0x22ecf3563b6a5b3a61b341fc11183aecbe97e65a#code)
+* Creation of Artworks needed for the Pixel Avatars
 
-```
-clothing/blackedout.svg
-clothing/blackhoodie.svg
-clothing/bra.svg
-clothing/bubblegumwrapper.svg
-clothing/bullsjersey.svg
-clothing/conferencet.svg
-clothing/navysuit.svg
-clothing/patagoniavest.svg
-clothing/pinkhoodie.svg
-clothing/platinumtrenchcoat.svg
-clothing/purpledress.svg
-clothing/purpleturtleneck.svg
-clothing/sweat.svg
-clothing/whitetanktop.svg
-industry/aistartup.svg
-industry/blackhat.svg
-industry/crypto.svg
-industry/environmental.svg
-industry/faang.svg
-industry/farming.svg
-industry/government.svg
-industry/hollywood.svg
-industry/influencer.svg
-industry/moneylaundering.svg
-industry/nonprofit.svg
-industry/travelingconsultant.svg
-industry/undercover.svg
-industry/vr.svg
-industry/whitehat.svg
-language/arnoldc.svg
-language/brainfuck.svg
-language/c.svg
-language/chicken.svg
-language/cobol.svg
-language/dart.svg
-language/fortran.svg
-language/go.svg
-language/haskell.svg
-language/java.svg
-language/javascript.svg
-language/julia.svg
-language/kotlin.svg
-language/legit.svg
-language/php.svg
-language/piet.svg
-language/python.svg
-language/rust.svg
-language/scala.svg
-language/shakespeare.svg
-language/swift.svg
-language/typescript.svg
-language/velato.svg
-language/whitespace.svg
-location/bucharest.svg
-location/budapest.svg
-location/buenosaires.svg
-location/goa.svg
-location/goldcoast.svg
-location/hongkong.svg
-location/jackson.svg
-location/kisumu.svg
-location/lagos.svg
-location/london.svg
-location/omaha.svg
-location/paris.svg
-location/pyongyang.svg
-location/ramallah.svg
-location/saintpetersburg.svg
-location/saopalo.svg
-location/shenzhen.svg
-location/tokyo.svg
-mind/abstract.svg
-mind/analytical.svg
-mind/anarchist.svg
-mind/concrete.svg
-mind/convergent.svg
-mind/creative.svg
-mind/critical.svg
-mind/divergent.svg
-os/androidmarshmallow.svg
-os/chromiumos.svg
-os/dos.svg
-os/freebsd.svg
-os/gm-naai/o.svg
-os/googlechromeos.svg
-os/kalilinux.svg
-os/linuxmint.svg
-os/macos.svg
-os/slackwarelinux.svg
-os/ubuntu.svg
-os/windows1.0.svg
-os/windows95.svg
-os/windowsvista.svg
-texteditor/atom.svg
-texteditor/bluefish.svg
-texteditor/brackets.svg
-texteditor/coda.svg
-texteditor/dreamweaver.svg
-texteditor/emacs.svg
-texteditor/mentaltelepathy.svg
-texteditor/notepad.svg
-texteditor/penpaper.svg
-texteditor/sandandstick.svg
-texteditor/sublimetext.svg
-texteditor/vim.svg
-texteditor/visualstudio.svg
-texteditor/vscode.svg
-vibe/chill.svg
-vibe/cosmic.svg
-vibe/generous.svg
-vibe/hater.svg
-vibe/hyper.svg
-vibe/jongold.svg
-vibe/kind.svg
-vibe/optimist.svg
-vibe/phobia.svg
-```
+## Status Updates
+Fortnightly Status updates can be found [here](./STATUS.md)
+## Meetings
+The derivatives project hold fortnightly meeting on Sundays 1700 UTC.
+
+The first kickoff meeting was recorded on 12th September 2021 UTC 1700 and can be found here:
+
+* [YouTube Recording](https://youtu.be/EiGaJDYyfhw)
+* [Presentation](https://prezi.com/view/qHW7XIO3JeHdKxhMAZrr/)
+
+Unfortunately no notes are available at this time.
