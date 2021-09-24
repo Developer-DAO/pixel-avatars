@@ -18,10 +18,11 @@
 ### DESIGN (Main Contributor - eknobl, with mention to neoc for originally starting)
 #### Achievements
 * Structure and general approach identified and agreed
-* The following traits have been completed - location, os
+* The following traits have been completed - backgrounds, flags, minds, text editors, and os
 * Suporting artwork done - backgrounds and computer
+* Working on - vibes - both male and female
 #### What Next
-* Completion of the remaining traits
+* Completion of the remaining traits - language and clothing
 
 ### ADMIN
 #### Achievements
