@@ -1,5 +1,9 @@
 import developers from "./developers"
 
+// Temporary solution. Until all assets are ready, we can keep track
+// of which ones are currently uploaded here.
+export const traitsWithAssets = ['location', 'mind', 'os', 'texteditor', 'vibe']
+
 const traits = (() => {
     const traitsList = Object.keys(developers[0]).filter(trait => trait !== 'id')
     let traitsMap = {}
@@ -40,7 +44,13 @@ const traits = (() => {
 })()
 
 function slugify(name) {
-    return name.toLowerCase().replaceAll(' ', '').replaceAll('&', '').replaceAll('+', '')
+    return name
+        .toLowerCase()
+        .replaceAll(' ', '')
+        .replaceAll('&', 'and')
+        .replaceAll('+', '')
+        .replaceAll('/', '')
+        .replaceAll('.', '')
 }
 
 function by(key) {

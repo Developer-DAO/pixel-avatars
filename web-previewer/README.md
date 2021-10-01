@@ -103,14 +103,14 @@ os/androidmarshmallow.svg
 os/chromiumos.svg
 os/dos.svg
 os/freebsd.svg
-os/gm-naai/o.svg
+os/gm-naaio.svg
 os/googlechromeos.svg
 os/kalilinux.svg
 os/linuxmint.svg
 os/macos.svg
 os/slackwarelinux.svg
 os/ubuntu.svg
-os/windows1.0.svg
+os/windows10.svg
 os/windows95.svg
 os/windowsvista.svg
 texteditor/atom.svg
@@ -121,7 +121,7 @@ texteditor/dreamweaver.svg
 texteditor/emacs.svg
 texteditor/mentaltelepathy.svg
 texteditor/notepad.svg
-texteditor/penpaper.svg
+texteditor/penandpaper.svg
 texteditor/sandandstick.svg
 texteditor/sublimetext.svg
 texteditor/vim.svg
