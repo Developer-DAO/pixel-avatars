@@ -2,7 +2,7 @@ import developers from "./developers"
 
 // Temporary solution. Until all assets are ready, we can keep track
 // of which ones are currently uploaded here.
-export const traitsWithAssets = ['location', 'mind', 'os', 'texteditor', 'vibe']
+export const traitsWithAssets = ['location', 'mind', 'os', 'texteditor', 'vibe', 'clothing']
 
 const traits = (() => {
     const traitsList = Object.keys(developers[0]).filter(trait => trait !== 'id')
