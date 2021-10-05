@@ -1,36 +1,39 @@
 import developers from "./developers"
+import {keyBy} from "lodash-es";
 
 // Temporary solution. Until all assets are ready, we can keep track
 // of which ones are currently uploaded here.
-export const traitsWithAssets = ['location', 'mind', 'os', 'texteditor', 'vibe', 'clothing']
+// export const traitsWithAssets = ['location', 'mind', 'os', 'texteditor', 'vibe', 'clothing']
 
 const traits = (() => {
     const traitsList = Object.keys(developers[0]).filter(trait => trait !== 'id')
     let traitsMap = {}
 
+    // Manually add backgrounds
+    traitsMap.background = {
+        ...buildTrait('background'),
+
+        values: keyBy(
+            ['Blue', 'Gray', 'Green', 'Orange', 'Pink', 'Purple', 'Yellow'].map(buildValue),
+            'slug'
+        )
+    }
+
+    // Discover traits from developers
     developers.forEach(developer => {
         traitsList.forEach(trait => {
-            const traitSlug = slugify(trait)
-            const traitValueSlug = slugify(developer[trait])
+            const _trait = buildTrait(trait)
+            const _value = buildValue(developer[trait])
 
-            if (traitsMap[traitSlug] == null) {
-                traitsMap[traitSlug] = {
-                    id: trait,
-                    slug: traitSlug,
-                    name: titleCase(trait),
-                    values: {}
-                }
+            if (traitsMap[_trait.slug] == null) {
+                traitsMap[_trait.slug] = _trait
             }
 
-            if (traitsMap[traitSlug].values[traitValueSlug] == null) {
-                traitsMap[traitSlug].values[traitValueSlug] = {
-                    slug: traitValueSlug,
-                    name: developer[trait]
-                }
+            if (traitsMap[_trait.slug].values[_value.slug] == null) {
+                traitsMap[_trait.slug].values[_value.slug] = _value
             }
         })
     })
-
 
     return Object
         .values(traitsMap)
@@ -38,10 +41,27 @@ const traits = (() => {
             return {
                 ...trait,
 
+                // Sort values by name
                 values: Object.values(trait.values).sort(by('name'))
             }
         })
 })()
+
+function buildTrait(traitId) {
+    return {
+        id: traitId,
+        slug: slugify(traitId),
+        name: titleCase(traitId),
+        values: {}
+    }
+}
+
+function buildValue(valueId) {
+    return {
+        slug: slugify(valueId),
+        name: valueId
+    }
+}
 
 function slugify(name) {
     return name
