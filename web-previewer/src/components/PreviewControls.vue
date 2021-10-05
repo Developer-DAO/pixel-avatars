@@ -1,6 +1,4 @@
 <script setup>
-import {traitsWithAssets} from '../data/traits'
-
 const props = defineProps({
     state: Object
 })
@@ -43,10 +41,17 @@ const props = defineProps({
                     />
                 </select>
                 <div class="absolute left-0 top-0 bottom-1 flex items-center text-sm text-gray-600">
-                    <span
-                        :class="{ 'text-red-700': traitsWithAssets.indexOf(trait.slug) === -1 }"
-                        v-text="trait.name"
-                    />
+                    <span v-text="trait.name" />
+                </div>
+            </div>
+
+            <div class="relative">
+                <select dir="rtl" class="input-select !pr-12" v-model="state.computer.value">
+                    <option :value="1">Yes</option>
+                    <option :value="0">No</option>
+                </select>
+                <div class="absolute left-0 top-0 bottom-1 flex items-center text-sm text-gray-600">
+                    <span>Computer</span>
                 </div>
             </div>
         </div>
