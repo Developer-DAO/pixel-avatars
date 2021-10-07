@@ -4,7 +4,8 @@
     "scripts": {
         "dev": "vite",
         "build": "vite build",
-        "serve": "vite preview"
+        "serve": "vite preview",
+        "assign-backgrounds": "node ./cli/assign-backgrounds.js"
     },
     "dependencies": {
         "@tailwindcss/forms": "^0.3.3",

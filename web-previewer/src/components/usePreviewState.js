@@ -1,5 +1,5 @@
-import dataDevelopers from '../data/developers.js'
-import {default as dataTraits} from '../data/traits.js'
+import dataDevelopers from '../../data/developers.js'
+import {default as dataTraits} from '../../data/traits.js'
 import {computed, ref, reactive} from 'vue'
 
 export default function usePreviewState() {

@@ -1,23 +1,8 @@
-import developers from "./developers"
-import {keyBy} from "lodash-es";
-
-// Temporary solution. Until all assets are ready, we can keep track
-// of which ones are currently uploaded here.
-// export const traitsWithAssets = ['location', 'mind', 'os', 'texteditor', 'vibe', 'clothing']
+import developers from "./developers.js"
 
 const traits = (() => {
     const traitsList = Object.keys(developers[0]).filter(trait => trait !== 'id')
     let traitsMap = {}
-
-    // Manually add backgrounds
-    traitsMap.background = {
-        ...buildTrait('background'),
-
-        values: keyBy(
-            ['Blue', 'Gray', 'Green', 'Orange', 'Pink', 'Purple', 'Yellow'].map(buildValue),
-            'slug'
-        )
-    }
 
     // Discover traits from developers
     developers.forEach(developer => {
@@ -56,14 +41,14 @@ function buildTrait(traitId) {
     }
 }
 
-function buildValue(valueId) {
+export function buildValue(valueId) {
     return {
         slug: slugify(valueId),
         name: valueId
     }
 }
 
-function slugify(name) {
+export function slugify(name) {
     return name
         .toLowerCase()
         .replaceAll(' ', '')
