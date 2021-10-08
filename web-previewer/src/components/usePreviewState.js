@@ -1,11 +1,11 @@
-import dataDevelopers from '../data/developers.js'
-import {default as dataTraits} from '../data/traits.js'
+import dataDevelopers from '../../data/developers.js'
+import {default as dataTraits} from '../../data/traits.js'
 import {computed, ref, reactive} from 'vue'
 
 export default function usePreviewState() {
     const developer = ref(1)
     const traits = reactive({})
-    const computer = ref(1)
+    const computer = ref(0)
     const layers = computed(() => {
         const orderedTraits = [
             'background', 'industry', 'language', 'location', 'mind', 'os', 'texteditor', 'vibe', 'clothing'
