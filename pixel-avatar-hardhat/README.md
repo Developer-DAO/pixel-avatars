@@ -17,6 +17,13 @@ Load the env variables from .env file
 source .env
 ```
 
+
+Install required node packages
+
+```
+npm i 
+```
+
 Deploy the contract to ethereum network 
 
 ```shell
