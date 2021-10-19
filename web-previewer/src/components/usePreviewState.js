@@ -1,22 +1,15 @@
 import dataDevelopers from "../../data/developers.js";
 import { default as dataTraits } from "../../data/traits.js";
 import { computed, ref, reactive, onMounted } from "vue";
-import { useRoute, useRouter } from "vue-router";
 
 export default function usePreviewState() {
-  const router = useRouter();
-  const route = useRoute();
-  const developer = ref(1);
+  const developerId = ref(1);
   const traits = reactive({});
   const computer = ref(0);
 
   onMounted(() => {
     // Initialize
     dataTraits.forEach((trait) => (traits[trait.slug] = null));
-
-    if (route.query.id) {
-      developer.value = route.query.id;
-    }
 
     updateTraits();
   });
@@ -61,13 +54,13 @@ export default function usePreviewState() {
     });
 
     // Apply developer id. Otherwise reset.
-    developer.value = _developer ? _developer.id : null;
+    developerId.value = _developer ? _developer.id : null;
   }
 
   function updateTraits() {
     // Find developer matching id.
     const _developer = dataDevelopers.find(
-      (dev) => parseInt(dev.id) === parseInt(developer.value)
+      (dev) => parseInt(dev.id) === parseInt(developerId.value)
     );
 
     // If found developer from current id, apply trait values. Otherwise reset.
@@ -76,8 +69,6 @@ export default function usePreviewState() {
         ? _getTraitSlugFromName(trait, _developer[trait.id] ?? null)
         : null;
     });
-
-    router.push({ path: "/", query: { id: _developer.id } });
   }
 
   function _getTraitSlugFromName(trait, name) {
@@ -87,7 +78,7 @@ export default function usePreviewState() {
   return {
     computer,
     dataTraits,
-    developer,
+    developerId,
     layers,
     traits,
     updateDeveloper,

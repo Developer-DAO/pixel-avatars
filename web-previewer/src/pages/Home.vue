@@ -3,8 +3,10 @@ import DaoLogo from "../components/DaoLogo.vue";
 import Preview from "../components/Preview.vue";
 import PreviewControls from "../components/PreviewControls.vue";
 import usePreviewState from "../components/usePreviewState";
+import useRouteParameterSync from "../components/useRouteParameterSync";
 
 const previewState = usePreviewState();
+useRouteParameterSync(previewState);
 </script>
 
 <template>
