@@ -1772,7 +1772,6 @@ contract PixelAvatars is ERC721Enumerable, ReentrancyGuard, Ownable {
     //Private sale minting (reserved for DevDao owners)
     function mintWithDevDaoToken(uint256 DevDaoTokenId)
         public
-        payable
         nonReentrant
     {
         require(
@@ -1787,7 +1786,7 @@ contract PixelAvatars is ERC721Enumerable, ReentrancyGuard, Ownable {
         _safeMint(msg.sender, DevDaoTokenId);
     }
 
-    // TODO: why is this payable ?
+    
     function multiMintWithDevDaoToken(uint256[] memory DevDaoTokenIds)
         public
         nonReentrant
