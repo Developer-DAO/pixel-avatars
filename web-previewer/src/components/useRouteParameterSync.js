@@ -6,12 +6,12 @@ export default function useRouteParameterSync(previewState) {
   const router = useRouter();
 
   onMounted(() => {
-    if (route.query.id) {
-      previewState.developerId.value = route.query.id;
+    if (route.query.developerId) {
+      previewState.developer.value = route.query.developerId;
     }
   });
 
-  watch(previewState?.developerId, (developerId, previousDeveloperId) => {
-    router.push({ path: "/", query: { id: developerId } });
+  watch(previewState?.developer, (developer, previousdeveloper) => {
+    router.push({ path: "/", query: { developerId: developer } });
   });
 }
