@@ -16,7 +16,7 @@ const props = defineProps({
                 type="number"
                 class="input-text text-center"
                 placeholder="Search no"
-                v-model="state.developer.value"
+                v-model="state.developerId.value"
                 @change="state.updateTraits"
             />
         </div>
