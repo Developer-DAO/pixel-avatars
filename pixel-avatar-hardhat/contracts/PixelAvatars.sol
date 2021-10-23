@@ -26,7 +26,7 @@ contract PixelAvatars is ERC721Enumerable, ReentrancyGuard, Ownable {
     modifier validDevDaoToken(uint256 _devDaoTokenId) {
         require(
             _devDaoTokenId > 0 && _devDaoTokenId <= 8000,
-            "Not a valid Dev DAO Token ID."
+            "Not a valid Developer DAO Token ID."
         );
         _;
     }
@@ -34,7 +34,7 @@ contract PixelAvatars is ERC721Enumerable, ReentrancyGuard, Ownable {
     modifier devDaoTokenOwnerOf(uint256 _devDaoTokenId) {
         require(
             _devDaoContract.ownerOf(_devDaoTokenId) == msg.sender,
-            "Not a Dev DAO Token owner."
+            "Not a Developer DAO Token owner."
         );
         _;
     }
@@ -43,7 +43,7 @@ contract PixelAvatars is ERC721Enumerable, ReentrancyGuard, Ownable {
         for (uint256 index = 0; index < _devDaoTokenIds.length; index++) {
             require(
                 _devDaoContract.ownerOf(_devDaoTokenIds[index]) == msg.sender,
-                "Not a Dev DAO Token owner."
+                "Not a Developer DAO Token owner."
             );
         }
         _;

@@ -20,31 +20,29 @@ describe("PixelAvatars", function () {
     describe("modifier: validDevDaoToken", async () => {
       it("should revert when given an invalid DevDAO token ID", async () => {
         await expect(contract.mintWithDevDaoToken(8001)).to.be.revertedWith(
-          "Not a valid Dev DAO Token ID."
+          "Not a valid Developer DAO Token ID."
         );
       });
 
       it("should revert when given a DevDAO token ID of 0", async () => {
         await expect(contract.mintWithDevDaoToken(0)).to.be.revertedWith(
-          "Not a valid Dev DAO Token ID."
+          "Not a valid Developer DAO Token ID."
         );
       });
 
       it("should not revert when given a valid DevDAO token ID", async () => {
         await expect(contract.mintWithDevDaoToken(6300)).not.to.be.revertedWith(
-          "Not a valid Dev DAO Token ID."
+          "Not a valid Developer DAO Token ID."
         );
       });
     });
 
     describe("modifier: devDaoTokenOwnerOf", () => {
-      // 
+      it("should revert when given a DevDAO token ID that isn't the owner", async () => {
+        await expect(contract.mintWithDevDaoToken(6300)).to.be.revertedWith(
+          "Not a Developer DAO Token owner."
+        );
+      });
     });
-
-    // it("should revert when given an invalid DevDAO token ID", async () => {
-    //   await expect(contract.mintWithDevDaoToken(8001)).to.be.revertedWith(
-    //     "Not a valid Dev DAO Token ID."
-    //   );
-    // });
   });
 });
