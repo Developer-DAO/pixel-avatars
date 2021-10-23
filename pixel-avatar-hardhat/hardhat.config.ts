@@ -32,7 +32,7 @@ const ETHERSCAN_API_KEY =
 // Go to https://hardhat.org/config/ to learn more
 
 const config: HardhatUserConfig = {
-  solidity: "0.8.7",
+  solidity: "0.8.9",
   defaultNetwork: "localhost",
   networks: {
     // ropsten: {
