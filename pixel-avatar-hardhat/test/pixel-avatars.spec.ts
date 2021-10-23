@@ -1,19 +1,27 @@
+import { MockProvider } from "@ethereum-waffle/provider";
 import { expect } from "chai";
-import { ethers } from "hardhat";
+import { ethers, waffle } from "hardhat";
 import { PixelAvatars } from "../typechain";
+import PixelAvatarsJSON from "../artifacts/contracts/PixelAvatars.sol/PixelAvatars.json";
+import { MockContract } from "@ethereum-waffle/mock-contract";
 
 describe("PixelAvatars", function () {
+  const [sender, receiver] = new MockProvider().getWallets();
   let contract: PixelAvatars;
+  let mockContract: MockContract;
 
   beforeEach(async () => {
-    const PixelAvatars = await ethers.getContractFactory("PixelAvatars");
-    contract = await PixelAvatars.deploy();
-  });
+    const contractFactory = new ethers.ContractFactory(
+      PixelAvatarsJSON.abi,
+      PixelAvatarsJSON.bytecode,
+      sender
+    );
 
-  it("Should return the new greeting once it's changed", async function () {
-    await contract.deployed();
-
-    expect(await contract.deployed()).to.be.not.undefined.and.to.be.not.null;
+    mockContract = await waffle.deployMockContract(
+      sender,
+      PixelAvatarsJSON.abi
+    );
+    contract = (await contractFactory.deploy()) as PixelAvatars;
   });
 
   describe("mintWithDevDaoToken", () => {
@@ -39,6 +47,8 @@ describe("PixelAvatars", function () {
 
     describe("modifier: devDaoTokenOwnerOf", () => {
       it("should revert when given a DevDAO token ID that isn't the owner", async () => {
+        mockContract.mock.ownerOf.withArgs(6300).returns(false);
+
         await expect(contract.mintWithDevDaoToken(6300)).to.be.revertedWith(
           "Not a Developer DAO Token owner."
         );
