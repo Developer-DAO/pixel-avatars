@@ -35,6 +35,11 @@ const config: HardhatUserConfig = {
   solidity: "0.8.9",
   defaultNetwork: "localhost",
   networks: {
+    hardhat: {
+      forking: {
+        url: `https://eth-mainnet.alchemyapi.io/v2/${process.env.ALCHEMY_API_KEY}`,
+      },
+    },
     // ropsten: {
     //   url: process.env.ROPSTEN_URL || "",
     //   accounts:
