@@ -41,15 +41,15 @@ const config: HardhatUserConfig = {
     //     process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
     // },
 
-    // rinkeby: {
-    //   url: process.env.ALCHEMY_RINKEBY_RPC_URL,
-    //   accounts: [`0x${PRIVATE_KEY}`],
-    // },
+    rinkeby: {
+      url: process.env.ALCHEMY_RINKEBY_RPC_URL,
+      accounts: [`0x${PRIVATE_KEY}`],
+    },
 
-    // mainnet: {
-    //   url: MAINNET_RPC_URL,
-    //   accounts: [`0x${PRIVATE_KEY}`],
-    // },
+    mainnet: {
+      url: MAINNET_RPC_URL,
+      accounts: [`0x${PRIVATE_KEY}`],
+    },
   },
 
   etherscan: {
