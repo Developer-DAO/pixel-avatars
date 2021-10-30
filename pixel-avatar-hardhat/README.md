@@ -24,6 +24,14 @@ Install required node packages
 npm i 
 ```
 
+Compile the contract 
+
+```
+npx hardhat compile
+```
+
+
+
 Deploy the contract to ethereum network 
 
 ```shell
