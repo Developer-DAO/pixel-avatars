@@ -51,10 +51,10 @@ const config: HardhatUserConfig = {
     //     process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
     // },
 
-    // rinkeby: {
-    //   url: RINKEYBY_RPC_URL,
-    //   accounts: [`0x${RINKEBY_PRIVATE_KEY}`],
-    // },
+    rinkeby: {
+      url: RINKEYBY_RPC_URL,
+      accounts: [`0x${RINKEBY_PRIVATE_KEY}`],
+    },
 
     // mainnet: {
     //   url: MAINNET_RPC_URL,
