@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.9;
+pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
@@ -61,6 +61,8 @@ contract PixelAvatars is ERC721Enumerable, ReentrancyGuard, Ownable {
         baseURI = _newBaseURI;
     }
 
+    event LogTokenMinted(address minter, uint tokenId);
+
     /// @dev Private sale minting (reserved for DevDao owners)
     function mintWithDevDaoToken(uint256 _devDaoTokenId)
         public
@@ -74,6 +76,7 @@ contract PixelAvatars is ERC721Enumerable, ReentrancyGuard, Ownable {
         );
 
         _safeMint(msg.sender, _devDaoTokenId);
+        emit LogTokenMinted(msg.sender, _devDaoTokenId);
     }
 
     function multiMintWithDevDaoToken(uint256[] memory _devDaoTokenIds)

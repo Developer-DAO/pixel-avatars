@@ -5,12 +5,15 @@
   "main": "index.js",
   "scripts": {
     "chain": "hardhat node",
+    "deploy": "hardhat run scripts/deploy.ts --network localhost",
     "deploy:local": "hardhat run scripts/deploy.ts --network localhost",
+    "deploy:rinkeby": "hardhat run scripts/deploy.ts --network rinkeby",
     "compile": "hardhat compile",
     "test": "hardhat test"
   },
   "keywords": [],
   "author": "Developer DAO",
+  "private": true,
   "license": "ISC",
   "devDependencies": {
     "@nomiclabs/hardhat-ethers": "^2.0.2",
@@ -44,5 +47,8 @@
     "ts-node": "^10.3.1",
     "typechain": "^5.2.0",
     "typescript": "^4.4.4"
+  },
+  "dependencies": {
+    "@defi-wonderland/smock": "^2.0.7"
   }
 }
