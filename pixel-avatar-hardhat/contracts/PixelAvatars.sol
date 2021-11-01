@@ -21,9 +21,11 @@ contract PixelAvatars is ERC721Enumerable, ReentrancyGuard, Ownable {
     /// @dev Original Developer Dao Contract
     /// TODO: Change this to mainnet Developer Dao Contract
     address public devDaoAddress = 0x25ed58c027921E14D86380eA2646E3a1B5C55A8b;
+    uint256 public mintPrice = 0.01 ether;
+
     LootInterface private _devDaoContract = LootInterface(devDaoAddress);
-    
-    //TODO Do we need this when we're not allowing public minting? 
+
+    //TODO Do we need this when we're not allowing public minting?
     modifier validDevDaoToken(uint256 _devDaoTokenId) {
         require(
             _devDaoTokenId > 0 && _devDaoTokenId <= 8000,
@@ -49,8 +51,6 @@ contract PixelAvatars is ERC721Enumerable, ReentrancyGuard, Ownable {
         }
         _;
     }
-
-    uint256 public mintPrice = 0.01 ether;
 
     constructor() ERC721("Pixel Avatars", "PXLAVTR") {
         console.log("PixelAvatars deployed by '%s'", msg.sender);
@@ -85,13 +85,8 @@ contract PixelAvatars is ERC721Enumerable, ReentrancyGuard, Ownable {
     }
 
     // provide Mint price in wei
-    function setmintPrice(uint256 newPrice) public onlyOwner {
-        if (newPrice == 0) {
-            mintPrice = newPrice;
-        } else {
-            // TODO: do we need safemath division here?
-            mintPrice = newPrice;
-        }
+    function setMintPrice(uint256 _newPrice) public onlyOwner {
+        mintPrice = _newPrice;
     }
 
     function withdraw() public onlyOwner {
