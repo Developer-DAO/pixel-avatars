@@ -13,7 +13,6 @@
   },
   "keywords": [],
   "author": "Developer DAO",
-  "private": true,
   "license": "ISC",
   "devDependencies": {
     "@nomiclabs/hardhat-ethers": "^2.0.2",
