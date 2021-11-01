@@ -27,24 +27,34 @@ const MAINNET_RPC_URL =
 const PRIVATE_KEY = process.env.PRIVATE_KEY;
 const ETHERSCAN_API_KEY =
   process.env.ETHERSCAN_API_KEY || "Your Etherscan API Key";
+const RINKEBY_PRIVATE_KEY = process.env.RINKEBY_PRIVATE_KEY ?? "";
 
 // You need to export an object to set up your config
 // Go to https://hardhat.org/config/ to learn more
 
 const config: HardhatUserConfig = {
-  solidity: "0.8.7",
-  defaultNetwork: "localhost",
+  solidity: "0.8.0",
+  // defaultNetwork: "localhost",
   networks: {
+    hardhat: {
+      // chainId: 1337,
+      gas: 50000,
+      gasPrice: 10000000,
+      // forking: {
+      //   url: `https://eth-mainnet.alchemyapi.io/v2/${process.env.ALCHEMY_API_KEY}`,
+      // },
+    },
+
     // ropsten: {
     //   url: process.env.ROPSTEN_URL || "",
     //   accounts:
     //     process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
     // },
 
-    // rinkeby: {
-    //   url: process.env.ALCHEMY_RINKEBY_RPC_URL,
-    //   accounts: [`0x${PRIVATE_KEY}`],
-    // },
+    rinkeby: {
+      url: RINKEYBY_RPC_URL,
+      accounts: [`0x${RINKEBY_PRIVATE_KEY}`],
+    },
 
     // mainnet: {
     //   url: MAINNET_RPC_URL,
