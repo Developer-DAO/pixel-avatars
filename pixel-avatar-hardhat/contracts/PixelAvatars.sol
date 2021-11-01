@@ -16,13 +16,16 @@ interface LootInterface {
 contract PixelAvatars is ERC721Enumerable, ReentrancyGuard, Ownable {
     /// TODO: Set this to the IPFS base uri before launch
     string public baseURI =
-        "https://g69d6ix8sb.execute-api.us-east-1.amazonaws.com/dev/api/tokens/";
+        "ipfs://QmUVH51tigyENzwUhsTv14dV7eyaVo6oHoeCD3JHD9rFnV/";
 
     /// @dev Original Developer Dao Contract
     /// TODO: Change this to mainnet Developer Dao Contract
     address public devDaoAddress = 0x25ed58c027921E14D86380eA2646E3a1B5C55A8b;
+    uint256 public mintPrice = 0.01 ether;
+
     LootInterface private _devDaoContract = LootInterface(devDaoAddress);
 
+    //TODO Do we need this when we're not allowing public minting?
     modifier validDevDaoToken(uint256 _devDaoTokenId) {
         require(
             _devDaoTokenId > 0 && _devDaoTokenId <= 8000,
@@ -61,15 +64,17 @@ contract PixelAvatars is ERC721Enumerable, ReentrancyGuard, Ownable {
         baseURI = _newBaseURI;
     }
 
-    event LogTokenMinted(address minter, uint tokenId);
+    event LogTokenMinted(address minter, uint256 tokenId);
 
     /// @dev Private sale minting (reserved for DevDao owners)
     function mintWithDevDaoToken(uint256 _devDaoTokenId)
         public
+        payable
         nonReentrant
         validDevDaoToken(_devDaoTokenId)
         devDaoTokenOwnerOf(_devDaoTokenId)
     {
+        require(mintPrice <= msg.value, "Not enough ether sent");
         console.log(
             "mintWithDevDaoToken | _devDaoTokenId '%s'",
             _devDaoTokenId
@@ -79,11 +84,26 @@ contract PixelAvatars is ERC721Enumerable, ReentrancyGuard, Ownable {
         emit LogTokenMinted(msg.sender, _devDaoTokenId);
     }
 
+    // provide Mint price in wei
+    function setMintPrice(uint256 _newPrice) public onlyOwner {
+        mintPrice = _newPrice;
+    }
+
+    function withdraw() public onlyOwner {
+        payable(msg.sender).transfer(address(this).balance);
+    }
+
     function multiMintWithDevDaoToken(uint256[] memory _devDaoTokenIds)
         public
+        payable
         nonReentrant
         multipleDevDaoTokenOwnerOf(_devDaoTokenIds)
     {
+        require(
+            (mintPrice * _devDaoTokenIds.length) <= msg.value,
+            "Ether value sent is not correct"
+        );
+
         for (uint256 index = 0; index < _devDaoTokenIds.length; index++) {
             uint256 devDaoTokenId = _devDaoTokenIds[index];
 
