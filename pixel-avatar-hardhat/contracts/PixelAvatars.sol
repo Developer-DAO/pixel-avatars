@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.0;
+pragma solidity ^0.8.9;
 
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
@@ -72,7 +72,7 @@ contract PixelAvatars is ERC721Enumerable, ReentrancyGuard, Ownable {
         payable
         nonReentrant
         validDevDaoToken(_devDaoTokenId)
-        devDaoTokenOwnerOf(_devDaoTokenId)
+        // devDaoTokenOwnerOf(_devDaoTokenId)
     {
         require(mintPrice <= msg.value, "Not enough ether sent");
         console.log(
