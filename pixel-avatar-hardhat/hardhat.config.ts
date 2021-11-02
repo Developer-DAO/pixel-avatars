@@ -33,13 +33,10 @@ const RINKEBY_PRIVATE_KEY = process.env.RINKEBY_PRIVATE_KEY ?? "";
 // Go to https://hardhat.org/config/ to learn more
 
 const config: HardhatUserConfig = {
-  solidity: "0.8.0",
+  solidity: "0.8.9",
   // defaultNetwork: "localhost",
   networks: {
     hardhat: {
-      // chainId: 1337,
-      gas: 50000,
-      gasPrice: 10000000,
       // forking: {
       //   url: `https://eth-mainnet.alchemyapi.io/v2/${process.env.ALCHEMY_API_KEY}`,
       // },
