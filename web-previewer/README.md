@@ -4,9 +4,28 @@
 
 ### Local development
 
+Install all dependencies
+
 ```shell
 yarn install
+```
+
+Run local development server
+
+```shell
 yarn dev # Starts a server on localhost:3000
+```
+
+To prettify all files run
+
+```shell
+yarn prettier
+```
+
+Automatic code formatting on file saves, execute this in another terminal instance.
+
+```shell
+yarn prettier:watch
 ```
 
 ### Production
@@ -17,6 +36,7 @@ yarn build # Creates a dist folder
 ```
 
 ## Assets
+
 NFT assets should be located in the `assets/traits` folder and adhere to the following file structure:
 
 ```
