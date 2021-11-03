@@ -1,7 +1,7 @@
 <script setup>
 const props = defineProps({
-    state: Object
-})
+  state: Object,
+});
 </script>
 
 <template>
@@ -23,4 +23,5 @@ const props = defineProps({
             </div>
         </div>
     </div>
+  </div>
 </template>
