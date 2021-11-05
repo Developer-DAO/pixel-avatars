@@ -36,9 +36,7 @@ const walletState = useWalletState()
                     :wallet-state="walletState"
                 />
 
-                <PreviewControls
-                    :state="previewState"
-                />
+                <PreviewControls :state="previewState" />
             </div>
         </div>
 
