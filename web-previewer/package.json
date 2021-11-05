@@ -2,26 +2,50 @@
   "name": "dao-pixelart-previewer",
   "version": "0.0.0",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "serve": "vite preview",
-    "assign-backgrounds": "node ./cli/assign-backgrounds.js",
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint",
     "prettier": "prettier --write .",
     "prettier:watch": "npx onchange \"**/*\" -- prettier --write --ignore-unknown {{changed}}"
   },
   "dependencies": {
     "@tailwindcss/forms": "^0.3.3",
+    "@tailwindcss/postcss7-compat": "^2.2.17",
+    "core-js": "^3.6.5",
     "lodash-es": "^4.17.21",
-    "tailwindcss": "^2.2.15",
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat",
     "vue": "^3.2.6",
     "vue-router": "4"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^1.6.1",
-    "@vue/compiler-sfc": "^3.2.6",
-    "autoprefixer": "^10.3.4",
-    "postcss": "^8.3.6",
-    "prettier": "2.4.1",
-    "vite": "^2.5.4"
-  }
+    "@vue/cli-plugin-babel": "~4.5.0",
+    "@vue/cli-plugin-eslint": "~4.5.0",
+    "@vue/cli-service": "~4.5.0",
+    "@vue/compiler-sfc": "^3.0.0",
+    "babel-eslint": "^10.1.0",
+    "autoprefixer": "^9",
+    "eslint": "^6.7.2",
+    "eslint-plugin-vue": "^7.0.0",
+    "postcss": "^7",
+    "prettier": "2.4.1"
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "node": true
+    },
+    "extends": [
+      "plugin:vue/vue3-essential",
+      "eslint:recommended"
+    ],
+    "parserOptions": {
+      "parser": "babel-eslint"
+    },
+    "rules": {}
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ]
 }
