@@ -49,6 +49,7 @@ export default function useWalletState() {
         },
 
         claim(token) {
+
         },
     }
 }
