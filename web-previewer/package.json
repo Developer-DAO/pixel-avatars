@@ -4,18 +4,24 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "serve": "vite preview"
+    "serve": "vite preview",
+    "assign-backgrounds": "node ./cli/assign-backgrounds.js",
+    "prettier": "prettier --write .",
+    "prettier:watch": "npx onchange \"**/*\" -- prettier --write --ignore-unknown {{changed}}"
   },
   "dependencies": {
     "@tailwindcss/forms": "^0.3.3",
-    "autoprefixer": "^10.3.4",
-    "postcss": "^8.3.6",
+    "lodash-es": "^4.17.21",
     "tailwindcss": "^2.2.15",
-    "vue": "^3.2.6"
+    "vue": "^3.2.6",
+    "vue-router": "4"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^1.6.1",
     "@vue/compiler-sfc": "^3.2.6",
+    "autoprefixer": "^10.3.4",
+    "postcss": "^8.3.6",
+    "prettier": "2.4.1",
     "vite": "^2.5.4"
   }
 }
