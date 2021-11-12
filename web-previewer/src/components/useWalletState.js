@@ -1,8 +1,8 @@
 import {computed, ref} from 'vue'
 import {ethers} from "ethers";
 import {GENESIS_CONTRACT, NETWORK, PIXEL_AVATAR_CONTRACT} from "../constants/adresses";
-import GenesisContract from "./../GenesisContract.json";
-import PixelAvatarContract from "./../PixelAvatars.json";
+import GenesisContract from "../contracts/GenesisContract.json";
+import PixelAvatarContract from "../contracts/PixelAvatars.json";
 
 export default function useWalletState() {
     const address = ref(null)
@@ -21,7 +21,7 @@ export default function useWalletState() {
         },
 
         async fetchOwnersTokens() {
-            if (address === null) {
+            if (address.value === null) {
                 console.log("please connect to wallet and select an account");
                 return;
             }
