@@ -38,7 +38,6 @@ function getButtonText() {
 
 async function startClaiming() {
   try {
-    console.log("start claiming avatar for token ", claimToken.value)
     claimingState.value = CLAIMING_STATES.LOADING;
     await props.walletState.claim(claimToken.value);
     claimingState.value = CLAIMING_STATES.SUCCESS;
