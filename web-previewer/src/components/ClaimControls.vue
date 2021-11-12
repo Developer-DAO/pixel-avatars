@@ -19,6 +19,7 @@ const claimingState = ref(CLAIMING_STATES.IDLE)
 
 
 function updatePreview() {
+  // eslint-disable-next-line vue/no-mutating-props
   props.previewState.developer.value = claimToken.value
   props.previewState.updateTraits()
 }
