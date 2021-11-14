@@ -1,12 +1,16 @@
-import {computed, ref} from 'vue'
-import {ethers} from "ethers";
-import {GENESIS_CONTRACT, NETWORK, PIXEL_AVATAR_CONTRACT} from "../constants/adresses";
-import GenesisContract from "../contracts/GenesisContract.json";
-import PixelAvatarContract from "../contracts/PixelAvatars.json";
+import { computed, ref } from 'vue'
+import { ethers } from 'ethers'
+import {
+    GENESIS_CONTRACT,
+    NETWORK,
+    PIXEL_AVATAR_CONTRACT,
+} from '../constants/adresses'
+import GenesisContract from '../contracts/GenesisContract.json'
+import PixelAvatarContract from '../contracts/PixelAvatars.json'
 
 export default function useWalletState() {
     const address = ref(null)
-    const tokens = ref([])
+    const tokens = ref(null)
     const isConnected = computed(() => address.value !== null)
 
     return {
@@ -15,52 +19,71 @@ export default function useWalletState() {
         tokens,
 
         async connect() {
-            const [_address] = await window.ethereum.request({method: "eth_requestAccounts"})
+            const [_address] = await window.ethereum.request({
+                method: 'eth_requestAccounts',
+            })
             address.value = _address
-            await this.fetchOwnersTokens();
+            await this.fetchOwnersTokens()
         },
 
         async fetchOwnersTokens() {
             if (address.value === null) {
-                console.log("please connect to wallet and select an account");
-                return;
+                alert('Please connect to wallet and select an account')
+                return
             }
-            const provider = new ethers.providers.Web3Provider(window.ethereum, NETWORK);
+            const provider = new ethers.providers.Web3Provider(
+                window.ethereum,
+                NETWORK
+            )
 
-            //developer dao contract
-            const contract = new ethers.Contract(GENESIS_CONTRACT, GenesisContract.abi, provider);
+            const genesisContract = new ethers.Contract(
+                GENESIS_CONTRACT,
+                GenesisContract.abi,
+                provider
+            )
 
-            //number of tokens owned by the address
-            const balance = (await contract.balanceOf(address.value)).toNumber();
+            // Number of tokens owned by the address
+            const balance = (
+                await genesisContract.balanceOf(address.value)
+            ).toNumber()
 
-            //For each token the address owns we need to fetch the actual nft
-            const tokenPromises = [...Array(balance).keys()].map(idx => contract.tokenOfOwnerByIndex(address.value, idx));
+            // For each token the address owns we need to fetch the actual nft
+            const tokenPromises = [...Array(balance).keys()].map((idx) =>
+                genesisContract.tokenOfOwnerByIndex(address.value, idx)
+            )
 
-            //await all async calls
-            const _tokens = await Promise.all(tokenPromises);
+            const _tokens = await Promise.all(tokenPromises)
 
-            //map them to string
-            tokens.value = _tokens.map(t => t.toString());
-
+            tokens.value = _tokens.map((t) => t.toString())
         },
 
         disconnect() {
             address.value = null
-            tokens.value = []
+            tokens.value = null
         },
 
         async claim(token) {
-            const provider = new ethers.providers.Web3Provider(window.ethereum, NETWORK);
+            const provider = new ethers.providers.Web3Provider(
+                window.ethereum,
+                NETWORK
+            )
 
-            const signer = provider.getSigner();
+            const signer = provider.getSigner()
 
+            const avatarContract = new ethers.Contract(
+                PIXEL_AVATAR_CONTRACT,
+                PixelAvatarContract.abi,
+                signer
+            )
 
-            //pixel avatar contract
-            const contract = new ethers.Contract(PIXEL_AVATAR_CONTRACT, PixelAvatarContract.abi, signer);
+            const transaction = await avatarContract.mintWithDevDaoToken(
+                token,
+                {
+                    value: ethers.utils.parseEther('0.1'),
+                }
+            )
 
-            const transaction = await contract.mintWithDevDaoToken(token, {value: ethers.utils.parseEther("0.1")});
             await transaction.wait()
-
         },
     }
 }

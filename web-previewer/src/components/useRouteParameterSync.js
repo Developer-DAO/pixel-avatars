@@ -11,7 +11,7 @@ export default function useRouteParameterSync(previewState) {
         }
     })
 
-    watch(previewState?.developer, (developer, previousdeveloper) => {
+    watch(previewState?.developer, (developer) => {
         router.push({ path: '/', query: { developerId: developer } })
     })
 }
