@@ -1,9 +1,12 @@
-import { computed, ref } from 'vue'
-import Web3 from 'web3'
+import {computed, ref} from 'vue'
+import {ethers} from "ethers";
+import {GENESIS_CONTRACT, NETWORK, PIXEL_AVATAR_CONTRACT} from "../constants/adresses";
+import GenesisContract from "../contracts/GenesisContract.json";
+import PixelAvatarContract from "../contracts/PixelAvatars.json";
 
 export default function useWalletState() {
     const address = ref(null)
-    const tokens = ref(null)
+    const tokens = ref([])
     const isConnected = computed(() => address.value !== null)
 
     return {
@@ -12,20 +15,33 @@ export default function useWalletState() {
         tokens,
 
         async connect() {
-            if (!window.ethereum) {
-                alert(
-                    'MetaMask not detected. Please try again from a MetaMask enabled browser.'
-                )
+            const [_address] = await window.ethereum.request({method: "eth_requestAccounts"})
+            address.value = _address
+            await this.fetchOwnersTokens();
+        },
 
-                return
+        async fetchOwnersTokens() {
+            if (address.value === null) {
+                console.log("please connect to wallet and select an account");
+                return;
             }
+            const provider = new ethers.providers.Web3Provider(window.ethereum, NETWORK);
 
-            const web3 = new Web3(window.ethereum)
+            //developer dao contract
+            const contract = new ethers.Contract(GENESIS_CONTRACT, GenesisContract.abi, provider);
 
-            address.value = (await web3.eth.requestAccounts())[0]
+            //number of tokens owned by the address
+            const balance = (await contract.balanceOf(address.value)).toNumber();
 
-            // TODO - detect tokens from genesis contract
-            tokens.value = [123, 234, 345, 456]
+            //For each token the address owns we need to fetch the actual nft
+            const tokenPromises = [...Array(balance).keys()].map(idx => contract.tokenOfOwnerByIndex(address.value, idx));
+
+            //await all async calls
+            const _tokens = await Promise.all(tokenPromises);
+
+            //map them to string
+            tokens.value = _tokens.map(t => t.toString());
+
         },
 
         disconnect() {
@@ -33,6 +49,18 @@ export default function useWalletState() {
             tokens.value = []
         },
 
-        claim(token) {},
+        async claim(token) {
+            const provider = new ethers.providers.Web3Provider(window.ethereum, NETWORK);
+
+            const signer = provider.getSigner();
+
+
+            //pixel avatar contract
+            const contract = new ethers.Contract(PIXEL_AVATAR_CONTRACT, PixelAvatarContract.abi, signer);
+
+            const transaction = await contract.mintWithDevDaoToken(token, {value: ethers.utils.parseEther("0.1")});
+            await transaction.wait()
+
+        },
     }
 }
