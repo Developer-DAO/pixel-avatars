@@ -1,114 +1,140 @@
 <script setup>
-import {defineProps, ref, watch} from 'vue'
+import { computed, inject, ref, watch } from 'vue'
+import Alert from './Alert'
+import { NETWORK } from '../constants/adresses'
 
-const props = defineProps({
-  previewState: Object,
-  walletState: Object,
+const previewState = inject('previewState')
+const walletState = inject('walletState')
+
+const CLAIMING_STATES = Object.freeze({
+    IDLE: 'idle',
+    LOADING: 'loading',
+    SUCCESS: 'success',
+    ERROR: 'error',
 })
 
 const claimToken = ref(null)
+const claimState = ref(CLAIMING_STATES.IDLE)
+const claimError = ref(null)
 
-const CLAIMING_STATES = Object.freeze({
-  IDLE: "idle",
-  LOADING: "loading",
-  SUCCESS: "success",
-  ERROR: "error"
+const openSeaUrl = computed(() => {
+    const base =
+        NETWORK === 'rinkeby'
+            ? 'https://testnets.opensea.io'
+            : 'https://opensea.io'
+
+    return `${base}/${walletState.address.value}`
 })
 
-const claimingState = ref(CLAIMING_STATES.IDLE)
-
-
 function updatePreview() {
-  // eslint-disable-next-line vue/no-mutating-props
-  props.previewState.developer.value = claimToken.value
-  props.previewState.updateTraits()
-}
-
-function getButtonText() {
-  switch (claimingState.value) {
-    case CLAIMING_STATES.IDLE:
-      return "Claim avatar"
-    case CLAIMING_STATES.SUCCESS:
-      return "Successfully claimed avatar 🚀 "
-    case CLAIMING_STATES.LOADING :
-      return "Claiming..."
-    default:
-      return "Claiming failed"
-  }
+    previewState.developer.value = claimToken.value
+    previewState.updateTraits()
 }
 
 async function startClaiming() {
-  try {
-    claimingState.value = CLAIMING_STATES.LOADING;
-    await props.walletState.claim(claimToken.value);
-    claimingState.value = CLAIMING_STATES.SUCCESS;
-  } catch (e) {
-    console.error(e);
-    claimingState.value = CLAIMING_STATES.ERROR;
-  }
+    try {
+        claimState.value = CLAIMING_STATES.LOADING
+
+        await walletState.claim(claimToken.value)
+
+        claimState.value = CLAIMING_STATES.SUCCESS
+        claimError.value = null
+    } catch (error) {
+        claimState.value = CLAIMING_STATES.ERROR
+        claimError.value =
+            typeof error.error !== 'undefined'
+                ? error.error.data.originalError
+                : error
+    }
 }
 
-watch(props.previewState.developer, (developer) => {
-  if (claimToken.value === developer) {
-    return
-  }
+watch(previewState.developer, (developer) => {
+    if (claimToken.value === developer) {
+        return
+    }
 
-  if (props.walletState.tokens.value.indexOf(developer) > -1) {
-    claimToken.value = developer
-    return
-  }
+    if (walletState.tokens.value.indexOf(developer) > -1) {
+        claimToken.value = developer
+        return
+    }
 
-  claimToken.value = null
+    claimToken.value = null
 })
 </script>
 
 <template>
-  <div v-if="walletState.isConnected.value">
-    <h3 class="text-sm font-bold text-gray-600 uppercase tracking-2">
-      Your personal avatars
-    </h3>
+    <div v-if="walletState.isConnected.value">
+        <h3 class="text-sm font-bold text-gray-600 uppercase tracking-2">
+            Your personal avatars
+        </h3>
 
-    <p class="mt-2 text-gray-600 text-sm">
-      Here is a list of genesis tokens owned by your connected account.
-      <br/>
-      Please select the token number you wish to claim.
-    </p>
+        <p class="mt-2 text-gray-600 text-sm">
+            Here is a list of genesis tokens owned by your connected account.
+            <br />
+            Please select the token number you wish to claim.
+        </p>
 
-    <div class="mt-3 relative">
-      <select
-          v-model="claimToken"
-          dir="rtl"
-          class="input-select !pr-12"
-          @change="updatePreview"
-      >
-        <option :value="null"/>
-        <option
-            v-for="token in walletState.tokens.value"
-            :key="token"
-            :value="token"
-            v-text="token"
-        />
-      </select>
-      <div
-          class="
-                    absolute
-                    left-0
-                    top-0
-                    bottom-1
-                    flex
-                    items-center
-                    text-sm text-gray-600
-                "
-      >
-        <span>Your personal tokens</span>
-      </div>
-    </div>
+        <Alert
+            v-if="claimState === CLAIMING_STATES.SUCCESS"
+            class="mt-3 space-y-2"
+            type="success"
+        >
+            <p><b>Congratulations!</b> 🎉🚀.</p>
+            <p>You are now the official owner of avatar #{{ claimToken }}.</p>
+            <p>
+                <a :href="openSeaUrl" target="_blank" class="text-blue-600"
+                    >Check out your account on OpenSea ↗</a
+                >
+            </p>
+        </Alert>
 
-    <div class="mt-5 text-right">
-      <button
-          v-text="getButtonText()"
-          v-if="claimToken"
-          class="
+        <Alert v-if="claimError" class="mt-3">
+            Error: {{ claimError.message }}
+        </Alert>
+
+        <template v-if="walletState.tokens.value !== null">
+            <div
+                v-if="walletState.tokens.value.length > 0"
+                class="mt-3 relative"
+            >
+                <select
+                    v-model="claimToken"
+                    dir="rtl"
+                    class="input-select !pr-12"
+                    @change="updatePreview"
+                >
+                    <option :value="null" />
+                    <option
+                        v-for="token in walletState.tokens.value"
+                        :key="token"
+                        :value="token"
+                        v-text="token"
+                    />
+                </select>
+                <div
+                    class="
+                        absolute
+                        left-0
+                        top-0
+                        bottom-1
+                        flex
+                        items-center
+                        text-sm text-gray-600
+                    "
+                >
+                    <span>Your personal tokens</span>
+                </div>
+            </div>
+            <Alert v-else>
+                No genesis tokens are available on this address. You must own a
+                genesis token before you can claim an avatar.
+            </Alert>
+        </template>
+
+        <div class="mt-5 text-right">
+            <button
+                v-if="claimToken"
+                class="
                     bg-black
                     text-white
                     rounded
@@ -117,11 +143,20 @@ watch(props.previewState.developer, (developer) => {
                     px-4
                     w-full
                     max-w-[12rem]
+                    disabled:bg-opacity-70
                 "
-          @click="startClaiming()"
-      >
-
-      </button>
+                :disabled="
+                    [CLAIMING_STATES.LOADING, CLAIMING_STATES.SUCCESS].indexOf(
+                        claimState
+                    ) > -1
+                "
+                @click="startClaiming()"
+            >
+                <span v-if="claimState === CLAIMING_STATES.LOADING"
+                    >Claiming...</span
+                >
+                <span v-else>Claim avatar</span>
+            </button>
+        </div>
     </div>
-  </div>
 </template>

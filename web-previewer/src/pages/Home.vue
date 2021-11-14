@@ -6,9 +6,13 @@ import PreviewControls from '../components/PreviewControls.vue'
 import ConnectWallet from '../components/ConnectWallet.vue'
 import usePreviewState from '../components/usePreviewState'
 import useWalletState from '../components/useWalletState'
+import { provide } from 'vue'
 
 const previewState = usePreviewState()
 const walletState = useWalletState()
+
+provide('previewState', previewState)
+provide('walletState', walletState)
 </script>
 
 <template>
@@ -28,15 +32,12 @@ const walletState = useWalletState()
                 <div class="flex justify-between items-center w-full">
                     <DaoLogo class="w-16 h-16 rounded-full shadow-md" />
 
-                    <ConnectWallet :state="walletState" />
+                    <ConnectWallet />
                 </div>
 
-                <ClaimControls
-                    :preview-state="previewState"
-                    :wallet-state="walletState"
-                />
+                <ClaimControls />
 
-                <PreviewControls :state="previewState" />
+                <PreviewControls />
             </div>
         </div>
 

@@ -1,9 +1,7 @@
 <script setup>
-import { defineProps } from 'vue'
+import { inject } from 'vue'
 
-defineProps({
-    state: Object,
-})
+const state = inject('previewState')
 </script>
 
 <template>
