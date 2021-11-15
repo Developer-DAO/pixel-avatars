@@ -1,8 +1,9 @@
 import {computed, ref} from 'vue'
 import {ethers} from "ethers";
-import {GENESIS_CONTRACT, NETWORK, PIXEL_AVATAR_CONTRACT} from "../constants/adresses";
+import {GENESIS_CONTRACT, INFURA_ID, NETWORK, PIXEL_AVATAR_CONTRACT} from "../constants/adresses";
 import GenesisContract from "../contracts/GenesisContract.json";
 import PixelAvatarContract from "../contracts/PixelAvatars.json";
+import WalletConnectProvider from "@walletconnect/web3-provider";
 
 export default function useWalletState() {
     const address = ref(null)
@@ -14,21 +15,33 @@ export default function useWalletState() {
         isConnected,
         tokens,
 
-        async connect() {
+        async connectWithMetamask() {
             const [_address] = await window.ethereum.request({method: "eth_requestAccounts"})
             address.value = _address
-            await this.fetchOwnersTokens();
+            const metaMaskProvider = window.ethereum;
+            await this.fetchOwnersTokens(metaMaskProvider);
         },
 
-        async fetchOwnersTokens() {
+        async connectWithWalletConnect() {
+            const walletConnectProvider = new WalletConnectProvider({
+                infuraId: INFURA_ID
+            });
+
+            await walletConnectProvider.enable();
+            const [_address] = walletConnectProvider.accounts;
+            address.value = _address;
+            await this.fetchOwnersTokens(walletConnectProvider);
+        },
+
+        async fetchOwnersTokens(provider) {
             if (address.value === null) {
                 console.log("please connect to wallet and select an account");
                 return;
             }
-            const provider = new ethers.providers.Web3Provider(window.ethereum, NETWORK);
+            const web3Provider = new ethers.providers.Web3Provider(provider, NETWORK);
 
             //developer dao contract
-            const contract = new ethers.Contract(GENESIS_CONTRACT, GenesisContract.abi, provider);
+            const contract = new ethers.Contract(GENESIS_CONTRACT, GenesisContract.abi, web3Provider);
 
             //number of tokens owned by the address
             const balance = (await contract.balanceOf(address.value)).toNumber();

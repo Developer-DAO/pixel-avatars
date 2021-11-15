@@ -9,9 +9,16 @@ const props = defineProps({
   <button
       v-if="!state.isConnected.value"
       class="bg-black text-white text-sm py-2 rounded px-4 inline-block"
-      @click="state.connect()"
+      @click="state.connectWithMetamask()"
   >
-    Connect wallet
+    Connect Metamask
+  </button>
+  <button
+      v-if="!state.isConnected.value"
+      class="bg-black text-white text-sm py-2 rounded px-4 inline-block"
+      @click="state.connectWithWalletConnect()"
+  >
+    Connect with Wallet Connect
   </button>
 
   <div v-else class="flex-1 min-w-0 flex flex-col items-end space-y-1">
