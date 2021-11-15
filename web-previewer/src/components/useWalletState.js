@@ -1,37 +1,29 @@
 import {computed, ref} from 'vue'
 import {ethers} from "ethers";
-import {GENESIS_CONTRACT, INFURA_ID, NETWORK, PIXEL_AVATAR_CONTRACT} from "../constants/adresses";
+import {GENESIS_CONTRACT, NETWORK, PIXEL_AVATAR_CONTRACT} from "../constants/adresses";
 import GenesisContract from "../contracts/GenesisContract.json";
 import PixelAvatarContract from "../contracts/PixelAvatars.json";
-import WalletConnectProvider from "@walletconnect/web3-provider";
+import {WalletProvider} from "./WalletProvider";
 
 export default function useWalletState() {
     const address = ref(null)
     const tokens = ref([])
     const isConnected = computed(() => address.value !== null)
 
+    const walletProvider = new WalletProvider();
+
     return {
         address,
         isConnected,
         tokens,
 
-        async connectWithMetamask() {
-            const [_address] = await window.ethereum.request({method: "eth_requestAccounts"})
+        async connect(kind) {
+            await walletProvider.connect(kind);
+            const {_address, impl} = walletProvider.selectecWalletProvider;
             address.value = _address
-            const metaMaskProvider = window.ethereum;
-            await this.fetchOwnersTokens(metaMaskProvider);
+            await this.fetchOwnersTokens(impl);
         },
 
-        async connectWithWalletConnect() {
-            const walletConnectProvider = new WalletConnectProvider({
-                infuraId: INFURA_ID
-            });
-
-            await walletConnectProvider.enable();
-            const [_address] = walletConnectProvider.accounts;
-            address.value = _address;
-            await this.fetchOwnersTokens(walletConnectProvider);
-        },
 
         async fetchOwnersTokens(provider) {
             if (address.value === null) {
@@ -39,6 +31,7 @@ export default function useWalletState() {
                 return;
             }
             const web3Provider = new ethers.providers.Web3Provider(provider, NETWORK);
+
 
             //developer dao contract
             const contract = new ethers.Contract(GENESIS_CONTRACT, GenesisContract.abi, web3Provider);
@@ -57,13 +50,15 @@ export default function useWalletState() {
 
         },
 
-        disconnect() {
+        async disconnect() {
+            await walletProvider.disconnect();
             address.value = null
             tokens.value = []
         },
 
         async claim(token) {
             const provider = new ethers.providers.Web3Provider(window.ethereum, NETWORK);
+
 
             const signer = provider.getSigner();
 
@@ -77,3 +72,6 @@ export default function useWalletState() {
         },
     }
 }
+
+
+

@@ -1,4 +1,5 @@
 <script setup>
+import {WalletProvider} from './WalletProvider';
 // eslint-disable-next-line no-unused-vars,no-undef
 const props = defineProps({
   state: Object,
@@ -9,15 +10,13 @@ const props = defineProps({
   <button
       v-if="!state.isConnected.value"
       class="bg-black text-white text-sm py-2 rounded px-4 inline-block"
-      @click="state.connectWithMetamask()"
-  >
+      @click="state.connect(WalletProvider.SUPPORTED_PROVIDERS.META_MASK)">
     Connect Metamask
   </button>
   <button
       v-if="!state.isConnected.value"
       class="bg-black text-white text-sm py-2 rounded px-4 inline-block"
-      @click="state.connectWithWalletConnect()"
-  >
+      @click="state.connect(WalletProvider.SUPPORTED_PROVIDERS.WALLET_CONNECT)">
     Connect with Wallet Connect
   </button>
 
