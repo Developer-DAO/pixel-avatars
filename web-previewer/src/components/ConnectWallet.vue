@@ -1,9 +1,8 @@
 <script setup>
+import { inject } from 'vue'
 import {WalletProvider} from './WalletProvider';
-// eslint-disable-next-line no-unused-vars,no-undef
-const props = defineProps({
-  state: Object,
-})
+
+const state = inject('walletState')
 </script>
 
 <template>
@@ -20,19 +19,19 @@ const props = defineProps({
     Connect with Wallet Connect
   </button>
 
-  <div v-else class="flex-1 min-w-0 flex flex-col items-end space-y-1">
-    <span class="text-sm text-gray-500">Connected to</span>
-    <div>
+    <div v-else class="flex-1 min-w-0 flex flex-col items-end space-y-1">
+        <span class="text-sm text-gray-500">Connected to</span>
+        <div>
             <span
                 class="text-sm font-semibold truncate"
                 v-text="state.address.value.substr(0, 20) + '...'"
             />
+        </div>
+        <button
+            class="text-sm inline text-blue-500"
+            @click="state.disconnect()"
+        >
+            Disconnect
+        </button>
     </div>
-    <button
-        class="text-sm inline text-blue-500"
-        @click="state.disconnect()"
-    >
-      Disconnect
-    </button>
-  </div>
 </template>

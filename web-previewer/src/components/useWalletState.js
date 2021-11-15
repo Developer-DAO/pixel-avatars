@@ -1,9 +1,9 @@
 import {computed, ref} from 'vue'
-import {ethers} from "ethers";
-import {GENESIS_CONTRACT, NETWORK, PIXEL_AVATAR_CONTRACT} from "../constants/adresses";
-import GenesisContract from "../contracts/GenesisContract.json";
-import PixelAvatarContract from "../contracts/PixelAvatars.json";
-import {WalletProvider} from "./WalletProvider";
+import {ethers} from 'ethers';
+import {GENESIS_CONTRACT, NETWORK, PIXEL_AVATAR_CONTRACT} from '../constants/adresses';
+import GenesisContract from '../contracts/GenesisContract.json';
+import PixelAvatarContract from '../contracts/PixelAvatars.json';
+import {WalletProvider} from './WalletProvider';
 
 export default function useWalletState() {
     const address = ref(null)
@@ -27,7 +27,7 @@ export default function useWalletState() {
 
         async fetchOwnersTokens(provider) {
             if (address.value === null) {
-                console.log("please connect to wallet and select an account");
+                console.log('please connect to wallet and select an account');
                 return;
             }
             const web3Provider = new ethers.providers.Web3Provider(provider, NETWORK);
@@ -66,7 +66,7 @@ export default function useWalletState() {
             //pixel avatar contract
             const contract = new ethers.Contract(PIXEL_AVATAR_CONTRACT, PixelAvatarContract.abi, signer);
 
-            const transaction = await contract.mintWithDevDaoToken(token, {value: ethers.utils.parseEther("0.1")});
+            const transaction = await contract.mintWithDevDaoToken(token, {value: ethers.utils.parseEther('0.1')});
             await transaction.wait()
 
         },
