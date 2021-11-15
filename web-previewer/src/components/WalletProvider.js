@@ -19,6 +19,11 @@ export class WalletProvider {
         }
     }
 
+    /**
+     * Public method to connect to a certain provider
+     * Switch statement assigns the proper impl
+     * @param kind one of WalletProvider.SUPPORTED_PROVIDERS
+     * */
     async connect(kind) {
         switch (kind) {
             case  WalletProvider.SUPPORTED_PROVIDERS.WALLET_CONNECT :
@@ -28,6 +33,9 @@ export class WalletProvider {
         }
     }
 
+    /**
+     * public method to disconnect wallet
+     */
     async disconnect() {
         switch (this.selectecWalletProvider.kind) {
             case  WalletProvider.SUPPORTED_PROVIDERS.WALLET_CONNECT :
@@ -75,6 +83,5 @@ export class WalletProvider {
     _disconnectMetaMask() {
         //Todo figure out how to disconnect from metamask
     }
-
 
 }
