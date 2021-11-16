@@ -7,7 +7,7 @@ import {WalletProvider} from './WalletProvider';
 
 export default function useWalletState() {
     const address = ref(null)
-    const tokens = ref([])
+    const tokens = ref(null)
     const isConnected = computed(() => address.value !== null)
 
     const walletProvider = new WalletProvider();
@@ -27,33 +27,32 @@ export default function useWalletState() {
 
         async fetchOwnersTokens(provider) {
             if (address.value === null) {
-                console.log('please connect to wallet and select an account');
+                alert('please connect to wallet and select an account');
                 return;
             }
             const web3Provider = new ethers.providers.Web3Provider(provider, NETWORK);
 
 
-            //developer dao contract
-            const contract = new ethers.Contract(GENESIS_CONTRACT, GenesisContract.abi, web3Provider);
+            const genesisContract = new ethers.Contract(GENESIS_CONTRACT, GenesisContract.abi, web3Provider);
 
-            //number of tokens owned by the address
-            const balance = (await contract.balanceOf(address.value)).toNumber();
+            //Number of tokens owned by the address
+            const balance = (await genesisContract.balanceOf(address.value)).toNumber();
 
             //For each token the address owns we need to fetch the actual nft
-            const tokenPromises = [...Array(balance).keys()].map(idx => contract.tokenOfOwnerByIndex(address.value, idx));
+            const tokenPromises = [...Array(balance).keys()].map(idx =>
+                genesisContract.tokenOfOwnerByIndex(address.value, idx)
+            );
 
-            //await all async calls
             const _tokens = await Promise.all(tokenPromises);
 
-            //map them to string
             tokens.value = _tokens.map(t => t.toString());
 
         },
 
         async disconnect() {
             await walletProvider.disconnect();
-            address.value = null
-            tokens.value = []
+            address.value = null;
+            tokens.value = null;
         },
 
         async claim(token) {
@@ -64,9 +63,12 @@ export default function useWalletState() {
 
 
             //pixel avatar contract
-            const contract = new ethers.Contract(PIXEL_AVATAR_CONTRACT, PixelAvatarContract.abi, signer);
+            const avatarContract = new ethers.Contract(PIXEL_AVATAR_CONTRACT, PixelAvatarContract.abi, signer);
 
-            const transaction = await contract.mintWithDevDaoToken(token, {value: ethers.utils.parseEther('0.1')});
+            const transaction = await avatarContract.mintWithDevDaoToken(token,
+                {
+                    value: ethers.utils.parseEther('0.1')
+                });
             await transaction.wait()
 
         },
