@@ -1,17 +1,17 @@
 <script setup>
+import useImageGenerator from "../components/useImageGenerator";
 const props = defineProps({
   state: Object,
 });
+const src = useImageGenerator(props.state);
 </script>
 
 <template>
     <div>
         <div class="relative w-full overflow-hidden" style="padding-top: 120%">
             <img
-                v-for="layer in state.layers.value"
                 class="absolute top-0 left-0 w-full"
-                :key="layer"
-                :src="layer"
+                :src="src"
             />
         </div>
         <div class="flex justify-end mb-10">
