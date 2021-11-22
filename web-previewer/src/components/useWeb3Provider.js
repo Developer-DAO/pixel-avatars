@@ -1,6 +1,6 @@
 import { ref } from 'vue'
 import { ethers } from 'ethers'
-import { NETWORK } from '../constants/adresses'
+import { NETWORK } from '../config'
 import MetaMask from '../web3-providers/MetaMask'
 import WalletConnect from '../web3-providers/WalletConnect'
 

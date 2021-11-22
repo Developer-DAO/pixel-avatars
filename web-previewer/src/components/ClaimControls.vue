@@ -1,7 +1,7 @@
 <script setup>
 import { computed, inject, ref, watch } from 'vue'
 import Alert from './Alert'
-import { NETWORK } from '../constants/adresses'
+import { NETWORK } from '../config'
 
 const previewState = inject('previewState')
 const walletState = inject('walletState')
