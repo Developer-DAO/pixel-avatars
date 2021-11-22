@@ -8,21 +8,6 @@ const state = inject('walletState')
 </script>
 
 <template>
-    <!--    <button-->
-    <!--        v-if="!state.isConnected.value"-->
-    <!--        class="bg-black text-white text-sm py-2 rounded px-4 inline-block"-->
-    <!--        @click="state.connect(SUPPORTED_PROVIDERS.META_MASK)"-->
-    <!--    >-->
-    <!--        Connect Metamask-->
-    <!--    </button>-->
-    <!--    <button-->
-    <!--        v-if="!state.isConnected.value"-->
-    <!--        class="bg-black text-white text-sm py-2 rounded px-4 inline-block"-->
-    <!--        @click="state.connect(SUPPORTED_PROVIDERS.WALLET_CONNECT)"-->
-    <!--    >-->
-    <!--        Connect with Wallet Connect-->
-    <!--    </button>-->
-
     <Menu
         v-if="!state.isConnected.value"
         as="div"
