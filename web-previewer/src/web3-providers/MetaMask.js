@@ -4,9 +4,13 @@ export default class WalletProvider {
     }
 
     async connect() {
-        return (await window.ethereum.request({
-            method: 'eth_requestAccounts',
-        }))[0] ?? null
+        return (
+            (
+                await window.ethereum.request({
+                    method: 'eth_requestAccounts',
+                })
+            )[0] ?? null
+        )
     }
 
     async disconnect() {
