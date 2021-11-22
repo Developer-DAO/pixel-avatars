@@ -8,3 +8,15 @@
 
     box-shadow: none !important;
 }
+
+button:focus
+/*a:focus,*/
+/*input:focus,*/
+/*textarea:focus,*/
+/*select:focus*/
+{
+    @apply outline-none ring ring-blue-300;
+
+    /*outline: none !important;*/
+    /*box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5) !important;*/
+}
