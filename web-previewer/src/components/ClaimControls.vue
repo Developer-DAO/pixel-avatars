@@ -41,10 +41,11 @@ async function startClaiming() {
         claimError.value = null
     } catch (error) {
         claimState.value = CLAIMING_STATES.ERROR
-        claimError.value =
-            typeof error.error !== 'undefined'
-                ? error.error.data.originalError
-                : error
+
+        claimError.value = null
+            ?? error?.error?.data?.originalError
+            ?? error?.error
+            ?? error
     }
 }
 
@@ -152,9 +153,9 @@ watch(previewState.developer, (developer) => {
                 "
                 @click="startClaiming()"
             >
-                <span v-if="claimState === CLAIMING_STATES.LOADING"
-                    >Claiming...</span
-                >
+                <span v-if="claimState === CLAIMING_STATES.LOADING">
+                    Claiming...
+                </span>
                 <span v-else>Claim avatar</span>
             </button>
         </div>

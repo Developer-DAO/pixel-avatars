@@ -1,23 +1,25 @@
 <script setup>
 import { inject } from 'vue'
-import {WalletProvider} from './WalletProvider';
+import {SUPPORTED_PROVIDERS} from './useWeb3Provider';
 
 const state = inject('walletState')
 </script>
 
 <template>
-  <button
-      v-if="!state.isConnected.value"
-      class="bg-black text-white text-sm py-2 rounded px-4 inline-block"
-      @click="state.connect(WalletProvider.SUPPORTED_PROVIDERS.META_MASK)">
-    Connect Metamask
-  </button>
-  <button
-      v-if="!state.isConnected.value"
-      class="bg-black text-white text-sm py-2 rounded px-4 inline-block"
-      @click="state.connect(WalletProvider.SUPPORTED_PROVIDERS.WALLET_CONNECT)">
-    Connect with Wallet Connect
-  </button>
+    <button
+        v-if="!state.isConnected.value"
+        class="bg-black text-white text-sm py-2 rounded px-4 inline-block"
+        @click="state.connect(SUPPORTED_PROVIDERS.META_MASK)"
+    >
+        Connect Metamask
+    </button>
+    <button
+        v-if="!state.isConnected.value"
+        class="bg-black text-white text-sm py-2 rounded px-4 inline-block"
+        @click="state.connect(SUPPORTED_PROVIDERS.WALLET_CONNECT)"
+    >
+        Connect with Wallet Connect
+    </button>
 
     <div v-else class="flex-1 min-w-0 flex flex-col items-end space-y-1">
         <span class="text-sm text-gray-500">Connected to</span>
