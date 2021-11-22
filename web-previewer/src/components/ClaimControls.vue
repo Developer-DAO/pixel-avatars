@@ -42,10 +42,8 @@ async function startClaiming() {
     } catch (error) {
         claimState.value = CLAIMING_STATES.ERROR
 
-        claimError.value = null
-            ?? error?.error?.data?.originalError
-            ?? error?.error
-            ?? error
+        claimError.value =
+            null ?? error?.error?.data?.originalError ?? error?.error ?? error
     }
 }
 

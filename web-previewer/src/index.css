@@ -13,8 +13,7 @@ button:focus
 /*a:focus,*/
 /*input:focus,*/
 /*textarea:focus,*/
-/*select:focus*/
-{
+/*select:focus*/ {
     @apply outline-none ring ring-blue-300;
 
     /*outline: none !important;*/

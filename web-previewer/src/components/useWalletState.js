@@ -1,9 +1,9 @@
 import { computed, ref } from 'vue'
 import { ethers } from 'ethers'
-import {GENESIS_CONTRACT, PIXEL_AVATAR_CONTRACT,} from '../constants/adresses'
+import { GENESIS_CONTRACT, PIXEL_AVATAR_CONTRACT } from '../constants/adresses'
 import GenesisContract from '../contracts/GenesisContract.json'
 import PixelAvatarContract from '../contracts/PixelAvatars.json'
-import useWeb3Provider from "./useWeb3Provider";
+import useWeb3Provider from './useWeb3Provider'
 
 export default function useWalletState() {
     const address = ref(null)
@@ -32,7 +32,10 @@ export default function useWalletState() {
         },
 
         async claim(token) {
-            const avatarContract = web3.contract(PIXEL_AVATAR_CONTRACT, PixelAvatarContract.abi)
+            const avatarContract = web3.contract(
+                PIXEL_AVATAR_CONTRACT,
+                PixelAvatarContract.abi
+            )
 
             const transaction = await avatarContract.mintWithDevDaoToken(
                 token,
@@ -45,10 +48,15 @@ export default function useWalletState() {
         },
 
         async _fetchOwnedTokens() {
-            const genesisContract = web3.contract(GENESIS_CONTRACT, GenesisContract.abi)
+            const genesisContract = web3.contract(
+                GENESIS_CONTRACT,
+                GenesisContract.abi
+            )
 
             // Number of tokens owned by the address
-            const balance = (await genesisContract.balanceOf(address.value)).toNumber()
+            const balance = (
+                await genesisContract.balanceOf(address.value)
+            ).toNumber()
 
             // For each token the address owns we need to fetch the actual nft
             const tokenPromises = [...Array(balance).keys()].map((idx) =>
