@@ -1,5 +1,5 @@
 import WalletConnectProvider from '@walletconnect/web3-provider'
-import { INFURA_ID } from '../constants/adresses'
+import { INFURA_ID } from '../config'
 
 export default class WalletConnect {
     constructor() {

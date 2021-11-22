@@ -1,6 +1,6 @@
 import { computed, ref } from 'vue'
 import { ethers } from 'ethers'
-import { GENESIS_CONTRACT, PIXEL_AVATAR_CONTRACT } from '../constants/adresses'
+import { GENESIS_CONTRACT, PIXEL_AVATAR_CONTRACT } from '../config'
 import GenesisContract from '../contracts/GenesisContract.json'
 import PixelAvatarContract from '../contracts/PixelAvatars.json'
 import useWeb3Provider from './useWeb3Provider'
