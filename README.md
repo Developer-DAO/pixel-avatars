@@ -31,7 +31,7 @@ Where the artwork design and generation is being done. Initially it will be a un
 Fortnightly Status updates can be found [here](./STATUS.md)
 
 ## Meetings
-The derivatives project hold fortnightly meeting on Sundays 1700 UTC.
+The derivatives project hold fortnightly meeting on wednesdays 1600 UTC.
 
 The first kickoff meeting was recorded on 12th September 2021 UTC 1700 and can be found here:
 
