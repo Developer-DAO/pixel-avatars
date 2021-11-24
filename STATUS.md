@@ -1,5 +1,6 @@
 # Status updates
 
+*The following has been deprecated and need to be cleaned up to have highest level status. For now please refer to meeting notes under meetings\2021 for the most updated status.*
 ## Week Ending 26th Sept 2021
 
 ### BACKEND (Main Contributor - etherinsight.eth)
