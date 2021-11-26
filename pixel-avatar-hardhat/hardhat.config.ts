@@ -34,7 +34,7 @@ const RINKEBY_PRIVATE_KEY = process.env.RINKEBY_PRIVATE_KEY ?? "";
 
 const config: HardhatUserConfig = {
   solidity: "0.8.9",
-  // defaultNetwork: "localhost",
+  defaultNetwork: "localhost",
   networks: {
     hardhat: {
       // forking: {
@@ -47,11 +47,11 @@ const config: HardhatUserConfig = {
     //   accounts:
     //     process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
     // },
-
-    rinkeby: {
-      url: RINKEYBY_RPC_URL,
-      accounts: [`0x${RINKEBY_PRIVATE_KEY}`],
-    },
+    //
+    // rinkeby: {
+    //   url: RINKEYBY_RPC_URL,
+    //   accounts: [`0x${RINKEBY_PRIVATE_KEY}`],
+    // },
 
     // mainnet: {
     //   url: MAINNET_RPC_URL,
