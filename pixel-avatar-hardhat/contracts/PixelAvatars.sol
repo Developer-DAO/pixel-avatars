@@ -1,124 +1,88 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.9;
 
-import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
-import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
+import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
+import "@openzeppelin/contracts/utils/Strings.sol";
 import "hardhat/console.sol";
-
-interface LootInterface {
-    function ownerOf(uint256 _tokenId) external view returns (address owner);
-}
 
 /// @author Developer DAO
 /// @title The PixelAvatars smart contract that is compliant to ERC721 standard.
 /// @dev Contract under development and requires more tests.
 contract PixelAvatars is ERC721Enumerable, ReentrancyGuard, Ownable {
     /// TODO: Set this to the IPFS base uri before launch
-    string public baseURI =
-        "ipfs://QmUVH51tigyENzwUhsTv14dV7eyaVo6oHoeCD3JHD9rFnV/";
-
-    /// @dev Original Developer Dao Contract
-    /// TODO: Change this to mainnet Developer Dao Contract
-    address public devDaoAddress = 0x25ed58c027921E14D86380eA2646E3a1B5C55A8b;
+    string public baseURI = "ipfs://QmUVH51tigyENzwUhsTv14dV7eyaVo6oHoeCD3JHD9rFnV/";
 
     uint256 public mintPrice = 0.01 ether;
 
-    LootInterface private _devDaoContract = LootInterface(devDaoAddress);
-
-    event LogTokenMinted(address minter, uint256 tokenId);
+    address public serverAddress = 0x758e7CA41f6508e4f2c7DB00DE9a6F1c6BB0Da9B;
 
     constructor() ERC721("Pixel Avatars", "PXLAVTR") {
         console.log("PixelAvatars deployed by '%s'", msg.sender);
-    }
-
-    function setBaseURI(string memory _newBaseURI) external onlyOwner {
-        baseURI = _newBaseURI;
-    }
-
-    // provide Mint price in wei
-    function setMintPrice(uint256 _newPrice) external onlyOwner {
-        mintPrice = _newPrice;
-    }
-
-    function withdraw() external onlyOwner {
-        payable(msg.sender).transfer(address(this).balance);
-    }
-
-    /// @dev Private sale minting (reserved for DevDao owners)
-    function mintWithDevDaoToken(uint256 _devDaoTokenId)
-        external
-        payable
-        nonReentrant
-        validDevDaoToken(_devDaoTokenId)
-        devDaoTokenOwnerOf(_devDaoTokenId)
-    {
-        require(mintPrice <= msg.value, "Not enough ether sent");
-        console.log(
-            "mintWithDevDaoToken | _devDaoTokenId '%s'",
-            _devDaoTokenId
-        );
-
-        _safeMint(msg.sender, _devDaoTokenId);
-        emit LogTokenMinted(msg.sender, _devDaoTokenId);
-    }
-
-    function multiMintWithDevDaoToken(uint256[] memory _devDaoTokenIds)
-        external
-        payable
-        nonReentrant
-        multipleDevDaoTokenOwnerOf(_devDaoTokenIds)
-    {
-        require(
-            (mintPrice * _devDaoTokenIds.length) <= msg.value,
-            "Ether value sent is not correct"
-        );
-
-        for (uint256 index = 0; index < _devDaoTokenIds.length; index++) {
-            uint256 devDaoTokenId = _devDaoTokenIds[index];
-
-            console.log(
-                "multiMintWithDevDaoToken | minting '%s' ...",
-                devDaoTokenId
-            );
-
-            _safeMint(_msgSender(), devDaoTokenId);
-
-            console.log(
-                "multiMintWithDevDaoToken | '%s' minted",
-                devDaoTokenId
-            );
-        }
     }
 
     function _baseURI() internal view virtual override returns (string memory) {
         return baseURI;
     }
 
-    //TODO Do we need this when we're not allowing public minting?
-    modifier validDevDaoToken(uint256 _devDaoTokenId) {
-        require(
-            _devDaoTokenId > 0 && _devDaoTokenId <= 8000,
-            "Not a valid Developer DAO Token ID."
+    function setBaseURI(string memory _newBaseURI) public onlyOwner {
+        baseURI = _newBaseURI;
+    }
+
+    function setMintPrice(uint256 _newPrice) public onlyOwner {
+        // Mint price in wei
+        mintPrice = _newPrice;
+    }
+
+    function setServerAddress(address _address) public onlyOwner {
+        serverAddress = _address;
+    }
+
+    event LogTokenMinted(address minter, uint256 tokenId);
+
+    modifier validServerSignature(
+        uint256 tokenId,
+        uint256 deadline,
+        uint8 v,
+        bytes32 r,
+        bytes32 s
+    )
+    {
+        bytes memory message = abi.encodePacked(
+            "TokenId:", Strings.toString(tokenId),
+            "Address:", msg.sender,
+            "Deadline:", Strings.toString(deadline)
         );
+
+        address signer = ecrecover(keccak256(message), v, r, s);
+
+        require(signer == serverAddress, string('Invalid server signature'));
+        require(block.timestamp <= deadline, "Signature expired");
+
         _;
     }
 
-    modifier devDaoTokenOwnerOf(uint256 _devDaoTokenId) {
-        require(
-            _devDaoContract.ownerOf(_devDaoTokenId) == msg.sender,
-            "Not a Developer DAO Token owner."
-        );
-        _;
+    function mintWithSignature(
+        uint256 tokenId,
+        uint256 deadline,
+        uint8 v,
+        bytes32 r,
+        bytes32 s
+    )
+    public
+    payable
+    nonReentrant
+    validServerSignature(tokenId, deadline, v, r, s)
+    {
+        require(mintPrice <= msg.value, "Not enough ether sent");
+
+        _safeMint(msg.sender, tokenId);
+
+        emit LogTokenMinted(msg.sender, tokenId);
     }
 
-    modifier multipleDevDaoTokenOwnerOf(uint256[] memory _devDaoTokenIds) {
-        for (uint256 index = 0; index < _devDaoTokenIds.length; index++) {
-            require(
-                _devDaoContract.ownerOf(_devDaoTokenIds[index]) == msg.sender,
-                "Not a Developer DAO Token owner."
-            );
-        }
-        _;
+    function withdraw() public onlyOwner {
+        payable(msg.sender).transfer(address(this).balance);
     }
 }

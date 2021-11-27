@@ -1,9 +1,9 @@
 import { computed, ref } from 'vue'
 import { ethers } from 'ethers'
-import { GENESIS_CONTRACT, PIXEL_AVATAR_CONTRACT } from '../config'
-import GenesisContract from '../contracts/GenesisContract.json'
-import PixelAvatarContract from '../contracts/PixelAvatars.json'
+import {PIXEL_AVATAR_TOKEN, SERVER_URL} from '../constants'
+import PixelAvatarContract from '../../../abis/PixelAvatars.json'
 import useWeb3Provider from './useWeb3Provider'
+import axios from "axios";
 
 export default function useWalletState() {
     const address = ref(null)
@@ -32,13 +32,18 @@ export default function useWalletState() {
         },
 
         async claim(token) {
-            const avatarContract = web3.contract(
-                PIXEL_AVATAR_CONTRACT,
-                PixelAvatarContract.abi
-            )
+            const response = (await axios.post(`${SERVER_URL}/owners/${address.value}/authorize`, {
+                tokenId: token,
+            })).data.data
 
-            const transaction = await avatarContract.mintWithDevDaoToken(
-                token,
+            const avatarContract = web3.contract(PIXEL_AVATAR_TOKEN, PixelAvatarContract.abi)
+
+            const transaction = await avatarContract.mintWithSignature(
+                response.tokenId,
+                response.deadline,
+                response.signature.v,
+                response.signature.r,
+                response.signature.s,
                 {
                     value: ethers.utils.parseEther('0.1'),
                 }
@@ -48,24 +53,9 @@ export default function useWalletState() {
         },
 
         async _fetchOwnedTokens() {
-            const genesisContract = web3.contract(
-                GENESIS_CONTRACT,
-                GenesisContract.abi
-            )
+            const response = await axios.get(`${SERVER_URL}/owners/${address.value}/inventory`)
 
-            // Number of tokens owned by the address
-            const balance = (
-                await genesisContract.balanceOf(address.value)
-            ).toNumber()
-
-            // For each token the address owns we need to fetch the actual nft
-            const tokenPromises = [...Array(balance).keys()].map((idx) =>
-                genesisContract.tokenOfOwnerByIndex(address.value, idx)
-            )
-
-            const _tokens = await Promise.all(tokenPromises)
-
-            tokens.value = _tokens.map((t) => t.toString())
+            tokens.value = response.data.data
         },
     }
 }

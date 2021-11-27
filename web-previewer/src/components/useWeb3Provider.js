@@ -1,6 +1,6 @@
 import { ref } from 'vue'
 import { ethers } from 'ethers'
-import { NETWORK } from '../config'
+import { PIXEL_AVATAR_NETWORK } from '../constants'
 import MetaMask from '../web3-providers/MetaMask'
 import WalletConnect from '../web3-providers/WalletConnect'
 
@@ -31,7 +31,7 @@ export default function useWeb3Provider() {
         contract(token, contract) {
             const provider = new ethers.providers.Web3Provider(
                 this.instance().provider,
-                NETWORK
+                PIXEL_AVATAR_NETWORK
             )
 
             return new ethers.Contract(token, contract, provider.getSigner())

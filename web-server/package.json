@@ -4,17 +4,21 @@
     "description": "",
     "main": "src/app.js",
     "scripts": {
-        "start": "node src/app.js"
+        "serve": "npx nodemon src/app.js"
     },
     "author": "Rasmus Christoffer Nielsen",
     "license": "MIT",
     "dependencies": {
         "body-parser": "^1.19.0",
+        "cors": "^2.8.5",
         "dotenv": "^10.0.0",
         "elliptic": "^6.5.4",
         "ethereum-public-key-to-address": "^0.0.5",
         "ethers": "^5.5.1",
         "express": "^4.17.1",
         "keccak256": "^1.0.3"
+    },
+    "devDependencies": {
+        "nodemon": "^2.0.15"
     }
 }

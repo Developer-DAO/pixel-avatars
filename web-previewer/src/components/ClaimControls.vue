@@ -1,7 +1,7 @@
 <script setup>
 import { computed, inject, ref, watch } from 'vue'
 import Alert from './Alert'
-import { NETWORK } from '../config'
+import {OPEN_SEA_URL} from '../constants'
 
 const previewState = inject('previewState')
 const walletState = inject('walletState')
@@ -15,18 +15,11 @@ const CLAIMING_STATES = Object.freeze({
 
 const claimToken = ref(null)
 const claimState = ref(CLAIMING_STATES.IDLE)
-const claimError = ref(null)
-
-const openSeaUrl = computed(() => {
-    const base =
-        NETWORK === 'rinkeby'
-            ? 'https://testnets.opensea.io'
-            : 'https://opensea.io'
-
-    return `${base}/${walletState.address.value}`
-})
+const claimErrorMessage = ref(null)
+const openSeaUrl = computed(() => `${OPEN_SEA_URL}/${walletState.address.value}`)
 
 function updatePreview() {
+    claimErrorMessage.value = null
     previewState.developer.value = claimToken.value
     previewState.updateTraits()
 }
@@ -38,12 +31,15 @@ async function startClaiming() {
         await walletState.claim(claimToken.value)
 
         claimState.value = CLAIMING_STATES.SUCCESS
-        claimError.value = null
+        claimErrorMessage.value = null
     } catch (error) {
         claimState.value = CLAIMING_STATES.ERROR
 
-        claimError.value =
-            null ?? error?.error?.data?.originalError ?? error?.error ?? error
+        claimErrorMessage.value = null
+            ?? error?.error?.data?.originalError?.message
+            ?? error?.error?.message
+            ?? error?.data?.message
+            ?? error?.message
     }
 }
 
@@ -87,8 +83,8 @@ watch(previewState.developer, (developer) => {
             </p>
         </Alert>
 
-        <Alert v-if="claimError" class="mt-3">
-            Error: {{ claimError.message }}
+        <Alert v-if="claimErrorMessage" class="mt-3">
+            Error: {{ claimErrorMessage }}
         </Alert>
 
         <template v-if="walletState.tokens.value !== null">

@@ -41,14 +41,14 @@ function buildTrait(traitId) {
     }
 }
 
-export function buildValue(valueId) {
+function buildValue(valueId) {
     return {
         slug: slugify(valueId),
         name: valueId,
     }
 }
 
-export function slugify(name) {
+function slugify(name) {
     return name
         .toLowerCase()
         .replaceAll(' ', '')
