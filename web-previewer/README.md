@@ -9,6 +9,7 @@ yarn install
 ```
 
 Setup `.env`
+
 ```shell
 cp .env.example .env
 ```

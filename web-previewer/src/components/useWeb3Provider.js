@@ -25,14 +25,16 @@ export default function useWeb3Provider() {
 
             activeInstance.value = providers[name]
 
+            // Reload on network change
+            this.instance().provider.on('chainChanged', () => {
+                window.location.reload()
+            })
+
             return this
         },
 
         contract(token, contract) {
-            const provider = new ethers.providers.Web3Provider(
-                this.instance().provider,
-                PIXEL_AVATAR_NETWORK
-            )
+            const provider = this.provider()
 
             return new ethers.Contract(token, contract, provider.getSigner())
         },
@@ -45,6 +47,13 @@ export default function useWeb3Provider() {
             }
 
             return activeInstance.value
+        },
+
+        provider() {
+            return new ethers.providers.Web3Provider(
+                this.instance().provider,
+                PIXEL_AVATAR_NETWORK
+            )
         },
     }
 }

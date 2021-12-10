@@ -1,4 +1,4 @@
-export default class WalletProvider {
+export default class MetaMask {
     constructor() {
         this.provider = window.ethereum
     }
