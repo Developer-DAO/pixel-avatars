@@ -4,13 +4,18 @@ export default class MetaMask {
     }
 
     async connect() {
-        return (
-            (
-                await window.ethereum.request({
-                    method: 'eth_requestAccounts',
-                })
-            )[0] ?? null
-        )
+        const [address] = await window.ethereum.request({
+            method: 'eth_requestAccounts',
+        })
+
+        if (address) {
+            // Reload on network change
+            window.ethereum.on('chainChanged', (...args) => {
+                window.location.reload()
+            })
+        }
+
+        return address
     }
 
     async disconnect() {

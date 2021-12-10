@@ -60,19 +60,22 @@ const state = inject('walletState')
             >
                 <div class="py-1">
                     <MenuItem v-slot="{ active }">
-                        <button
-                            :class="[
-                                active
-                                    ? 'bg-gray-100 text-gray-900'
-                                    : 'text-gray-700',
-                                'block w-full text-left px-4 py-2 text-sm',
-                            ]"
-                            @click="
-                                state.connect(SUPPORTED_PROVIDERS.META_MASK)
-                            "
-                        >
-                            MetaMask
-                        </button>
+                        <span class="flex">
+                            <button
+                                :class="[
+                                    active
+                                        ? 'bg-gray-100 text-gray-900'
+                                        : 'text-gray-700',
+                                    'w-full flex items-center text-left px-4 py-2 text-sm',
+                                ]"
+                                @click="
+                                    state.connect(SUPPORTED_PROVIDERS.META_MASK)
+                                "
+                            >
+                                <img src="/img/metamask.png" class="w-6 h-6 mr-4" alt="MetaMask Logo">
+                                <span>MetaMask</span>
+                            </button>
+                        </span>
                     </MenuItem>
                     <MenuItem v-slot="{ active }">
                         <button
@@ -80,7 +83,7 @@ const state = inject('walletState')
                                 active
                                     ? 'bg-gray-100 text-gray-900'
                                     : 'text-gray-700',
-                                'block w-full text-left px-4 py-2 text-sm',
+                                'w-full flex items-center text-left px-4 py-2 text-sm',
                             ]"
                             @click="
                                 state.connect(
@@ -88,7 +91,8 @@ const state = inject('walletState')
                                 )
                             "
                         >
-                            Wallet Connect
+                            <img src="/img/walletconnect.png" class="w-6 h-6 mr-4" alt="Wallet Connect Logo">
+                            <span>Wallet Connect</span>
                         </button>
                     </MenuItem>
                 </div>

@@ -48,7 +48,9 @@ async function startClaiming() {
 }
 
 function updatePreview() {
+    claimState.value = CLAIMING_STATES.IDLE
     errorMessage.value = null
+
     previewState.developer.value = claimToken.value
     previewState.updateTraits()
 }

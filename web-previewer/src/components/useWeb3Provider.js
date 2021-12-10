@@ -25,11 +25,6 @@ export default function useWeb3Provider() {
 
             activeInstance.value = providers[name]
 
-            // Reload on network change
-            this.instance().provider.on('chainChanged', () => {
-                window.location.reload()
-            })
-
             return this
         },
 
