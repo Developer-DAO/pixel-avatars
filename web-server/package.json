@@ -4,7 +4,7 @@
     "description": "",
     "main": "src/app.js",
     "scripts": {
-        "serve": "npx nodemon src/app.js"
+        "serve": "npx nodemon server.js"
     },
     "author": "Rasmus Christoffer Nielsen",
     "license": "MIT",

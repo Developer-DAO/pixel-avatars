@@ -4,7 +4,8 @@ export const OPEN_SEA_URL = process.env.VUE_APP_OPEN_SEA_URL
 export const PIXEL_AVATAR_TOKEN = process.env.VUE_APP_PIXEL_AVATAR_TOKEN
 export const PIXEL_AVATAR_NETWORK = {
     name: process.env.VUE_APP_PIXEL_AVATAR_NETWORK_NAME,
-    chainId: process.env.VUE_APP_PIXEL_AVATAR_NETWORK_CHAIN_ID,
+    chainId: parseInt(process.env.VUE_APP_PIXEL_AVATAR_NETWORK_CHAIN_ID),
     ensAddress: process.env.VUE_APP_PIXEL_AVATAR_NETWORK_RPC,
 }
+
 export const SERVER_URL = process.env.VUE_APP_SERVER_URL

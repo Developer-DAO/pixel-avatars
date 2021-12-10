@@ -54,6 +54,6 @@ export default function useWeb3Provider() {
                 this.instance().provider,
                 PIXEL_AVATAR_NETWORK
             )
-        },
+        }
     }
 }

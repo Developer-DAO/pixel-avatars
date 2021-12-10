@@ -14,6 +14,4 @@ app.use(cors({
 app.post('/owners/:address/authorize', require('./controllers/AuthorizeController').store)
 app.get('/owners/:address/inventory', require('./controllers/InventoryController').show)
 
-app.listen(HTTP_PORT, () => {
-    console.log(`Pixel webserver ready at http://localhost:${HTTP_PORT}`)
-})
+module.exports = app
