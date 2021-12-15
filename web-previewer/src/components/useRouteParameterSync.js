@@ -8,6 +8,7 @@ export default function useRouteParameterSync(previewState) {
   onMounted(() => {
     if (route.query.developerId) {
       previewState.developer.value = route.query.developerId;
+      previewState.updateTraits();
     }
   });
 
