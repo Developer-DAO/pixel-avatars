@@ -4,16 +4,9 @@ export default class MetaMask {
     }
 
     async connect() {
-        const [address] = await window.ethereum.request({
+        const [address] = await this.provider.request({
             method: 'eth_requestAccounts',
         })
-
-        if (address) {
-            // Reload on network change
-            window.ethereum.on('chainChanged', (...args) => {
-                window.location.reload()
-            })
-        }
 
         return address
     }

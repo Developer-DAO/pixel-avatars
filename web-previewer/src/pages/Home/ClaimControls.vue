@@ -1,11 +1,8 @@
 <script setup>
+import Alert from '../../components/ui/Alert.vue'
+import useAvatarContract from './useAvatarContract'
 import { computed, inject, ref, watch } from 'vue'
-import Alert from './Alert'
-import { OPEN_SEA_URL, CURRENCY_SYMBOL } from '../constants'
-import { ethers } from 'ethers'
-
-const previewState = inject('previewState')
-const walletState = inject('walletState')
+import { OPEN_SEA_URL, CURRENCY_SYMBOL } from '../../constants'
 
 const CLAIMING_STATES = Object.freeze({
     IDLE: 'idle',
@@ -14,30 +11,24 @@ const CLAIMING_STATES = Object.freeze({
     ERROR: 'error',
 })
 
+const client = inject('web3client')
+const previewState = inject('previewState')
+const avatarContract = useAvatarContract()
+
+const availableTokens = ref(null)
 const claimToken = ref(null)
 const claimState = ref(CLAIMING_STATES.IDLE)
 const errorMessage = ref(null)
 const mintPriceEther = ref(null)
 const openSeaUrl = computed(
-    () => `${OPEN_SEA_URL}/${walletState.address.value}`
+    () => `${OPEN_SEA_URL}/${client.connectedAddress.value}`
 )
-
-async function loadMintPrice() {
-    try {
-        const price = await walletState.getMintPrice()
-
-        mintPriceEther.value = ethers.utils.formatEther(price)
-        errorMessage.value = null
-    } catch (error) {
-        errorMessage.value = error.message
-    }
-}
 
 async function startClaiming() {
     try {
         claimState.value = CLAIMING_STATES.LOADING
 
-        await walletState.claim(claimToken.value)
+        await avatarContract.claim(claimToken.value)
 
         claimState.value = CLAIMING_STATES.SUCCESS
         errorMessage.value = null
@@ -55,14 +46,15 @@ function updatePreview() {
     previewState.updateTraits()
 }
 
+// Automatically set claimToken based on previewState
 watch(previewState.developer, (developer) => {
     if (claimToken.value === developer) {
         return
     }
 
     if (
-        walletState.tokens.value &&
-        walletState.tokens.value.indexOf(developer) > -1
+        availableTokens.value &&
+        availableTokens.value.indexOf(developer) > -1
     ) {
         claimToken.value = developer
         return
@@ -71,15 +63,17 @@ watch(previewState.developer, (developer) => {
     claimToken.value = null
 })
 
-watch(walletState.isConnected, (isConnected) => {
+// Load available tokens + mint price when connected to wallet
+watch(client.isConnected, async (isConnected) => {
     if (isConnected) {
-        loadMintPrice()
+        availableTokens.value = await avatarContract.getAvailableTokens()
+        mintPriceEther.value = await avatarContract.getMintPriceInEther()
     }
 })
 </script>
 
 <template>
-    <div v-if="walletState.isConnected.value">
+    <div v-if="client.isConnected.value">
         <h3 class="text-sm font-bold text-gray-600 uppercase tracking-2">
             Your personal avatars
         </h3>
@@ -108,8 +102,8 @@ watch(walletState.isConnected, (isConnected) => {
             Error: {{ errorMessage }}
         </Alert>
 
-        <template v-if="walletState.tokens.value !== null">
-            <div v-if="walletState.tokens.value.length > 0">
+        <template v-if="availableTokens !== null">
+            <div v-if="availableTokens.length > 0">
                 <div class="mt-3 relative">
                     <select
                         v-model="claimToken"
@@ -119,7 +113,7 @@ watch(walletState.isConnected, (isConnected) => {
                     >
                         <option :value="null" />
                         <option
-                            v-for="token in walletState.tokens.value"
+                            v-for="token in availableTokens"
                             :key="token"
                             :value="token"
                             v-text="token"

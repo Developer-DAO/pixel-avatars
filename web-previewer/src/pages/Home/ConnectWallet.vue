@@ -2,14 +2,13 @@
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
 import { ChevronDownIcon } from '@heroicons/vue/solid'
 import { inject } from 'vue'
-import { SUPPORTED_PROVIDERS } from './useWeb3Provider'
 
-const state = inject('walletState')
+const client = inject('web3client')
 </script>
 
 <template>
     <Menu
-        v-if="!state.isConnected.value"
+        v-if="!client.isConnected.value"
         as="div"
         class="relative inline-block text-left"
     >
@@ -69,7 +68,9 @@ const state = inject('walletState')
                                     'w-full flex items-center text-left px-4 py-2 text-sm',
                                 ]"
                                 @click="
-                                    state.connect(SUPPORTED_PROVIDERS.META_MASK)
+                                    client.connect(
+                                        client.supportedProviders.MetaMask
+                                    )
                                 "
                             >
                                 <img
@@ -90,8 +91,8 @@ const state = inject('walletState')
                                 'w-full flex items-center text-left px-4 py-2 text-sm',
                             ]"
                             @click="
-                                state.connect(
-                                    SUPPORTED_PROVIDERS.WALLET_CONNECT
+                                client.connect(
+                                    client.supportedProviders.WalletConnect
                                 )
                             "
                         >
@@ -113,12 +114,12 @@ const state = inject('walletState')
         <div>
             <span
                 class="text-sm font-semibold truncate"
-                v-text="state.address.value.substr(0, 20) + '...'"
+                v-text="client.connectedAddress.value.substr(0, 20) + '...'"
             />
         </div>
         <button
             class="text-sm inline text-blue-500"
-            @click="state.disconnect()"
+            @click="client.disconnect()"
         >
             Disconnect
         </button>

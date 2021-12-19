@@ -57,29 +57,5 @@ const state = inject('previewState')
                 <span v-text="trait.name" />
             </div>
         </div>
-
-        <!--        <div class="relative">-->
-        <!--            <select-->
-        <!--                v-model="state.computer.value"-->
-        <!--                dir="rtl"-->
-        <!--                class="input-select !pr-12"-->
-        <!--            >-->
-        <!--                <option :value="1">Yes</option>-->
-        <!--                <option :value="0">No</option>-->
-        <!--            </select>-->
-        <!--            <div-->
-        <!--                class="-->
-        <!--                    absolute-->
-        <!--                    left-0-->
-        <!--                    top-0-->
-        <!--                    bottom-1-->
-        <!--                    flex-->
-        <!--                    items-center-->
-        <!--                    text-sm text-gray-600-->
-        <!--                "-->
-        <!--            >-->
-        <!--                <span>Computer</span>-->
-        <!--            </div>-->
-        <!--        </div>-->
     </div>
 </template>

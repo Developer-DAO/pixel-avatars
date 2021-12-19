@@ -1,21 +1,18 @@
 <script setup>
-import ClaimControls from '../components/ClaimControls.vue'
-import DaoLogo from '../components/DaoLogo.vue'
-import Preview from '../components/Preview.vue'
-import PreviewControls from '../components/PreviewControls.vue'
-import ConnectWallet from '../components/ConnectWallet.vue'
-import usePreviewState from '../components/usePreviewState'
-import useWalletState from '../components/useWalletState'
+import ClaimControls from './ClaimControls.vue'
+import ConnectWallet from './ConnectWallet.vue'
+import DaoLogo from '../../components/ui/DaoLogo.vue'
+import Preview from './Preview.vue'
+import PreviewControls from './PreviewControls.vue'
+import usePreviewState from './usePreviewState'
+import useRouteParameterSync from './useRouteParameterSync'
 import { provide } from 'vue'
-import useRouteParameterSync from '../components/useRouteParameterSync'
 
 const previewState = usePreviewState()
-const walletState = useWalletState()
 
 useRouteParameterSync(previewState)
 
 provide('previewState', previewState)
-provide('walletState', walletState)
 </script>
 
 <template>
