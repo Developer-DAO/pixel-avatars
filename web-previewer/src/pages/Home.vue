@@ -7,9 +7,12 @@ import ConnectWallet from '../components/ConnectWallet.vue'
 import usePreviewState from '../components/usePreviewState'
 import useWalletState from '../components/useWalletState'
 import { provide } from 'vue'
+import useRouteParameterSync from '../components/useRouteParameterSync'
 
 const previewState = usePreviewState()
 const walletState = useWalletState()
+
+useRouteParameterSync(previewState)
 
 provide('previewState', previewState)
 provide('walletState', walletState)

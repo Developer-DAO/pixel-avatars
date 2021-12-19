@@ -1,5 +1,5 @@
-import {watch, onMounted} from 'vue'
-import {useRoute, useRouter} from 'vue-router'
+import { watch, onMounted } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 
 export default function useRouteParameterSync(previewState) {
     const route = useRoute()
@@ -7,12 +7,12 @@ export default function useRouteParameterSync(previewState) {
 
     onMounted(() => {
         if (route.query.developerId) {
-            previewState.developer.value = route.query.developerId;
-            previewState.updateTraits();
+            previewState.developer.value = route.query.developerId
+            previewState.updateTraits()
         }
-    });
+    })
 
-    watch(previewState?.developer, (developer) => {
+    watch(previewState.developer, (developer) => {
         router.push({ path: '/', query: { developerId: developer } })
     })
 }

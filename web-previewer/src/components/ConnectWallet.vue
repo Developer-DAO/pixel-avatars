@@ -72,7 +72,11 @@ const state = inject('walletState')
                                     state.connect(SUPPORTED_PROVIDERS.META_MASK)
                                 "
                             >
-                                <img src="/img/metamask.png" class="w-6 h-6 mr-4" alt="MetaMask Logo">
+                                <img
+                                    src="/img/metamask.png"
+                                    class="w-6 h-6 mr-4"
+                                    alt="MetaMask Logo"
+                                />
                                 <span>MetaMask</span>
                             </button>
                         </span>
@@ -91,7 +95,11 @@ const state = inject('walletState')
                                 )
                             "
                         >
-                            <img src="/img/walletconnect.png" class="w-6 h-6 mr-4" alt="Wallet Connect Logo">
+                            <img
+                                src="/img/walletconnect.png"
+                                class="w-6 h-6 mr-4"
+                                alt="Wallet Connect Logo"
+                            />
                             <span>Wallet Connect</span>
                         </button>
                     </MenuItem>

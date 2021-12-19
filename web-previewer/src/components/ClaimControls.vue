@@ -60,7 +60,10 @@ watch(previewState.developer, (developer) => {
         return
     }
 
-    if (walletState.tokens.value.indexOf(developer) > -1) {
+    if (
+        walletState.tokens.value &&
+        walletState.tokens.value.indexOf(developer) > -1
+    ) {
         claimToken.value = developer
         return
     }
