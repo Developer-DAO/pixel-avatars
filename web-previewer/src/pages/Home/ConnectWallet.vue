@@ -59,28 +59,26 @@ const client = inject('web3client')
             >
                 <div class="py-1">
                     <MenuItem v-slot="{ active }">
-                        <span class="flex">
-                            <button
-                                :class="[
-                                    active
-                                        ? 'bg-gray-100 text-gray-900'
-                                        : 'text-gray-700',
-                                    'w-full flex items-center text-left px-4 py-2 text-sm',
-                                ]"
-                                @click="
-                                    client.connect(
-                                        client.supportedProviders.MetaMask
-                                    )
-                                "
-                            >
-                                <img
-                                    src="/img/metamask.png"
-                                    class="w-6 h-6 mr-4"
-                                    alt="MetaMask Logo"
-                                />
-                                <span>MetaMask</span>
-                            </button>
-                        </span>
+                        <button
+                            :class="[
+                                active
+                                    ? 'bg-gray-100 text-gray-900'
+                                    : 'text-gray-700',
+                                'w-full flex items-center text-left px-4 py-2 text-sm',
+                            ]"
+                            @click="
+                                client.connect(
+                                    client.supportedProviders.MetaMask
+                                )
+                            "
+                        >
+                            <img
+                                src="/img/metamask.png"
+                                class="w-6 h-6 mr-4"
+                                alt="MetaMask Logo"
+                            />
+                            <span>MetaMask</span>
+                        </button>
                     </MenuItem>
                     <MenuItem v-slot="{ active }">
                         <button
