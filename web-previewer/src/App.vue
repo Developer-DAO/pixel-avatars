@@ -1,3 +1,9 @@
+<script setup>
+import Web3Client from './components/Web3Client.vue'
+</script>
+
 <template>
-  <router-view />
+    <Web3Client>
+        <router-view />
+    </Web3Client>
 </template>

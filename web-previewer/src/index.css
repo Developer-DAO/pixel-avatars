@@ -4,7 +4,18 @@
 
 .input-text,
 .input-select {
-  @apply w-full rounded-none py-2 px-4 bg-transparent border-l-0 border-t-0 border-r-0 border-b-4 border-gray-200 focus:outline-none focus:border-blue-300;
+    @apply w-full rounded-none py-2 px-4 bg-transparent border-l-0 border-t-0 border-r-0 border-b-4 border-gray-200 focus:outline-none focus:border-blue-300;
 
-  box-shadow: none !important;
+    box-shadow: none !important;
+}
+
+button:focus
+/*a:focus,*/
+/*input:focus,*/
+/*textarea:focus,*/
+/*select:focus*/ {
+    @apply outline-none ring ring-blue-300;
+
+    /*outline: none !important;*/
+    /*box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5) !important;*/
 }
