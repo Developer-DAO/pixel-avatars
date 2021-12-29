@@ -51,7 +51,7 @@ describe("PixelAvatars", function () {
           split.r,
           split.s,
           {
-            value: ethers.utils.parseEther("0.01"),
+            value: ethers.utils.parseEther("6"),
           }
         )
       ).emit(contract, "LogTokenMinted");
