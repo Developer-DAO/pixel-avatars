@@ -9,21 +9,17 @@ describe("PixelAvatars", function () {
   beforeEach(async () => {
     const contractFactory = await ethers.getContractFactory("PixelAvatars");
     contract = await contractFactory.deploy();
-    console.log("Contract deployed at", contract.address);
   });
 
-  describe("mint", () => {
-    it("should mint a token", async () => {
-      // hardhat account that deployed contract
+  describe("mintWithSignature()", () => {
+    it("should mint a token when given proper auth and minimum ether", async () => {
       const [signer] = await ethers.getSigners();
-      expect(signer.address.toLowerCase()).to.be.equal(
-        "0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266".toLowerCase()
-      );
-      // no worries here checking in this test private key.
-      // It's part of the hardhat network test accounts and is not secret.
-      const PRIVATE_KEY =
-        "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80";
       const address = signer.address;
+
+      // these test keys generated via `node web-server/cli/generate-keys.js`
+      const PRIVATE_KEY =
+        "8ef55fc4bb8f066ada9a9f1cbf6f09ff8a1ed9b168c9eeec0ca0a8fda8b309fd";
+      const serverAddress = "0x9788f6B80e3b856bb420eDf05D352f474be733a5";
 
       // data returned from web server
       const tokenId = 6300;
@@ -43,16 +39,21 @@ describe("PixelAvatars", function () {
       const hash = utils.hash(message);
       const signature = utils.sign(hash, PRIVATE_KEY);
 
-      console.log("tokenId", tokenId);
-      console.log("deadline", deadline);
-      console.log("signature", signature);
-
       const split = ethers.utils.splitSignature(signature);
 
-      await contract.setServerAddress(contract.address);
+      await contract.setServerAddress(serverAddress);
 
       await expect(
-        contract.mintWithSignature(tokenId, deadline, split.v, split.r, split.s)
+        contract.mintWithSignature(
+          tokenId,
+          deadline,
+          split.v,
+          split.r,
+          split.s,
+          {
+            value: ethers.utils.parseEther("0.01"),
+          }
+        )
       ).emit(contract, "LogTokenMinted");
     });
   });
