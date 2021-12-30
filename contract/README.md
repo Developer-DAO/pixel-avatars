@@ -26,6 +26,24 @@ In order to deploy the contract to a given network you will need:
 
 ## Local development
 
+**Run local tests**
+
+For first time install, you need to also install dependencies for `web-server` since tests are depending on a `utils.js` module.
+
+```shell
+cd web-server
+yarn
+```
+
+Ok, let's head back to `contract` folder then:
+
+```shell
+yarn test
+
+yarn test:coverage      # to see coverage report
+yarn test:report_gas    # to see report on estimated gas usage
+```
+
 **Start a local node**
 
 ```shell

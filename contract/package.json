@@ -10,7 +10,10 @@
         "deploy:mainnet": "hardhat run scripts/deploy.ts --network mainnet",
         "prettier": "prettier --write .",
         "compile": "yarn prettier && hardhat compile && cp ./artifacts/contracts/PixelAvatars.sol/PixelAvatars.json ../abis",
-        "test": "yarn prettier && hardhat test",
+        "test": "hardhat compile && hardhat test --network hardhat",
+        "test:coverage": "hardhat coverage --network hardhat",
+        "test:report_gas": "REPORT_GAS=true hardhat test --network hardhat",
+        "test-ci": "hardhat compile && hardhat test --network hardhat",
         "lint": "yarn prettier && solhint 'contracts/**/*.sol'"
     },
     "keywords": [],
