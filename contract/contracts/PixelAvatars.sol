@@ -1,24 +1,24 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.9;
 
-import '@openzeppelin/contracts/access/Ownable.sol';
-import '@openzeppelin/contracts/security/ReentrancyGuard.sol';
-import '@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol';
-import '@openzeppelin/contracts/utils/Strings.sol';
-import 'hardhat/console.sol';
+import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
+import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
+import "@openzeppelin/contracts/utils/Strings.sol";
+import "hardhat/console.sol";
 
 /// @author Developer DAO
 /// @title The Pixel Avatar smart contract that is compliant to ERC721 standard.
 contract PixelAvatars is ERC721Enumerable, ReentrancyGuard, Ownable {
     /// TODO: Set this to the IPFS base uri before launch
     string public baseURI =
-        'ipfs://QmUVH51tigyENzwUhsTv14dV7eyaVo6oHoeCD3JHD9rFnV/';
+        "ipfs://QmUVH51tigyENzwUhsTv14dV7eyaVo6oHoeCD3JHD9rFnV/";
 
     uint256 public mintPrice = 6 ether;
 
     address public serverAddress;
 
-    constructor() ERC721('Pixel Avatars', 'PXLAVTR') {
+    constructor() ERC721("Pixel Avatars", "PXLAVTR") {
         console.log("PixelAvatars deployed by '%s'", msg.sender);
     }
 
@@ -45,18 +45,18 @@ contract PixelAvatars is ERC721Enumerable, ReentrancyGuard, Ownable {
         bytes32 s
     ) {
         bytes memory message = abi.encodePacked(
-            'TokenId:',
+            "TokenId:",
             Strings.toString(tokenId),
-            'Address:',
+            "Address:",
             msg.sender,
-            'Deadline:',
+            "Deadline:",
             Strings.toString(deadline)
         );
 
         address signer = ecrecover(keccak256(message), v, r, s);
 
-        require(signer == serverAddress, string('Invalid server signature'));
-        require(block.timestamp <= deadline, 'Signature expired');
+        require(signer == serverAddress, string("Invalid server signature"));
+        require(block.timestamp <= deadline, "Signature expired");
 
         _;
     }
@@ -73,7 +73,7 @@ contract PixelAvatars is ERC721Enumerable, ReentrancyGuard, Ownable {
         nonReentrant
         validServerSignature(tokenId, deadline, v, r, s)
     {
-        require(mintPrice <= msg.value, 'Not enough ether sent');
+        require(mintPrice <= msg.value, "Not enough ether sent");
 
         _safeMint(msg.sender, tokenId);
 
