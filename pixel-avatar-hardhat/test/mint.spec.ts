@@ -21,20 +21,34 @@ describe("PixelAvatars", function () {
   });
 
   describe("mintWithSignature()", function () {
-    it("should fail without proper auth", async () => {
-      const tokenId = 6300;
-      const deadline = 0;
-      const v = "0x1b";
-      const r =
-        "0xfd3a030273cf43afadb504375fcf378003c506ae8aad2c5b651e832af7e87012";
-      const s =
-        "0x2f86d81471da2a7077229fd7804536c19166496813aeeea31bb603e16fbf828b";
+    describe("without auth", function () {
+      it("should fail", async () => {
+        const tokenId = 6300;
+        const deadline = 0;
+        const v = "0x1b";
+        const r =
+          "0xfd3a030273cf43afadb504375fcf378003c506ae8aad2c5b651e832af7e87012";
+        const s =
+          "0x2f86d81471da2a7077229fd7804536c19166496813aeeea31bb603e16fbf828b";
 
-      await expect(
-        contract.mintWithSignature(tokenId, deadline, v, r, s, {
-          value: ethers.utils.parseEther("6"),
-        })
-      ).to.be.revertedWith("Invalid server signature");
+        await expect(
+          contract.mintWithSignature(tokenId, deadline, v, r, s, {
+            value: ethers.utils.parseEther("6"),
+          })
+        ).to.be.revertedWith("Invalid server signature");
+      });
+
+      it("should successfully setBaseURI", async () => {
+        const newURI = "ipfs://testuri";
+        await contract.setBaseURI(newURI);
+        await expect(await contract.baseURI()).to.equal(newURI);
+      });
+
+      it("should successfully set and retrieve MintPrice", async () => {
+        const newMintPrice = 10;
+        await contract.setMintPrice(newMintPrice);
+        await expect(await contract.mintPrice()).to.equal(newMintPrice);
+      });
     });
 
     describe("with proper auth", function () {
@@ -99,6 +113,39 @@ describe("PixelAvatars", function () {
             }
           )
         ).emit(contract, "LogTokenMinted");
+      });
+
+      it("owner should be able to withdraw full balance of eth", async () => {
+        const [signer] = await ethers.getSigners();
+        const initialBalance = await signer.getBalance();
+
+        // initial eth (rounded off to avoid including gas fee)
+        await expect(
+          parseInt(ethers.utils.formatEther(initialBalance), 10)
+        ).to.equal(9993);
+
+        await contract.mintWithSignature(
+          tokenId,
+          deadline,
+          split.v,
+          split.r,
+          split.s,
+          {
+            value: ethers.utils.parseEther("200"),
+          }
+        );
+        // should be approx 200 more eth (rounded off to avoid including gas fee)
+        const balanceAfterPayingEth = await signer.getBalance();
+        await expect(
+          parseInt(ethers.utils.formatEther(balanceAfterPayingEth), 10)
+        ).to.equal(9793);
+
+        // should be approx 200 eth less after withdrawal (rounded off to avoid including gas fee)
+        await contract.withdraw();
+        const balanceAfterWithdrawal = await signer.getBalance();
+        await expect(
+          parseInt(ethers.utils.formatEther(balanceAfterWithdrawal), 10)
+        ).to.equal(9993);
       });
     });
   });
