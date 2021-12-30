@@ -22,6 +22,10 @@ contract PixelAvatars is ERC721Enumerable, ReentrancyGuard, Ownable {
         console.log("PixelAvatars deployed by '%s'", msg.sender);
     }
 
+    function _baseURI() internal view virtual override returns (string memory) {
+        return baseURI;
+    }
+
     function setBaseURI(string memory _newBaseURI) public onlyOwner {
         baseURI = _newBaseURI;
     }
