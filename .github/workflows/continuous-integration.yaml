@@ -1,0 +1,38 @@
+name: Continuous Integration
+on:
+  push:
+    paths-ignore:
+      - "**.md"
+  pull_request:
+    paths-ignore:
+      - "**.md"
+jobs:
+  run:
+    name: Run CI
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: ["16.x"]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@master
+
+      - name: Set Node.js ${{ matrix.node }}
+        uses: actions/setup-node@master
+        with:
+          node-version: ${{ matrix.node }}
+
+      - name: node version
+        run: node --version
+
+      - name: contract - npm install
+        run: npm install
+        working-directory: ./contract
+
+      - name: web-server - npm install - dependencies needed for utils module
+        run: npm install
+        working-directory: ./web-server
+
+      - name: contract - test
+        run: npm run test-ci
+        working-directory: ./contract
