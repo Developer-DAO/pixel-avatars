@@ -97,6 +97,52 @@ describe('PixelAvatars contract', function () {
                 ).to.be.revertedWith('Not enough ether sent')
             })
 
+            it('should fail if deadline expires', async () => {
+                // Test Setup:
+                //
+                // Needed to reuse most of the beforeEach() boilerplate
+                // since deadline is part of the signed message
+
+                const [signer] = await ethers.getSigners()
+                const address = signer.address
+
+                // these test keys generated via `node web-server/cli/generate-keys.js`
+                const PRIVATE_KEY =
+                    '8ef55fc4bb8f066ada9a9f1cbf6f09ff8a1ed9b168c9eeec0ca0a8fda8b309fd'
+                const serverAddress =
+                    '0x9788f6B80e3b856bb420eDf05D352f474be733a5'
+
+                // data returned from web server
+                tokenId = 6300
+
+                deadline = 0
+
+                const message = utils.hexConcat([
+                    'TokenId:',
+                    tokenId.toString(),
+                    'Address:',
+                    address,
+                    'Deadline:',
+                    deadline.toString(),
+                ])
+                const hash = utils.hash(message)
+                const signature = utils.sign(hash, PRIVATE_KEY)
+
+                split = ethers.utils.splitSignature(signature)
+
+                await contract.setServerAddress(serverAddress)
+
+                await expect(
+                    contract.mintWithSignature(
+                        tokenId,
+                        deadline,
+                        split.v,
+                        split.r,
+                        split.s
+                    )
+                ).to.be.revertedWith('Signature expired')
+            })
+
             it('should mint a token when given minimum ether', async () => {
                 await expect(
                     contract.mintWithSignature(
