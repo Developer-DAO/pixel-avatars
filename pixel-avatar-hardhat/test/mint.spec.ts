@@ -12,12 +12,26 @@ import { PixelAvatars } from "../typechain";
 
 const utils = require("../../web-server/src/utils");
 
-describe("PixelAvatars", function () {
+describe("PixelAvatars contract", function () {
   let contract: PixelAvatars;
 
   beforeEach(async () => {
     const contractFactory = await ethers.getContractFactory("PixelAvatars");
     contract = await contractFactory.deploy();
+  });
+
+  describe("helper functions", function () {
+    it("should successfully setBaseURI", async () => {
+      const newURI = "ipfs://testuri";
+      await contract.setBaseURI(newURI);
+      await expect(await contract.baseURI()).to.equal(newURI);
+    });
+
+    it("should successfully set and retrieve MintPrice", async () => {
+      const newMintPrice = 10;
+      await contract.setMintPrice(newMintPrice);
+      await expect(await contract.mintPrice()).to.equal(newMintPrice);
+    });
   });
 
   describe("mintWithSignature()", function () {
@@ -36,18 +50,6 @@ describe("PixelAvatars", function () {
             value: ethers.utils.parseEther("6"),
           })
         ).to.be.revertedWith("Invalid server signature");
-      });
-
-      it("should successfully setBaseURI", async () => {
-        const newURI = "ipfs://testuri";
-        await contract.setBaseURI(newURI);
-        await expect(await contract.baseURI()).to.equal(newURI);
-      });
-
-      it("should successfully set and retrieve MintPrice", async () => {
-        const newMintPrice = 10;
-        await contract.setMintPrice(newMintPrice);
-        await expect(await contract.mintPrice()).to.equal(newMintPrice);
       });
     });
 
