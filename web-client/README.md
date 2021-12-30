@@ -11,11 +11,12 @@ yarn install
 ```
 
 ### Setup `.env`
+
 ```shell
 cp .env.example .env
 ```
 
-Fill in the environment variables suitable for your needs. 
+Fill in the environment variables suitable for your needs.
 
 The example env comes pre-bottled with the Mumbai testnet contract and local webserver url for your convenience.
 
@@ -37,7 +38,7 @@ yarn style
 
 ##### Use with local web server
 
-For use with a locally deployed web server please replace the following `.env` variables: 
+For use with a locally deployed web server please replace the following `.env` variables:
 
 ```dotenv
 VUE_APP_SERVER_URL='http://127.0.0.1:3000'

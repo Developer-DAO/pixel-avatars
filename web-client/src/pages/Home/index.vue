@@ -7,7 +7,7 @@ import PreviewControls from './PreviewControls.vue'
 import usePreviewState from './usePreviewState'
 import useRouteParameterSync from './useRouteParameterSync'
 import { provide } from 'vue'
-import {PIXEL_AVATAR_NETWORK} from "../../constants";
+import { PIXEL_AVATAR_NETWORK } from '../../constants'
 
 const networkConfigured = PIXEL_AVATAR_NETWORK.chainId > 0
 const previewState = usePreviewState()
@@ -31,7 +31,12 @@ provide('previewState', previewState)
                     mx-auto
                 "
             >
-                <div class="flex items-center w-full" :class="networkConfigured ? 'justify-between' : 'justify-around'">
+                <div
+                    class="flex items-center w-full"
+                    :class="
+                        networkConfigured ? 'justify-between' : 'justify-around'
+                    "
+                >
                     <DaoLogo class="w-16 h-16 rounded-full shadow-md" />
 
                     <ConnectWallet v-if="networkConfigured" />
