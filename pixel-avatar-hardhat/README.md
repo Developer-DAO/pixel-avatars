@@ -27,3 +27,8 @@ Deploy the contract to ethereum network
     npm test
 
 The default network in `hardhat.config.ts` is configured to use the in-process `hardhat` network.
+
+Other handy commands:
+
+    npm run test:coverage
+    npm run test:report_gas

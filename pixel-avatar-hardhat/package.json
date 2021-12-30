@@ -11,6 +11,8 @@
     "prettier": "prettier --write 'contracts/**/*.sol'",
     "compile": "yarn prettier && hardhat compile",
     "test": "yarn prettier && hardhat test --network hardhat",
+    "test:coverage": "yarn prettier && hardhat coverage --network hardhat",
+    "test:report_gas": "yarn prettier && REPORT_GAS=true hardhat test --network hardhat",
     "lint": "yarn prettier && solhint 'contracts/**/*.sol'"
   },
   "keywords": [],
