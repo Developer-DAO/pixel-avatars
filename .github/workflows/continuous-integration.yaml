@@ -7,7 +7,7 @@ on:
     paths-ignore:
       - "**.md"
 jobs:
-  run:
+  tests:
     name: Run CI
     runs-on: ubuntu-latest
     strategy:
@@ -36,3 +36,43 @@ jobs:
       - name: contract - test
         run: npm run test-ci
         working-directory: ./contract
+
+  prettier:
+    runs-on: ubuntu-latest
+    needs: tests
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        persist-credentials: false # otherwise, the token used is the GITHUB_TOKEN, instead of your personal access token.
+        fetch-depth: 0 # otherwise, there would be errors pushing refs to the destination repository.
+
+    # run prettier, and also ensure any lock file changes are reverted
+    - name: Prettify web-client
+      run: yarn && yarn prettier && git restore yarn.lock
+      working-directory: ./web-client
+
+    # run prettier, and also ensure any lock file changes are reverted
+    - name: Prettify web-server
+      run: yarn && yarn prettier && git restore yarn.lock && git restore package-lock.json
+      working-directory: ./web-server
+
+    # run prettier, and also ensure any lock file changes are reverted
+    - name: Prettify contract
+      run: yarn && yarn prettier && git restore yarn.lock
+      working-directory: ./contract
+
+    # test if there are no prettier changes to avoid error of trying to commit when no changes
+    - name: Commit files
+      run: |
+        git config --global user.email "Developer-DAO@users.noreply.github.com"
+        git config --global user.name "Github Actions"
+        if test -n "$(git status --porcelain --untracked-files=no)"; then git commit -m "Add prettier changes" -a; fi
+
+    - name: git status
+      run: git status
+
+    - name: Push changes
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        branch: ${{ github.ref }}

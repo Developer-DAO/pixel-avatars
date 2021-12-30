@@ -1,4 +1,4 @@
-const {GENESIS_RPC, GENESIS_TOKEN} = require("../constants");
+const { GENESIS_RPC, GENESIS_TOKEN } = require('../constants')
 const ethers = require('ethers')
 const genesis = require('../../../abis/GenesisContract.json')
 const provider = ethers.getDefaultProvider(GENESIS_RPC)
@@ -21,13 +21,17 @@ module.exports = {
     async getOwnerOfGenesisTokenId(tokenId) {
         return contract
             .ownerOf(tokenId)
-            .then(result => result.toString())
-            .catch(error => {
-                if (error.error.message.indexOf('owner query for nonexistent token')) {
-                    return null;
+            .then((result) => result.toString())
+            .catch((error) => {
+                if (
+                    error.error.message.indexOf(
+                        'owner query for nonexistent token'
+                    )
+                ) {
+                    return null
                 }
 
                 throw error
             })
-    }
+    },
 }
