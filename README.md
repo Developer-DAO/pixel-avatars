@@ -1,4 +1,7 @@
 # Derivatives Project
+<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
+<!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 ## Project
 The Derivatives project, originally known as the pixel-avatars project is created initially to allow the minting of a derived Pixel Avatar ERC721 NFT token generated based on the traits of the original DeveloperDAO genesis NFTs; similar to how Loot has its own derivatives projects.
@@ -39,3 +42,23 @@ The first kickoff meeting was recorded on 12th September 2021 UTC 1700 and can b
 * [Presentation](https://prezi.com/view/qHW7XIO3JeHdKxhMAZrr/)
 
 Meeting notes will be provided in future meetings.
+
+## Contributors ✨
+
+Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<table>
+  <tr>
+    <td align="center"><a href="http://bit.ly/voicetechguy"><img src="https://avatars.githubusercontent.com/u/64346879?v=4?s=100" width="100px;" alt=""/><br /><sub><b>VoiceTechGuy</b></sub></a><br /><a href="https://github.com/Developer-DAO/pixel-avatars/commits?author=goldzulu" title="Code">💻</a> <a href="#ideas-goldzulu" title="Ideas, Planning, & Feedback">🤔</a> <a href="#projectManagement-goldzulu" title="Project Management">📆</a></td>
+  </tr>
+</table>
+
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
+This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
