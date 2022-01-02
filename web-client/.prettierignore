@@ -1,4 +1,4 @@
-# Ignore artifcats:
+# Ignore artifacts:
 build
 coverage
 data/developers.js
