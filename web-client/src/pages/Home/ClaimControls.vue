@@ -2,7 +2,11 @@
 import Alert from '../../components/ui/Alert.vue'
 import useAvatarContract from './useAvatarContract'
 import { computed, inject, ref, watch } from 'vue'
-import { OPEN_SEA_URL, PIXEL_AVATAR_NETWORK } from '../../constants'
+import {
+    OPEN_SEA_URL,
+    PIXEL_AVATAR_NETWORK,
+    TEST_MINT_GENESIS_URL,
+} from '../../constants'
 
 const CLAIMING_STATES = Object.freeze({
     IDLE: 'idle',
@@ -84,10 +88,32 @@ watch(client.isConnected, async (isConnected) => {
             Please select the token number you wish to claim.
         </p>
 
+        <Alert v-if="TEST_MINT_GENESIS_URL" color="yellow">
+            <div class="space-y-2">
+                <p><b>TEST MODE</b></p>
+                <p>
+                    Before you can claim any Pixel Avatars you must first make
+                    sure your currently connected address holds genesis tokens
+                    from the test contract.
+                </p>
+                <p>
+                    During test mode you may mint genesis tokens for free to
+                    test out the claim flow.
+                </p>
+                <p>
+                    <a
+                        :href="TEST_MINT_GENESIS_URL"
+                        target="_blank"
+                        class="text-blue-600"
+                    >Mint genesis tokens here ↗</a>
+                </p>
+            </div>
+        </Alert>
+
         <Alert
             v-if="claimState === CLAIMING_STATES.SUCCESS"
             class="mt-3 space-y-2"
-            type="success"
+            color="green"
         >
             <p><b>Congratulations!</b> 🎉🚀.</p>
             <p>You are now the official owner of avatar #{{ claimToken }}.</p>
@@ -136,8 +162,10 @@ watch(client.isConnected, async (isConnected) => {
 
                 <div v-if="mintPriceEther" class="mt-4 flex justify-between">
                     <span class="text-sm text-gray-600">Mint price</span>
-                    <span>{{ mintPriceEther }}
-                        {{ PIXEL_AVATAR_NETWORK.currencySymbol }}</span>
+                    <span>
+                        {{ mintPriceEther }}
+                        {{ PIXEL_AVATAR_NETWORK.currencySymbol }}
+                    </span>
                 </div>
             </div>
             <Alert v-else>

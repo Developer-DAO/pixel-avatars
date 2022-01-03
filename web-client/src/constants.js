@@ -10,3 +10,4 @@ export const PIXEL_AVATAR_NETWORK = {
 }
 
 export const SERVER_URL = process.env.VUE_APP_SERVER_URL
+export const TEST_MINT_GENESIS_URL = process.env.VUE_APP_TEST_MINT_GENESIS_URL
