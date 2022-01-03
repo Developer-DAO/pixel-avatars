@@ -78,7 +78,7 @@ defineEmits(['close'])
                             shadow-xl
                             transform
                             transition-all
-                            sm:my-8 sm:align-middle sm:max-w-sm sm:w-full sm:p-6
+                            sm:my-8 sm:align-middle sm:max-w-md sm:w-full sm:p-6
                         "
                     >
                         <slot />

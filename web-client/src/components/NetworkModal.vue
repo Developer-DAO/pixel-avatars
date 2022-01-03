@@ -7,7 +7,7 @@ import { ExclamationIcon, ExternalLinkIcon } from '@heroicons/vue/outline'
 import { defineProps, defineEmits } from 'vue'
 
 defineProps({ show: Boolean })
-defineEmits(['close', 'retry'])
+defineEmits(['changeNetwork', 'close', 'retry'])
 </script>
 
 <template>
@@ -45,13 +45,19 @@ defineEmits(['close', 'retry'])
                 </DialogDescription>
                 <dl class="mt-5 grid grid-cols-2 gap-y-4 text-sm text-left">
                     <dt class="font-medium">Network name</dt>
-                    <dd>{{ PIXEL_AVATAR_NETWORK.name }}</dd>
+                    <dd class="break-all">{{ PIXEL_AVATAR_NETWORK.name }}</dd>
 
                     <dt class="font-medium">Chain ID</dt>
-                    <dd>{{ PIXEL_AVATAR_NETWORK.chainId }}</dd>
+                    <dd class="break-all">{{ PIXEL_AVATAR_NETWORK.chainId }}</dd>
 
                     <dt class="font-medium">RPC URL</dt>
-                    <dd>{{ PIXEL_AVATAR_NETWORK.ensAddress }}</dd>
+                    <dd class="break-all">{{ PIXEL_AVATAR_NETWORK.ensAddress }}</dd>
+
+                    <dt class="font-medium">Currency Symbol</dt>
+                    <dd class="break-all">{{ PIXEL_AVATAR_NETWORK.currencySymbol }}</dd>
+
+                    <dt class="font-medium">Block Explorer</dt>
+                    <dd class="break-all">{{ PIXEL_AVATAR_NETWORK.blockExplorer }}</dd>
                 </dl>
             </div>
         </div>
@@ -69,7 +75,8 @@ defineEmits(['close', 'retry'])
         </div>
 
         <div class="mt-5 sm:mt-6 space-y-2">
-            <Button type="button" @click="$emit('retry')"> Try again </Button>
+            <Button type="button" @click="$emit('changeNetwork')">Change network</Button>
+            <Button type="button" color="blackOutline" @click="$emit('retry')">Check again</Button>
             <Button type="button" color="blackOutline" @click="$emit('close')">
                 Cancel
             </Button>

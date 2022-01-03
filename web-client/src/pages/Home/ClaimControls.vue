@@ -2,7 +2,7 @@
 import Alert from '../../components/ui/Alert.vue'
 import useAvatarContract from './useAvatarContract'
 import { computed, inject, ref, watch } from 'vue'
-import { OPEN_SEA_URL, CURRENCY_SYMBOL } from '../../constants'
+import { OPEN_SEA_URL, PIXEL_AVATAR_NETWORK } from '../../constants'
 
 const CLAIMING_STATES = Object.freeze({
     IDLE: 'idle',
@@ -136,7 +136,7 @@ watch(client.isConnected, async (isConnected) => {
 
                 <div v-if="mintPriceEther" class="mt-4 flex justify-between">
                     <span class="text-sm text-gray-600">Mint price</span>
-                    <span>{{ mintPriceEther }} {{ CURRENCY_SYMBOL }}</span>
+                    <span>{{ mintPriceEther }} {{ PIXEL_AVATAR_NETWORK.currencySymbol }}</span>
                 </div>
             </div>
             <Alert v-else>
