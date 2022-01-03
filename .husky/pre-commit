@@ -2,10 +2,13 @@
 . "$(dirname "$0")/_/husky.sh"
 
 cd contract
+yarn
 yarn prettier
 
 cd ../web-client
+yarn
 yarn prettier
 
 cd ../web-server
+yarn
 yarn prettier
