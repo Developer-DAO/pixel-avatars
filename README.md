@@ -3,6 +3,8 @@
 [![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
+![Solidity contract tests](https://github.com/Developer-DAO/pixel-avatars/actions/workflows/continuous-integration.yaml/badge.svg)
+
 ## Project
 The Derivatives project, originally known as the pixel-avatars project is created initially to allow the minting of a derived Pixel Avatar ERC721 NFT token generated based on the traits of the original DeveloperDAO genesis NFTs; similar to how Loot has its own derivatives projects.
 

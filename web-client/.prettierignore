@@ -1,3 +1,4 @@
 # Ignore artifcats:
 build
 coverage
+data/developers.js
