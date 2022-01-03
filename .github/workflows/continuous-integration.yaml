@@ -1,4 +1,4 @@
-name: Continuous Integration
+name: Solidity contract tests
 on:
   push:
     paths-ignore:

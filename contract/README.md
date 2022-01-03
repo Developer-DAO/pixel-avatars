@@ -2,6 +2,8 @@
 
 This is the smart contract for the Developer DAO pixel avatar NFT.
 
+![Solidity contract tests](https://github.com/Developer-DAO/pixel-avatars/actions/workflows/continuous-integration.yaml/badge.svg)
+
 ## Installation
 
 ### Install dependencies
