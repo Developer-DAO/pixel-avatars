@@ -1,4 +1,4 @@
-import {PIXEL_AVATAR_NETWORK} from "../constants";
+import { PIXEL_AVATAR_NETWORK } from '../constants'
 
 export default class MetaMask {
     constructor() {
@@ -23,13 +23,15 @@ export default class MetaMask {
         try {
             await this.provider.request({
                 method: 'wallet_switchEthereumChain',
-                params: [{
-                    chainId: chainId
-                }],
-            });
+                params: [
+                    {
+                        chainId: chainId,
+                    },
+                ],
+            })
         } catch (switchError) {
             await this.provider.request({
-                method: "wallet_addEthereumChain",
+                method: 'wallet_addEthereumChain',
                 params: [
                     {
                         chainId: chainId,
@@ -40,12 +42,10 @@ export default class MetaMask {
                             symbol: PIXEL_AVATAR_NETWORK.currencySymbol,
                             decimals: 18,
                         },
-                        blockExplorerUrls: [
-                            PIXEL_AVATAR_NETWORK.blockExplorer
-                        ],
+                        blockExplorerUrls: [PIXEL_AVATAR_NETWORK.blockExplorer],
                     },
-                ]
-            });
+                ],
+            })
         }
     }
 }

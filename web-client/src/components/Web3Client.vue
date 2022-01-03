@@ -57,7 +57,9 @@ function useClient() {
             try {
                 await this._instance().changeNetwork()
             } catch (_error) {
-                alert('Unfortunately this action is currently unsupported by your wallet. Please add network manually and check again.')
+                alert(
+                    'Unfortunately this action is currently unsupported by your wallet. Please add network manually and check again.'
+                )
             }
         },
 

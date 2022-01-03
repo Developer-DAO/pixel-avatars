@@ -136,7 +136,8 @@ watch(client.isConnected, async (isConnected) => {
 
                 <div v-if="mintPriceEther" class="mt-4 flex justify-between">
                     <span class="text-sm text-gray-600">Mint price</span>
-                    <span>{{ mintPriceEther }} {{ PIXEL_AVATAR_NETWORK.currencySymbol }}</span>
+                    <span>{{ mintPriceEther }}
+                        {{ PIXEL_AVATAR_NETWORK.currencySymbol }}</span>
                 </div>
             </div>
             <Alert v-else>

@@ -48,16 +48,24 @@ defineEmits(['changeNetwork', 'close', 'retry'])
                     <dd class="break-all">{{ PIXEL_AVATAR_NETWORK.name }}</dd>
 
                     <dt class="font-medium">Chain ID</dt>
-                    <dd class="break-all">{{ PIXEL_AVATAR_NETWORK.chainId }}</dd>
+                    <dd class="break-all">
+                        {{ PIXEL_AVATAR_NETWORK.chainId }}
+                    </dd>
 
                     <dt class="font-medium">RPC URL</dt>
-                    <dd class="break-all">{{ PIXEL_AVATAR_NETWORK.ensAddress }}</dd>
+                    <dd class="break-all">
+                        {{ PIXEL_AVATAR_NETWORK.ensAddress }}
+                    </dd>
 
                     <dt class="font-medium">Currency Symbol</dt>
-                    <dd class="break-all">{{ PIXEL_AVATAR_NETWORK.currencySymbol }}</dd>
+                    <dd class="break-all">
+                        {{ PIXEL_AVATAR_NETWORK.currencySymbol }}
+                    </dd>
 
                     <dt class="font-medium">Block Explorer</dt>
-                    <dd class="break-all">{{ PIXEL_AVATAR_NETWORK.blockExplorer }}</dd>
+                    <dd class="break-all">
+                        {{ PIXEL_AVATAR_NETWORK.blockExplorer }}
+                    </dd>
                 </dl>
             </div>
         </div>
@@ -75,8 +83,12 @@ defineEmits(['changeNetwork', 'close', 'retry'])
         </div>
 
         <div class="mt-5 sm:mt-6 space-y-2">
-            <Button type="button" @click="$emit('changeNetwork')">Change network</Button>
-            <Button type="button" color="blackOutline" @click="$emit('retry')">Check again</Button>
+            <Button type="button" @click="$emit('changeNetwork')">
+                Change network
+            </Button>
+            <Button type="button" color="blackOutline" @click="$emit('retry')">
+                Check again
+            </Button>
             <Button type="button" color="blackOutline" @click="$emit('close')">
                 Cancel
             </Button>

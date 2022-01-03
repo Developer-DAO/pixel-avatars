@@ -6,7 +6,7 @@ export const PIXEL_AVATAR_NETWORK = {
     chainId: parseInt(process.env.VUE_APP_PIXEL_AVATAR_NETWORK_CHAIN_ID ?? 0),
     ensAddress: process.env.VUE_APP_PIXEL_AVATAR_NETWORK_RPC,
     blockExplorer: process.env.VUE_APP_PIXEL_AVATAR_NETWORK_BLOCK_EXPLORER,
-    currencySymbol: 'MATIC'
+    currencySymbol: 'MATIC',
 }
 
 export const SERVER_URL = process.env.VUE_APP_SERVER_URL
