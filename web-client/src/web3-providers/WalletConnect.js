@@ -26,4 +26,8 @@ export default class WalletConnect {
 
         this.provider = null
     }
+
+    async changeNetwork() {
+        throw Error('Unsupported action')
+    }
 }

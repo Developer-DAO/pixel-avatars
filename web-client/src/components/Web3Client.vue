@@ -53,6 +53,14 @@ function useClient() {
             return this.connect(latestProviderName.value)
         },
 
+        async changeNetwork() {
+            try {
+                await this._instance().changeNetwork()
+            } catch (_error) {
+                alert('Unfortunately this action is currently unsupported by your wallet. Please add network manually and check again.')
+            }
+        },
+
         async disconnect() {
             await this._instance().disconnect()
 
@@ -79,9 +87,11 @@ function useClient() {
         },
 
         _provider() {
+            const { name, chainId, ensAddress } = PIXEL_AVATAR_NETWORK
+
             return new ethers.providers.Web3Provider(
                 this._instance().provider,
-                PIXEL_AVATAR_NETWORK
+                { name, chainId, ensAddress }
             )
         },
 
@@ -168,6 +178,7 @@ export default {
     <div>
         <NetworkModal
             :show="networkModal.show.value"
+            @changeNetwork="client.changeNetwork()"
             @close="networkModal.close()"
             @retry="networkModal.retry()"
         />
