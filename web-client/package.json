@@ -50,8 +50,30 @@
             "parser": "babel-eslint"
         },
         "rules": {
+            "vue/html-indent": [
+                "error",
+                4
+            ],
+            "vue/html-self-closing": [
+                "error",
+                {
+                    "html": {
+                        "void": "always",
+                        "normal": "always",
+                        "component": "always"
+                    },
+                    "svg": "always",
+                    "math": "always"
+                }
+            ],
+            "vue/max-attributes-per-line": [
+                "off"
+            ],
             "vue/no-mutating-props": 0,
-            "vue/require-default-prop": 0
+            "vue/require-default-prop": 0,
+            "vue/singleline-html-element-content-newline": [
+                "off"
+            ]
         }
     },
     "browserslist": [
