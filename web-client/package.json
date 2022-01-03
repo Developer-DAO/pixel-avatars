@@ -8,7 +8,7 @@
         "lint": "vue-cli-service lint",
         "prettier": "prettier --write .",
         "prettier:watch": "npx onchange \"**/*\" -- prettier --write --ignore-unknown {{changed}}",
-        "style": "npm run lint && npm run prettier"
+        "style": "npm run prettier && npm run lint"
     },
     "dependencies": {
         "@headlessui/vue": "^1.4.2",

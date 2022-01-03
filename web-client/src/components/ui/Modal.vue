@@ -54,8 +54,7 @@ defineEmits(['close'])
                 <span
                     class="hidden sm:inline-block sm:align-middle sm:h-screen"
                     aria-hidden="true"
-                    >&#8203;</span
-                >
+                >&#8203;</span>
                 <TransitionChild
                     as="template"
                     enter="ease-out duration-300"
