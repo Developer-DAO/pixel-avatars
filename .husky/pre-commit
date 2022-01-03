@@ -1,0 +1,11 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+cd contract
+yarn prettier
+
+cd ../web-client
+yarn prettier
+
+cd ../web-server
+yarn prettier
