@@ -1,5 +1,5 @@
 name: Solidity contract tests
-on: [push, pull_request]
+on: [push]
 jobs:
   tests:
     name: Run CI
@@ -33,8 +33,6 @@ jobs:
     needs: tests
     steps:
     - uses: actions/checkout@v2
-      with:
-        ref: ${{ github.head_ref }}
 
     # run prettier, and also ensure any lock file changes are reverted
     - name: Prettify web-client
