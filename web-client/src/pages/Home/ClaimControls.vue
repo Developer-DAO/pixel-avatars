@@ -105,7 +105,8 @@ watch(client.isConnected, async (isConnected) => {
                         :href="TEST_MINT_GENESIS_URL"
                         target="_blank"
                         class="text-blue-600"
-                    >Mint genesis tokens here ↗</a>
+                        >Mint genesis tokens here ↗</a
+                    >
                 </p>
             </div>
         </Alert>
