@@ -5,7 +5,7 @@
     "main": "src/app.js",
     "scripts": {
         "serve": "npx nodemon server.js",
-        "prettier": "prettier --write ."
+        "style": "prettier --write ."
     },
     "author": "Rasmus Christoffer Nielsen",
     "license": "MIT",
