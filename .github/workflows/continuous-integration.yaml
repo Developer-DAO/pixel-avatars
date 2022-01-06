@@ -1,5 +1,5 @@
 name: Solidity contract tests
-on: [push]
+on: [push, pull_request]
 jobs:
   tests:
     name: Run CI
@@ -28,8 +28,9 @@ jobs:
         run: yarn test-ci
         working-directory: ./contract
 
-  prettier:
+  styling:
     runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'push' }}
     needs: tests
     steps:
     - uses: actions/checkout@v2
