@@ -1,6 +1,6 @@
 # Derivatives Project
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 ![Solidity contract tests](https://github.com/Developer-DAO/pixel-avatars/actions/workflows/continuous-integration.yaml/badge.svg)
@@ -56,6 +56,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   <tr>
     <td align="center"><a href="http://bit.ly/voicetechguy"><img src="https://avatars.githubusercontent.com/u/64346879?v=4?s=100" width="100px;" alt=""/><br /><sub><b>VoiceTechGuy</b></sub></a><br /><a href="https://github.com/Developer-DAO/pixel-avatars/commits?author=goldzulu" title="Code">💻</a> <a href="#ideas-goldzulu" title="Ideas, Planning, & Feedback">🤔</a> <a href="#projectManagement-goldzulu" title="Project Management">📆</a></td>
     <td align="center"><a href="https://github.com/rasmuscnielsen"><img src="https://avatars.githubusercontent.com/u/8465957?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Rasmus Nielsen</b></sub></a><br /><a href="https://github.com/Developer-DAO/pixel-avatars/commits?author=rasmuscnielsen" title="Code">💻</a> <a href="https://github.com/Developer-DAO/pixel-avatars/pulls?q=is%3Apr+reviewed-by%3Arasmuscnielsen" title="Reviewed Pull Requests">👀</a> <a href="#ideas-rasmuscnielsen" title="Ideas, Planning, & Feedback">🤔</a></td>
+    <td align="center"><a href="https://github.com/AlexNi245"><img src="https://avatars.githubusercontent.com/u/26583503?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Alex</b></sub></a><br /><a href="https://github.com/Developer-DAO/pixel-avatars/commits?author=AlexNi245" title="Code">💻</a></td>
   </tr>
 </table>
 
