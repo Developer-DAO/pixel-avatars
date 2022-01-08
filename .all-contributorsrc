@@ -28,6 +28,54 @@
       ]
     },
     {
+      "login": "eknobl",
+      "name": "Erik Knobl",
+      "avatar_url": "https://avatars.githubusercontent.com/u/51840990?v=4",
+      "profile": "https://github.com/eknobl",
+      "contributions": [
+        "design",
+      ]
+    },
+    {
+      "login": "etherinsight",
+      "name": "etherinsight",
+      "avatar_url": "https://avatars.githubusercontent.com/u/89233725?v=4",
+      "profile": "https://github.com/etherinsight",
+      "contributions": [
+        "code",
+        "ideas"
+      ]
+    },
+    {
+      "login": "carlomigueldy",
+      "name": "Carlo Miguel Dy",
+      "avatar_url": "https://avatars.githubusercontent.com/u/45052332?v=4",
+      "profile": "https://linktr.ee/carlomigueldy",
+      "contributions": [
+        "code",
+        "ideas"
+      ]
+    },
+    {
+      "login": "AlexNi245",
+      "name": "Alex",
+      "avatar_url": "https://avatars.githubusercontent.com/u/26583503?v=4",
+      "profile": "https://github.com/AlexNi245",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "briangershon",
+      "name": "Brian Gershon",
+      "avatar_url": "https://avatars.githubusercontent.com/u/139330?v=4",
+      "profile": "https://www.briangershon.com",
+      "contributions": [
+        "code",
+        "infra"
+      ]
+    },
+    {
       "login": "Dhaiwat10",
       "name": "Dhaiwat Pandya",
       "avatar_url": "https://avatars.githubusercontent.com/u/39617427?v=4",
