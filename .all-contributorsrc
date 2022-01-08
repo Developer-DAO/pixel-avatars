@@ -26,6 +26,16 @@
         "review",
         "ideas"
       ]
+    },
+    {
+      "login": "etherinsight",
+      "name": "etherinsight",
+      "avatar_url": "https://avatars.githubusercontent.com/u/89233725?v=4",
+      "profile": "https://github.com/etherinsight",
+      "contributions": [
+        "code",
+        "ideas"
+      ]
     }
   ],
   "contributorsPerLine": 7,
