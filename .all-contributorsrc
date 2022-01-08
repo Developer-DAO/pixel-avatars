@@ -26,6 +26,16 @@
         "review",
         "ideas"
       ]
+    },
+    {
+      "login": "eknobl",
+      "name": "Erik Knobl",
+      "avatar_url": "https://avatars.githubusercontent.com/u/51840990?v=4",
+      "profile": "https://github.com/eknobl",
+      "contributions": [
+        "design",
+        "ideas"
+      ]
     }
   ],
   "contributorsPerLine": 7,
