@@ -61,6 +61,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://linktr.ee/carlomigueldy"><img src="https://avatars.githubusercontent.com/u/45052332?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Carlo Miguel Dy</b></sub></a><br /><a href="https://github.com/Developer-DAO/pixel-avatars/commits?author=carlomigueldy" title="Code">💻</a> <a href="#ideas-carlomigueldy" title="Ideas, Planning, & Feedback">🤔</a></td>
     <td align="center"><a href="https://github.com/AlexNi245"><img src="https://avatars.githubusercontent.com/u/26583503?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Alex</b></sub></a><br /><a href="https://github.com/Developer-DAO/pixel-avatars/commits?author=AlexNi245" title="Code">💻</a></td>
     <td align="center"><a href="https://www.briangershon.com"><img src="https://avatars.githubusercontent.com/u/139330?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Brian Gershon</b></sub></a><br /><a href="https://github.com/Developer-DAO/pixel-avatars/commits?author=briangershon" title="Code">💻</a> <a href="#infra-briangershon" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a></td>
+    <td align="center"><a href="http://dhaiwat.com"><img src="https://avatars.githubusercontent.com/u/39617427?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Dhaiwat Pandya</b></sub></a><br /><a href="#question-Dhaiwat10" title="Answering Questions">💬</a></td>
   </tr>
 </table>
 
