@@ -4,7 +4,8 @@
     "description": "",
     "main": "src/app.js",
     "scripts": {
-        "serve": "npx nodemon server.js"
+        "serve": "npx nodemon server.js",
+        "style": "prettier --write ."
     },
     "author": "Rasmus Christoffer Nielsen",
     "license": "MIT",
@@ -19,6 +20,7 @@
         "keccak256": "^1.0.3"
     },
     "devDependencies": {
-        "nodemon": "^2.0.15"
+        "nodemon": "^2.0.15",
+        "prettier": "^2.5.1"
     }
 }

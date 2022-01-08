@@ -1,12 +1,12 @@
 const { ec } = require('elliptic')
 const { utils } = require('ethers')
-const keccak256 = require("keccak256");
+const keccak256 = require('keccak256')
 
-const UNCOMPRESSED_PUBKEY_HEADER = 27;
+const UNCOMPRESSED_PUBKEY_HEADER = 27
 
 function hexConcat(parts) {
     return utils.hexConcat(
-        parts.map(part => utils.isHexString(part) ? part : toHex(part))
+        parts.map((part) => (utils.isHexString(part) ? part : toHex(part)))
     )
 }
 
@@ -15,11 +15,11 @@ function hexPrefix(value) {
 }
 
 function toHex(str) {
-    let result = '';
+    let result = ''
     for (let i = 0; i < str.length; i++) {
-        result += str.charCodeAt(i).toString(16);
+        result += str.charCodeAt(i).toString(16)
     }
-    return hexPrefix(result);
+    return hexPrefix(result)
 }
 
 function hash(message) {
@@ -32,7 +32,9 @@ function sign(hash, hexPrivateKey) {
         .sign(hash, { canonical: true })
 
     return {
-        v: hexPrefix((UNCOMPRESSED_PUBKEY_HEADER + signature.recoveryParam).toString(16)),
+        v: hexPrefix(
+            (UNCOMPRESSED_PUBKEY_HEADER + signature.recoveryParam).toString(16)
+        ),
         r: hexPrefix(signature.r.toString(16).padStart(64, '0')),
         s: hexPrefix(signature.s.toString(16).padStart(64, '0')),
     }

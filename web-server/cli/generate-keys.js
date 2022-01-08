@@ -1,5 +1,5 @@
 const publicKeyToAddress = require('ethereum-public-key-to-address')
-const {ec} = require("elliptic");
+const { ec } = require('elliptic')
 
 const keypair = new ec('secp256k1').genKeyPair()
 
