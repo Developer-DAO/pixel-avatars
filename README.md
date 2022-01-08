@@ -59,6 +59,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/eknobl"><img src="https://avatars.githubusercontent.com/u/51840990?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Erik Knobl</b></sub></a><br /><a href="#design-eknobl" title="Design">🎨</a> <a href="#ideas-eknobl" title="Ideas, Planning, & Feedback">🤔</a></td>
     <td align="center"><a href="https://github.com/etherinsight"><img src="https://avatars.githubusercontent.com/u/89233725?v=4?s=100" width="100px;" alt=""/><br /><sub><b>etherinsight</b></sub></a><br /><a href="https://github.com/Developer-DAO/pixel-avatars/commits?author=etherinsight" title="Code">💻</a> <a href="#ideas-etherinsight" title="Ideas, Planning, & Feedback">🤔</a></td>
     <td align="center"><a href="https://linktr.ee/carlomigueldy"><img src="https://avatars.githubusercontent.com/u/45052332?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Carlo Miguel Dy</b></sub></a><br /><a href="https://github.com/Developer-DAO/pixel-avatars/commits?author=carlomigueldy" title="Code">💻</a> <a href="#ideas-carlomigueldy" title="Ideas, Planning, & Feedback">🤔</a></td>
+    <td align="center"><a href="https://github.com/AlexNi245"><img src="https://avatars.githubusercontent.com/u/26583503?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Alex</b></sub></a><br /><a href="https://github.com/Developer-DAO/pixel-avatars/commits?author=AlexNi245" title="Code">💻</a></td>
   </tr>
 </table>
 
