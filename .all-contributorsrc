@@ -64,6 +64,16 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "briangershon",
+      "name": "Brian Gershon",
+      "avatar_url": "https://avatars.githubusercontent.com/u/139330?v=4",
+      "profile": "https://www.briangershon.com",
+      "contributions": [
+        "code",
+        "infra"
+      ]
     }
   ],
   "contributorsPerLine": 7,
