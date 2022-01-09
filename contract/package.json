@@ -9,12 +9,12 @@
         "deploy:mumbai": "hardhat run scripts/deploy.ts --network mumbai",
         "deploy:mainnet": "hardhat run scripts/deploy.ts --network mainnet",
         "style": "prettier --write .",
-        "compile": "yarn prettier && hardhat compile && cp ./artifacts/contracts/PixelAvatars.sol/PixelAvatars.json ../abis",
-        "test": "hardhat compile && hardhat test --network hardhat",
+        "compile": "yarn style && hardhat compile && cp ./artifacts/contracts/PixelAvatars.sol/PixelAvatars.json ../abis",
+        "test": "yarn compile && hardhat test --network hardhat",
         "test:coverage": "hardhat coverage --network hardhat",
         "test:report_gas": "REPORT_GAS=true hardhat test --network hardhat",
-        "test-ci": "hardhat compile && hardhat test --network hardhat",
-        "lint": "yarn prettier && solhint 'contracts/**/*.sol'"
+        "test-ci": "yarn compile && hardhat test --network hardhat",
+        "lint": "yarn style && solhint 'contracts/**/*.sol'"
     },
     "keywords": [],
     "author": "Developer DAO",
