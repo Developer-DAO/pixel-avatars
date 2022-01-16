@@ -29,7 +29,7 @@ export default function useAvatarContract() {
                     response.signature.r,
                     response.signature.s,
                     {
-                        value: this.getMintPrice(),
+                        value: await this.getMintPrice(),
                     }
                 )
                 .catch(normalizeContractError)
