@@ -29,6 +29,7 @@ You can't run the contract locally with hardhat since it's Polygon and not Ether
 ### Run front-end
 
 - Follow instructions in [./web-client/README.md](./web-client/README.md) to get front-end setup
+- Change value for `VUE_APP_SERVER_URL` in `.env` to be `'http://127.0.0.1:3000'` to point to local server instead of staging server online.
 - With contract, web server and front-end running, visit front-end at http://localhost:8080
 
 ### Setup your wallet for testing contract on Polygon Mumbai Testnet

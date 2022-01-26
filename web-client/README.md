@@ -13,7 +13,7 @@ yarn install
 ### Setup `.env`
 
 ```shell
-cp .env.local.example .env
+cp .env.example .env
 ```
 
 Fill in the environment variables suitable for your needs.
