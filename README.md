@@ -5,13 +5,17 @@
 
 ![Solidity contract tests](https://github.com/Developer-DAO/pixel-avatars/actions/workflows/continuous-integration.yaml/badge.svg)
 
-Production: https://pixel-avatars.developerdao.com/
-Staging: https://pixel-avatars-staging-developerdao.vercel.app/
-
 ## Project
 The Derivatives project, originally known as the pixel-avatars project is created initially to allow the minting of a derived Pixel Avatar ERC721 NFT token generated based on the traits of the original DeveloperDAO genesis NFTs; similar to how Loot has its own derivatives projects.
 
 It was later renamed to a derivatives project to include initiatives that will form a roadmap beyond the initial pixel avatars token.
+
+## Developer Setup
+For Developers, see [FULL_LOCAL_SETUP.md](./FULL_LOCAL_SETUP.md) to be able to change, run and test all three major pieces locally. Or visit individual README.md files if you only want to setup one piece, such as the front-end, and then use the hosted web server and deployed contract.
+
+The servers are deployed at:
+- Production: https://pixel-avatars.developerdao.com/
+- Staging: https://pixel-avatars-staging-developerdao.vercel.app/
 
 ## Historical notes
 User by the name of Neoc id the DeveloperDao Discord was offering to do an avatar versions of the developer dao NFT genesis token. Another user [goldzulu](https://github.com/goldzulu) spotted the potential and suggested a project which upon some initial consensus was put to lead the project. Officially the project kicked off on the 12th September 2021 via an online discord meeting hosted by goldzulu.

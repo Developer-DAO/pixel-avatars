@@ -6,19 +6,19 @@ These are the steps to get all the pieces of the application running locally to:
 - change and run the web server
 - change and run the local front-end
 
-NOTE: If you want to only run the front-end (and rely on a deployed contract and server so you don't need to run locally), visit [./web-client/README.md](./web-client/README.md).
+NOTE: If you want to only run the front-end (and rely on a deployed contract and server so you don't need to run locally), visit [web-client/README.md](./web-client/README.md).
 
 ## Setup Steps
 
 ### Setup web server
 
-Follow instructions in [./web-server/README.md](./web-server/README.md), specifically the `Creating a keypair` section, then the `Start the Webserver` section. (The earlier pieces are for running the web server against )
+Follow instructions in [web-server/README.md](./web-server/README.md), specifically the `Creating a keypair` section, then the `Start the Webserver` section. (The earlier pieces are for running the web server against )
 
 ### Setup Contract on Polygon Mumbai Testnet
 
 You can't run the contract locally with hardhat since it's Polygon and not Ethereum.
 
-- Follow instructions in [./contract/README.md](./contract/README.md) to get Mumbai Testnet setup, namely setting `MUMBAI_RPC_URL` and `MUMBAI_PRIVATE_KEY` `.env` variables.
+- Follow instructions in [contract/README.md](./contract/README.md) to get Mumbai Testnet setup, namely setting `MUMBAI_RPC_URL` and `MUMBAI_PRIVATE_KEY` `.env` variables.
 - Change contract:
   - change `PixelAvatars.sol` mintPrice to `0.01 ether` for testing at a cheaper price
   - set the `serverAddress` variables to the SERVER_ADDRESS from `contract/.env`, created in the `Generate a keypair` step)
@@ -28,7 +28,7 @@ You can't run the contract locally with hardhat since it's Polygon and not Ether
 
 ### Run front-end
 
-- Follow instructions in [./web-client/README.md](./web-client/README.md) to get front-end setup
+- Follow instructions in [web-client/README.md](./web-client/README.md) to get front-end setup
 - Change value for `VUE_APP_SERVER_URL` in `.env` to be `'http://127.0.0.1:3000'` to point to local server instead of staging server online.
 - With contract, web server and front-end running, visit front-end at http://localhost:8080
 
