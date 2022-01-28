@@ -28,6 +28,14 @@ In order to deploy the contract to a given network you will need:
 
 ## Local development
 
+**VSCode Setup**
+
+If using VSCode, the OpenZeppelin imports are shown with red lint errors when using the Solidity VSCode plugin.
+
+This project is a monorepo, so the contract is not in a standard location picked up by the plugin and it can't find the OpenZeppelin imports.
+
+To fix, open Settings for the Solidity VSCode plugin and set "Package Default Dependencies Directory" to `contract/node_modules` instead of default `node_modules`.
+
 **Run local tests**
 
 For first time install, you need to also install dependencies for `web-server` since tests are depending on a `utils.js` module.
@@ -82,10 +90,22 @@ See `/web-server/README.md` for more information.
 
 ---
 
+As this is an OpenZeppelin Upgradeable Contract, there are two types of deploys now:
+
+-   an initial deploy, and
+-   an upgrade deploy on each subsequent release
+
 **Localhost (hardhat)**
 
 ```shell
 yarn deploy
+```
+
+or
+
+```shell
+# make sure UPGRADEABLE_PROXY_CONTRACT_ADDRESS .env has a value
+yarn upgrade
 ```
 
 **Polygon mainnet**
@@ -94,8 +114,22 @@ yarn deploy
 yarn deploy:mainnet
 ```
 
+or
+
+```shell
+# make sure UPGRADEABLE_PROXY_CONTRACT_ADDRESS .env has a value
+yarn upgrade:mainnet
+```
+
 **Mumbai testnet**
 
 ```shell
 yarn deploy:mumbai
+```
+
+or
+
+```shell
+# make sure UPGRADEABLE_PROXY_CONTRACT_ADDRESS .env has a value
+yarn upgrade:mumbai
 ```

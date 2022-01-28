@@ -1,25 +1,31 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.9;
 
-import "@openzeppelin/contracts/access/Ownable.sol";
-import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
-import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
-import "@openzeppelin/contracts/utils/Strings.sol";
+import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/token/ERC721/extensions/ERC721EnumerableUpgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/utils/StringsUpgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 import "hardhat/console.sol";
 
 /// @author Developer DAO
-/// @title The Pixel Avatar smart contract that is compliant to ERC721 standard.
-contract PixelAvatars is ERC721Enumerable, ReentrancyGuard, Ownable {
-    /// TODO: Set this to the IPFS base uri before launch
-    string public baseURI =
-        "ipfs://QmUVH51tigyENzwUhsTv14dV7eyaVo6oHoeCD3JHD9rFnV/";
-
-    uint256 public mintPrice = 6 ether;
-
+/// @title The Pixel Avatar smart contract that is compliant to ERC721 standard and is upgradeable
+contract PixelAvatars is
+    ERC721EnumerableUpgradeable,
+    ReentrancyGuardUpgradeable,
+    OwnableUpgradeable
+{
+    string public baseURI;
+    uint256 public mintPrice;
     address public serverAddress;
 
-    constructor() ERC721("Pixel Avatars", "PXLAVTR") {
-        console.log("PixelAvatars deployed by '%s'", msg.sender);
+    function initialize() public initializer {
+        __ERC721_init("Pixel Avatars", "PXLAVTR");
+        __Ownable_init();
+
+        /// TODO: Set this to the IPFS base uri before launch
+        baseURI = "ipfs://QmUVH51tigyENzwUhsTv14dV7eyaVo6oHoeCD3JHD9rFnV/";
+        mintPrice = 6 ether;
     }
 
     function _baseURI() internal view virtual override returns (string memory) {
@@ -50,11 +56,11 @@ contract PixelAvatars is ERC721Enumerable, ReentrancyGuard, Ownable {
     ) {
         bytes memory message = abi.encodePacked(
             "TokenId:",
-            Strings.toString(tokenId),
+            StringsUpgradeable.toString(tokenId),
             "Address:",
             msg.sender,
             "Deadline:",
-            Strings.toString(deadline)
+            StringsUpgradeable.toString(deadline)
         );
 
         address signer = ecrecover(keccak256(message), v, r, s);

@@ -1,5 +1,5 @@
 import { expect } from 'chai'
-import { ethers } from 'hardhat'
+import { ethers, upgrades } from 'hardhat'
 import { BigNumberish, Signature } from 'ethers'
 import { PixelAvatars } from '../typechain'
 
@@ -9,8 +9,9 @@ describe('PixelAvatars contract', function () {
     let contract: PixelAvatars
 
     beforeEach(async () => {
-        const contractFactory = await ethers.getContractFactory('PixelAvatars')
-        contract = await contractFactory.deploy()
+        const Contract = await ethers.getContractFactory('PixelAvatars')
+        contract = (await upgrades.deployProxy(Contract)) as PixelAvatars
+        await contract.deployed()
     })
 
     describe('helper functions', function () {
