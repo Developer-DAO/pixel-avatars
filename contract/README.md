@@ -23,7 +23,7 @@ Fill in the environment variables suitable for your needs.
 In order to deploy the contract to a given network you will need:
 
 -   `SERVER_ADDRESS`: The address from the webserver keypair. See "Deployment" section for more information.
--   `{NETWORK}_RPC_URL`: An alchemy url. Sign up for http://alchemy.com to get one for the given network.
+-   `{NETWORK}_RPC_URL`: An http://infura.io url. Sign up for http://infura.io to get one for the given network.
 -   `{NETWORK}_PRIVATE_KEY`: The private key for the wallet that will become the owner of the deployed contract.
 
 ## Local development
