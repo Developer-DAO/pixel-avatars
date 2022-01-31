@@ -11,9 +11,8 @@ async function main() {
     }
     console.log('Server address is:', serverAddress)
 
-    const upgradeableContractAddress =
-        process.env.UPGRADEABLE_PROXY_CONTRACT_ADDRESS
-    if (!upgradeableContractAddress) {
+    const upgradeableProxyAddress = process.env.UPGRADEABLE_PROXY_ADDRESS
+    if (!upgradeableProxyAddress) {
         console.error(
             'Missing address for OpenZeppelin upgradeable proxy in .env. Required, please set.'
         )
@@ -26,10 +25,7 @@ async function main() {
     console.log('Account balance:', (await deployer.getBalance()).toString())
 
     const Contract = await ethers.getContractFactory('PixelAvatars')
-    const token = await upgrades.upgradeProxy(
-        upgradeableContractAddress,
-        Contract
-    )
+    const token = await upgrades.upgradeProxy(upgradeableProxyAddress, Contract)
     await token.setServerAddress(serverAddress)
 
     console.log('Contract deployed to:', token.address)

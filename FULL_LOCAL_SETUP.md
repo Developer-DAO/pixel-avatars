@@ -12,7 +12,7 @@ NOTE: If you want to only run the front-end (and rely on a deployed contract and
 
 ### Setup web server
 
-Follow instructions in [web-server/README.md](./web-server/README.md), specifically the `Creating a keypair` section, then the `Start the Webserver` section. (The earlier pieces are for running the web server against )
+Follow instructions in [web-server/README.md](./web-server/README.md), specifically the `Creating a keypair` section, then the `Start the Webserver` section. (The earlier pieces are for running the web server against a contract running on a non-local blockchain)
 
 ### Setup Contract on Polygon Mumbai Testnet
 
@@ -22,7 +22,9 @@ You can't run the contract locally with hardhat since it's Polygon and not Ether
 - Change contract:
   - change `PixelAvatars.sol` mintPrice to `0.01 ether` for testing at a cheaper price
   - set the `serverAddress` variables to the SERVER_ADDRESS from `contract/.env`, created in the `Generate a keypair` step)
-  - Deploy to Mumbai via `yarn compile && yarn deploy:mumbai`. You'll see a value next to the `Token address` line.
+  - Deploy to Mumbai. Since our contract is upgradeable, you have two choices -- an initial deploy and a consquent upgrade.
+    - First time: `yarn compile && yarn deploy:mumbai` the very first time to setup proxy, ProxyAdmin and contract. You'll see a value next to the `Token address` line.
+    - All other times: You just upgrade your contract (and not proxy) via `yarn compile && yarn upgrade:mumbai`. You'll see a value next to the `Token address` line.
   - Visit https://mumbai.polygonscan.com and find that token address. From there find the `contract` address.
   - Add `contract` address to `web-client/.env` for the `VUE_APP_PIXEL_AVATAR_TOKEN` variable.
 

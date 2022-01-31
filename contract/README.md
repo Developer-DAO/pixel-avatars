@@ -98,38 +98,38 @@ As this is an OpenZeppelin Upgradeable Contract, there are two types of deploys 
 **Localhost (hardhat)**
 
 ```shell
-yarn deploy
+yarn compile && yarn deploy
 ```
 
 or
 
 ```shell
-# make sure UPGRADEABLE_PROXY_CONTRACT_ADDRESS .env has a value
-yarn upgrade
+# make sure UPGRADEABLE_PROXY_ADDRESS .env has a value that points to OpenZeppelin Proxy contract.
+yarn compile && yarn upgrade
 ```
 
 **Polygon mainnet**
 
 ```shell
-yarn deploy:mainnet
+yarn compile && yarn deploy:mainnet
 ```
 
 or
 
 ```shell
-# make sure UPGRADEABLE_PROXY_CONTRACT_ADDRESS .env has a value
-yarn upgrade:mainnet
+# make sure UPGRADEABLE_PROXY_ADDRESS .env has a value that points to OpenZeppelin Proxy contract.
+yarn compile && yarn upgrade:mainnet
 ```
 
 **Mumbai testnet**
 
 ```shell
-yarn deploy:mumbai
+yarn compile && yarn deploy:mumbai
 ```
 
 or
 
 ```shell
-# make sure UPGRADEABLE_PROXY_CONTRACT_ADDRESS .env has a value
-yarn upgrade:mumbai
+# make sure UPGRADEABLE_PROXY_ADDRESS .env has a value that points to OpenZeppelin Proxy contract.
+yarn compile && yarn upgrade:mumbai
 ```
