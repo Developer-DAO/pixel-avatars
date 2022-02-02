@@ -28,7 +28,9 @@ async function main() {
     const token = await upgrades.upgradeProxy(upgradeableProxyAddress, Contract)
     await token.setServerAddress(serverAddress)
 
-    console.log('Contract deployed to:', token.address)
+    console.log(
+        `OpenZeppelin Proxy upgraded. Proxy is still: ${token.address} for VUE_APP_PIXEL_AVATAR_TOKEN and UPGRADEABLE_PROXY_ADDRESS`
+    )
 }
 
 main().catch((error) => {

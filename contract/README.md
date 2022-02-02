@@ -88,11 +88,9 @@ Each environment should have their separate keypair - this is important.
 
 See `/web-server/README.md` for more information.
 
----
+**As this is an OpenZeppelin Upgradeable Contract**, there are two types of deploys now:
 
-As this is an OpenZeppelin Upgradeable Contract, there are two types of deploys now:
-
--   an initial deploy, and
+-   an initial deploy (only do once to setup initial 3 contracts), and
 -   an upgrade deploy on each subsequent release
 
 **Localhost (hardhat)**
@@ -112,6 +110,7 @@ yarn compile && yarn upgrade
 
 ```shell
 yarn compile && yarn deploy:mainnet
+# IMPORTANT: Make sure you check-in the .JSON file in `.openzeppelin' which is needed for upgrades.
 ```
 
 or
@@ -119,7 +118,13 @@ or
 ```shell
 # make sure UPGRADEABLE_PROXY_ADDRESS .env has a value that points to OpenZeppelin Proxy contract.
 yarn compile && yarn upgrade:mainnet
+# IMPORTANT: Make sure you check-in the .JSON file in `.openzeppelin' which is needed for upgrades.
 ```
+
+If you want to upload contract source. You can't call contract directly, except through Proxy -- see below for Hardhat code to try the contract.
+
+-   Make sure `ETHERSCAN_API_KEY` .env key is set to API for polygonscan
+-   Then to verify contract, run `npx hardhat verify --network mainnet CONTRACT_ADDRESS_HERE`.
 
 **Mumbai testnet**
 
@@ -133,3 +138,21 @@ or
 # make sure UPGRADEABLE_PROXY_ADDRESS .env has a value that points to OpenZeppelin Proxy contract.
 yarn compile && yarn upgrade:mumbai
 ```
+
+If you want to upload contract source. You can't call contract directly, except through Proxy -- see below for Hardhat code to try the contract.
+
+-   Make sure `ETHERSCAN_API_KEY` .env key is set to API for polygonscan
+-   Then to verify contract, run `npx hardhat verify --network mumbai CONTRACT_ADDRESS_HERE`.
+
+## To play with contract via Proxy in Hardhat
+
+    npx hardhat console --network mumbai
+
+    > await ethers.provider.listAccounts();
+    > const Avatars = await ethers.getContractFactory('PixelAvatars');
+    > const avatars = await Avatars.attach('<proxy address goes here>');
+    > await avatars.mintPrice();
+    > await avatars.baseURI();
+    > await avatars.serverAddress();
+    > await avatars.setMintPrice('2000000000000000');
+    > await avatars.ownerOf('6860');
