@@ -19,7 +19,7 @@ const client = inject('web3client')
 const previewState = inject('previewState')
 const avatarContract = useAvatarContract()
 
-const availableTokens = ref(null)
+const availableTokens = ref(null) // Each token is now an object: { tokenId: number, minted: bool }
 const claimToken = ref(null)
 const claimState = ref(CLAIMING_STATES.IDLE)
 const errorMessage = ref(null)
@@ -36,6 +36,8 @@ async function startClaiming() {
 
         claimState.value = CLAIMING_STATES.SUCCESS
         errorMessage.value = null
+        // Update availableTokens because 'minted' values should change
+        availableTokens.value = await avatarContract.getAvailableTokens()
     } catch (error) {
         claimState.value = CLAIMING_STATES.ERROR
         errorMessage.value = error.message
@@ -48,9 +50,18 @@ function updatePreview() {
 
     previewState.developer.value = claimToken.value
     previewState.updateTraits()
+
+    // Update claimState if token is already minted
+    if (
+        claimToken.value &&
+        availableTokens.value &&
+        availableTokens.value.find(available => available.tokenId === claimToken.value).minted
+    ) {
+        claimState.value = CLAIMING_STATES.SUCCESS
+    }
 }
 
-// Automatically set claimToken based on previewState
+// Automatically set claimToken and claimState based on previewState
 watch(previewState.developer, (developer) => {
     if (claimToken.value === developer) {
         return
@@ -58,13 +69,16 @@ watch(previewState.developer, (developer) => {
 
     if (
         availableTokens.value &&
-        availableTokens.value.indexOf(developer) > -1
+        availableTokens.value.findIndex(available => available.tokenId === developer) > -1
     ) {
         claimToken.value = developer
+        claimState.value = availableTokens.value.find(available => available.tokenId === claimToken.value).minted ?
+            CLAIMING_STATES.SUCCESS : CLAIMING_STATES.IDLE
         return
     }
 
     claimToken.value = null
+    claimState.value = CLAIMING_STATES.IDLE
 })
 
 // Load available tokens + mint price when connected to wallet
@@ -76,7 +90,7 @@ watch(client.isConnected, async (isConnected) => {
         // If signer has at least one token, auto-pick the first one
         // then refresh preview
         if (availableTokens.value.length) {
-            claimToken.value = availableTokens.value[0]
+            claimToken.value = availableTokens.value[0].tokenId
             updatePreview()
         }
     }
@@ -123,7 +137,7 @@ watch(client.isConnected, async (isConnected) => {
             color="green"
         >
             <p><b>Congratulations!</b> 🎉🚀.</p>
-            <p>You are now the official owner of avatar #{{ claimToken }}.</p>
+            <p>You are the official owner of avatar #{{ claimToken }}.</p>
             <p>
                 <a :href="openSeaUrl" target="_blank" class="text-blue-600">
                     Check out your account on OpenSea ↗
@@ -146,7 +160,7 @@ watch(client.isConnected, async (isConnected) => {
                     >
                         <option :value="null" />
                         <option
-                            v-for="token in availableTokens"
+                            v-for="token in availableTokens.map( available => available.tokenId )"
                             :key="token"
                             :value="token"
                             v-text="token"

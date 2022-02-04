@@ -21,6 +21,15 @@ cp .env.example .env
 
 Fill in the environment variables suitable for your needs.
 
+##### PIXELAVATARS_RPC
+
+A http://infura.io URL that points to either Rinkeby, Mumbai or the network where PixelAvatars contract will be deployed to.
+
+##### PIXELAVATARS_TOKEN
+
+The address of the PixelAvatars contract (fill when deployed).
+The example env comes pre-bottled with the Mumbai testnet contract.
+
 ##### GENESIS_RPC
 
 A http://infura.io URL that points to either Ethereum mainnet or Rinkeby.
