@@ -22,7 +22,7 @@ const encrypted = Buffer.from(encryptedBytes).toString('base64')
 
 console.log(`To update GitHub Action Secret please run following command: \n`)
 console.log(
-    `hub api -XPUT /repos/${config.repo}/actions/secret/${config.secretName} -f key_id="${config.publicKeyId}" -f encrypted_value="${encrypted}"\n`
+    `hub api -XPUT /repos/${config.repo}/actions/secrets/${config.secretName} -f key_id="${config.publicKeyId}" -f encrypted_value="${encrypted}"\n`
 )
 console.log(`(requires http://hub.github.com installed)\n`)
 console.log(`Please set contract SERVER_ADDRESS=${keypair.address}`)
