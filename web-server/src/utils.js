@@ -1,7 +1,7 @@
 const { ec } = require('elliptic')
 const { utils } = require('ethers')
 const keccak256 = require('keccak256')
-const publicKeyToAddress = require("ethereum-public-key-to-address");
+const publicKeyToAddress = require('ethereum-public-key-to-address')
 
 const UNCOMPRESSED_PUBKEY_HEADER = 27
 
