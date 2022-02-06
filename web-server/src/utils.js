@@ -1,6 +1,7 @@
 const { ec } = require('elliptic')
 const { utils } = require('ethers')
 const keccak256 = require('keccak256')
+const publicKeyToAddress = require("ethereum-public-key-to-address");
 
 const UNCOMPRESSED_PUBKEY_HEADER = 27
 
@@ -40,4 +41,14 @@ function sign(hash, hexPrivateKey) {
     }
 }
 
-module.exports = { hash, sign, hexConcat, hexPrefix, toHex }
+function generateKeypair() {
+    const keypair = new ec('secp256k1').genKeyPair()
+
+    const privateKey = keypair.getPrivate('hex')
+    const publicKey = keypair.getPublic('hex')
+    const address = publicKeyToAddress(publicKey)
+
+    return { privateKey, publicKey, address }
+}
+
+module.exports = { generateKeypair, hash, sign, hexConcat, hexPrefix, toHex }
