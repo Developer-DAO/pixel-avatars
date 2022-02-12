@@ -54,30 +54,28 @@ jobs:
         commit_message: Code style fixes [skip ci]
         commit_user_name: Github Action
 
-  deploy:
-    name: "Deploy server"
-    runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/staging'
+  deploy-staging:
+    if: github.ref == 'refs/heads/staging'
     needs: styling
-    steps:
-      - uses: actions/checkout@v2
+    uses: './.github/workflows/deploy.yaml'
+    with:
+      environment: 'Staging'
+      deployOptions: ''
+    secrets:
+      serverPrivateKey: ${{ secrets.SERVER_PRIVATE_KEY }}
+      vercelOrganizationId: ${{ secrets.VERCEL_ORG_ID }}
+      vercelProjectId: ${{ secrets.VERCEL_PROJECT_ID }}
+      vercelToken: ${{ secrets.VERCEL_TOKEN }}
 
-      - name: Install server dependencies
-        run: yarn
-        working-directory: ./web-server
-
-      - name: 'Install Vercel CLI'
-        run: npm i -g vercel
-
-      - name: "Deploy to Vercel"
-        run: |
-          flag=""
-          if [[ ${GITHUB_REF} == "refs/heads/main" ]]; then
-            flag="--prod"
-          fi
-          npx vercel --token ${VERCEL_TOKEN} $flag --env PRIVATE_KEY=${{ secrets.SERVER_PRIVATE_KEY }}
-        env:
-          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
-          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-        working-directory: .
+  deploy-production:
+    if: github.ref == 'refs/heads/main'
+    needs: styling
+    uses: './.github/workflows/deploy.yaml'
+    with:
+      environment: 'Production'
+      deployOptions: '--prod'
+    secrets:
+      serverPrivateKey: ${{ secrets.SERVER_PRIVATE_KEY }}
+      vercelOrganizationId: ${{ secrets.VERCEL_ORG_ID }}
+      vercelProjectId: ${{ secrets.VERCEL_PROJECT_ID }}
+      vercelToken: ${{ secrets.VERCEL_TOKEN }}

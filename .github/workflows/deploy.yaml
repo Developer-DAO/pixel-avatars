@@ -1,0 +1,43 @@
+name: Reuseable deploy action
+
+on:
+  workflow_call:
+    inputs:
+      deployOptions:
+        required: true
+        type: string
+      environment:
+        required: true
+        type: string
+    secrets:
+      serverPrivateKey:
+        required: true
+      vercelOrganizationId:
+        required: true
+      vercelProjectId:
+        required: true
+      vercelToken:
+        required: true
+
+jobs:
+  deploy:
+    name: "Deploy server"
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install server dependencies
+        run: yarn
+        working-directory: ./web-server
+
+      - name: 'Install Vercel CLI'
+        run: npm i -g vercel
+
+      - name: "Deploy to Vercel"
+        run: npx vercel --token ${{ secrets.vercelToken }} ${{ inputs.deployOptions }} --env PRIVATE_KEY=${{ secrets.serverPrivateKey }}
+        env:
+          VERCEL_TOKEN: ${{ secrets.vercelToken }}
+          VERCEL_PROJECT_ID: ${{ secrets.vercelProjectId }}
+          VERCEL_ORG_ID: ${{ secrets.vercelOrganizationId }}
+        working-directory: .

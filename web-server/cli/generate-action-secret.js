@@ -3,6 +3,7 @@ const sodium = require('tweetsodium')
 
 const config = {
     repo: 'Developer-DAO/pixel-avatars',
+    environmentName: 'Production',
     publicKeyId: '568250167242549743',
     publicKey: 'FUbH7LzIYoY9JTygD0YkyLkkrQULdMnFssoCo/YRgWc=',
     secretName: 'SERVER_PRIVATE_KEY',
@@ -22,7 +23,7 @@ const encrypted = Buffer.from(encryptedBytes).toString('base64')
 
 console.log(`To update GitHub Action Secret please run following command: \n`)
 console.log(
-    `hub api -XPUT /repos/${config.repo}/actions/secrets/${config.secretName} -f key_id="${config.publicKeyId}" -f encrypted_value="${encrypted}"\n`
+    `hub api -XPUT /repos/${config.repo}/environments/${config.environmentName}/secrets/${config.secretName} -f key_id="${config.publicKeyId}" -f encrypted_value="${encrypted}"\n`
 )
 console.log(`(requires http://hub.github.com installed)\n`)
 console.log(`Please set contract SERVER_ADDRESS=${keypair.address}`)
