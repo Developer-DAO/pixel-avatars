@@ -1,8 +1,8 @@
-name: Solidity contract tests
+name: Continuous Integration & Deployment
 on: [push, pull_request]
 jobs:
   tests:
-    name: Run CI
+    name: Run tests
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -16,11 +16,11 @@ jobs:
       - name: node version
         run: node --version
 
-      - name: contract - install dependencies
+      - name: Install contract dependencies
         run: yarn
         working-directory: ./contract
 
-      - name: install dependencies needed for utils module
+      - name: Install server dependencies
         run: yarn
         working-directory: ./web-server
 
@@ -29,30 +29,55 @@ jobs:
         working-directory: ./contract
 
   styling:
+    name: Fix code style
     runs-on: ubuntu-latest
     if: ${{ github.event_name == 'push' }}
     needs: tests
     steps:
     - uses: actions/checkout@v2
 
-    # run prettier, and also ensure any lock file changes are reverted
     - name: Prettify web-client
       run: yarn && yarn style
       working-directory: ./web-client
 
-    # run prettier, and also ensure any lock file changes are reverted
     - name: Prettify web-server
       run: yarn && yarn style
       working-directory: ./web-server
 
-    # run prettier, and also ensure any lock file changes are reverted
     - name: Prettify contract
       run: yarn && yarn style
       working-directory: ./contract
 
-    # commit and push changes
     - name: Commit style fixes
       uses: stefanzweifel/git-auto-commit-action@v4
       with:
-        commit_message: Code style fixes
+        commit_message: Code style fixes [skip ci]
         commit_user_name: Github Action
+
+  deploy:
+    name: "Deploy server"
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/staging'
+    needs: styling
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install server dependencies
+        run: yarn
+        working-directory: ./web-server
+
+      - name: 'Install Vercel CLI'
+        run: npm i -g vercel
+
+      - name: "Deploy to Vercel"
+        run: |
+          flag=""
+          if [[ ${GITHUB_REF} == "refs/heads/main" ]]; then
+            flag="--prod"
+          fi
+          npx vercel --token ${VERCEL_TOKEN} $flag --env PRIVATE_KEY=${{ secrets.SERVER_PRIVATE_KEY }}
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+        working-directory: .
