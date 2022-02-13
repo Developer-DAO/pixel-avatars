@@ -3,7 +3,7 @@ const sodium = require('tweetsodium')
 
 const config = {
     repo: 'Developer-DAO/pixel-avatars',
-    environmentName: 'Production',
+    environmentName: process.argv[2] ?? 'Production',
     publicKeyId: '568250167242549743',
     publicKey: 'FUbH7LzIYoY9JTygD0YkyLkkrQULdMnFssoCo/YRgWc=',
     secretName: 'SERVER_PRIVATE_KEY',
