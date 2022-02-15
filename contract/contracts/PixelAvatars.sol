@@ -22,8 +22,7 @@ contract PixelAvatars is
         __ERC721_init("Pixel Avatars", "PXLAVTR");
         __Ownable_init();
 
-        /// TODO: Set this to the IPFS base uri before launch
-        baseURI = "ipfs://QmUVH51tigyENzwUhsTv14dV7eyaVo6oHoeCD3JHD9rFnV/";
+        baseURI = "ipfs://QmQK8MYcafSRLXTG8azwTs51B7vj7iZGVxGxdEHwUMDXUQ/";
         mintPrice = 6 ether;
     }
 
