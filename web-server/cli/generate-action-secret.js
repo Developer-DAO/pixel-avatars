@@ -17,7 +17,7 @@ const environments = {
 const config = {
     repo: 'Developer-DAO/pixel-avatars',
     secretName: 'SERVER_PRIVATE_KEY',
-    environment: environments[process.argv[2] ?? 'Production']
+    environment: environments[process.argv[2] ?? 'Production'],
 }
 
 const keypair = generateKeypair()
