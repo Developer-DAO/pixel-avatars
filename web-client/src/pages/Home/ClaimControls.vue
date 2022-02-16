@@ -72,6 +72,13 @@ watch(client.isConnected, async (isConnected) => {
     if (isConnected) {
         availableTokens.value = await avatarContract.getAvailableTokens()
         mintPriceEther.value = await avatarContract.getMintPriceInEther()
+
+        // If signer has at least one token, auto-pick the first one
+        // then refresh preview
+        if (availableTokens.value.length) {
+            claimToken.value = availableTokens.value[0]
+            updatePreview()
+        }
     }
 })
 </script>

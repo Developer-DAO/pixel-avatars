@@ -1,5 +1,5 @@
 import { expect } from 'chai'
-import { ethers } from 'hardhat'
+import { ethers, upgrades } from 'hardhat'
 import { BigNumberish, Signature } from 'ethers'
 import { PixelAvatars } from '../typechain'
 
@@ -9,8 +9,9 @@ describe('PixelAvatars contract', function () {
     let contract: PixelAvatars
 
     beforeEach(async () => {
-        const contractFactory = await ethers.getContractFactory('PixelAvatars')
-        contract = await contractFactory.deploy()
+        const Contract = await ethers.getContractFactory('PixelAvatars')
+        contract = (await upgrades.deployProxy(Contract)) as PixelAvatars
+        await contract.deployed()
     })
 
     describe('helper functions', function () {
@@ -152,7 +153,7 @@ describe('PixelAvatars contract', function () {
                         split.r,
                         split.s,
                         {
-                            value: ethers.utils.parseEther('6'),
+                            value: ethers.utils.parseEther('12'),
                         }
                     )
                 ).emit(contract, 'LogTokenMinted')
@@ -165,7 +166,7 @@ describe('PixelAvatars contract', function () {
                 // initial eth (rounded off to avoid including gas fee)
                 await expect(
                     parseInt(ethers.utils.formatEther(initialBalance), 10)
-                ).to.equal(9993)
+                ).to.equal(9987)
 
                 await contract.mintWithSignature(
                     tokenId,
@@ -184,7 +185,7 @@ describe('PixelAvatars contract', function () {
                         ethers.utils.formatEther(balanceAfterPayingEth),
                         10
                     )
-                ).to.equal(9793)
+                ).to.equal(9787)
 
                 // should be approx 200 eth less after withdrawal (rounded off to avoid including gas fee)
                 await contract.withdraw()
@@ -194,7 +195,7 @@ describe('PixelAvatars contract', function () {
                         ethers.utils.formatEther(balanceAfterWithdrawal),
                         10
                     )
-                ).to.equal(9993)
+                ).to.equal(9987)
             })
         })
     })
