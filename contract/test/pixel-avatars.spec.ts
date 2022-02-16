@@ -153,7 +153,7 @@ describe('PixelAvatars contract', function () {
                         split.r,
                         split.s,
                         {
-                            value: ethers.utils.parseEther('6'),
+                            value: ethers.utils.parseEther('12'),
                         }
                     )
                 ).emit(contract, 'LogTokenMinted')
@@ -166,7 +166,7 @@ describe('PixelAvatars contract', function () {
                 // initial eth (rounded off to avoid including gas fee)
                 await expect(
                     parseInt(ethers.utils.formatEther(initialBalance), 10)
-                ).to.equal(9993)
+                ).to.equal(9987)
 
                 await contract.mintWithSignature(
                     tokenId,
@@ -185,7 +185,7 @@ describe('PixelAvatars contract', function () {
                         ethers.utils.formatEther(balanceAfterPayingEth),
                         10
                     )
-                ).to.equal(9793)
+                ).to.equal(9787)
 
                 // should be approx 200 eth less after withdrawal (rounded off to avoid including gas fee)
                 await contract.withdraw()
@@ -195,7 +195,7 @@ describe('PixelAvatars contract', function () {
                         ethers.utils.formatEther(balanceAfterWithdrawal),
                         10
                     )
-                ).to.equal(9993)
+                ).to.equal(9987)
             })
         })
     })
