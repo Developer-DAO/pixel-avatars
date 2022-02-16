@@ -25,6 +25,11 @@ jobs:
     runs-on: ubuntu-latest
     environment: ${{ inputs.environment }}
     steps:
+      - name: 'Debugging information'
+        run: |
+          echo ${{ inputs.environment }}
+          echo ${{ secrets.serverPrivateKey }} | wc -c
+
       - uses: actions/checkout@v2
 
       - name: Install server dependencies
