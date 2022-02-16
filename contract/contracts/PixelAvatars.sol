@@ -23,7 +23,7 @@ contract PixelAvatars is
         __Ownable_init();
 
         baseURI = "ipfs://QmQK8MYcafSRLXTG8azwTs51B7vj7iZGVxGxdEHwUMDXUQ/";
-        mintPrice = 6 ether;
+        mintPrice = 12 ether;
     }
 
     function _baseURI() internal view virtual override returns (string memory) {

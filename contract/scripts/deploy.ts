@@ -21,7 +21,9 @@ async function main() {
     await token.setServerAddress(serverAddress)
 
     console.log(
-        `OpenZeppelin Proxy deployed to: ${token.address} for VUE_APP_PIXEL_AVATAR_TOKEN and UPGRADEABLE_PROXY_ADDRESS`
+        `OpenZeppelin Proxy deployed to: ${token.address}\n`+
+        `Please add the following line to your "contract/.env": UPGRADEABLE_PROXY_ADDRESS=${token.address}\n` +
+        `Please add the following line to your "web-client/.env": VUE_APP_PIXEL_AVATAR_TOKEN=${token.address}`
     )
 }
 
