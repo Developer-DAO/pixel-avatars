@@ -1,6 +1,6 @@
 const { GENESIS_RPC, GENESIS_TOKEN } = require('../constants')
 const ethers = require('ethers')
-const genesis = require('../../../abis/GenesisContract.json')
+const genesis = require('../../abis/GenesisContract.json')
 const provider = ethers.getDefaultProvider(GENESIS_RPC)
 
 const contract = new ethers.Contract(GENESIS_TOKEN, genesis.abi, provider)

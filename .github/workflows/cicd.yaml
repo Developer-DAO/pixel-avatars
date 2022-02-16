@@ -1,0 +1,81 @@
+name: Continuous Integration & Deployment
+on: [push]
+jobs:
+  tests:
+    name: Run tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@master
+        with:
+          node-version: "16.x"
+
+      - name: node version
+        run: node --version
+
+      - name: Install contract dependencies
+        run: yarn
+        working-directory: ./contract
+
+      - name: Install server dependencies
+        run: yarn
+        working-directory: ./web-server
+
+      - name: contract - test
+        run: yarn test-ci
+        working-directory: ./contract
+
+  styling:
+    name: Fix code style
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'push' }}
+    needs: tests
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Prettify web-client
+      run: yarn && yarn style
+      working-directory: ./web-client
+
+    - name: Prettify web-server
+      run: yarn && yarn style
+      working-directory: ./web-server
+
+    - name: Prettify contract
+      run: yarn && yarn style
+      working-directory: ./contract
+
+    - name: Commit style fixes
+      uses: stefanzweifel/git-auto-commit-action@v4
+      with:
+        commit_message: Code style fixes [skip ci]
+        commit_user_name: Github Action
+
+  deploy-staging:
+    if: github.ref == 'refs/heads/staging'
+    needs: styling
+    uses: './.github/workflows/deploy.yaml'
+    with:
+      environment: 'Staging'
+      deployOptions: ''
+    secrets:
+      serverPrivateKey: ${{ secrets.SERVER_PRIVATE_KEY }}
+      vercelOrganizationId: ${{ secrets.VERCEL_ORG_ID }}
+      vercelProjectId: ${{ secrets.VERCEL_PROJECT_ID }}
+      vercelToken: ${{ secrets.VERCEL_TOKEN }}
+
+  deploy-production:
+    if: github.ref == 'refs/heads/main'
+    needs: styling
+    uses: './.github/workflows/deploy.yaml'
+    with:
+      environment: 'Production'
+      deployOptions: '--prod'
+    secrets:
+      serverPrivateKey: ${{ secrets.SERVER_PRIVATE_KEY }}
+      vercelOrganizationId: ${{ secrets.VERCEL_ORG_ID }}
+      vercelProjectId: ${{ secrets.VERCEL_PROJECT_ID }}
+      vercelToken: ${{ secrets.VERCEL_TOKEN }}
