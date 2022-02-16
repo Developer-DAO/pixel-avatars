@@ -81,6 +81,8 @@ Also **Upgradeable Contract** means there are two types of deploys:
 
 2. After deploy or upgrade, make sure you check-in the JSON file in `.openzeppelin` so that the contract can be upgraded next time.
 
+3. To verify deployment visit https://polygonscan.com/ (or https://mumbai.polygonscan.com/ for Mumbai) and search for the account that deployed the contract. There should be 3 contracts upon initial deploy and then only 1 each time contract is upgraded.
+
 ### Compile contract
 
 This will lint and style your code, as well as create artifacts consumed by the frontend.
