@@ -12,19 +12,17 @@ NOTE: If you want to only run the front-end (and rely on a deployed contract and
 
 ### Setup web server
 
-Follow instructions in [web-server/README.md](./web-server/README.md), specifically the `Creating a keypair` section, then the `Start the Webserver` section. (The earlier pieces are for running the web server against )
+Follow instructions in [web-server/README.md](./web-server/README.md), specifically the `Creating a keypair` section, then the `Start the Webserver` section.
 
 ### Setup Contract on Polygon Mumbai Testnet
-
-You can't run the contract locally with hardhat since it's Polygon and not Ethereum.
 
 - Follow instructions in [contract/README.md](./contract/README.md) to get Mumbai Testnet setup, namely setting `MUMBAI_RPC_URL` and `MUMBAI_PRIVATE_KEY` `.env` variables.
 - Change contract:
   - change `PixelAvatars.sol` mintPrice to `0.01 ether` for testing at a cheaper price
   - set the `serverAddress` variables to the SERVER_ADDRESS from `contract/.env`, created in the `Generate a keypair` step)
-  - Deploy to Mumbai via `yarn compile && yarn deploy:mumbai`. You'll see a value next to the `Token address` line.
-  - Visit https://mumbai.polygonscan.com and find that token address. From there find the `contract` address.
-  - Add `contract` address to `web-client/.env` for the `VUE_APP_PIXEL_AVATAR_TOKEN` variable.
+  - Deploy to Mumbai. See Deploy section in [contract/README.md](./contract/README.md).
+  - At end of instructions, you should have a OpenZeppelin Proxy address.
+  - Add that proxy address to `web-client/.env` for the `VUE_APP_PIXEL_AVATAR_TOKEN` variable.
 
 ### Run front-end
 
