@@ -12,11 +12,9 @@ NOTE: If you want to only run the front-end (and rely on a deployed contract and
 
 ### Setup web server
 
-Follow instructions in [web-server/README.md](./web-server/README.md), specifically the `Creating a keypair` section, then the `Start the Webserver` section. (The earlier pieces are for running the web server against a contract running on a non-local blockchain)
+Follow instructions in [web-server/README.md](./web-server/README.md), specifically the `Creating a keypair` section, then the `Start the Webserver` section.
 
 ### Setup Contract on Polygon Mumbai Testnet
-
-You can't run the contract locally with hardhat since it's Polygon and not Ethereum.
 
 - Follow instructions in [contract/README.md](./contract/README.md) to get Mumbai Testnet setup, namely setting `MUMBAI_RPC_URL` and `MUMBAI_PRIVATE_KEY` `.env` variables.
 - Change contract:
