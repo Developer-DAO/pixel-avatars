@@ -19,7 +19,7 @@ contract PixelAvatars is
     address public serverAddress;
 
     function initialize() public initializer {
-        __ERC721_init("Pixel Avatars", "PXLAVTR");
+        __ERC721_init("Pixel Avatars", "PXLDEV");
         __Ownable_init();
 
         baseURI = "ipfs://QmQK8MYcafSRLXTG8azwTs51B7vj7iZGVxGxdEHwUMDXUQ/";
