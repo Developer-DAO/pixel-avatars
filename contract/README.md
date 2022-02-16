@@ -64,8 +64,6 @@ Now you may deploy your contract locally.
 
 ## Deployment
 
-**IMPORTANT: Before deploying**
-
 Our contract is **upgradeable**. This means that there are now three contracts -- and the proxy holds the data while the deployed contract holds the code. This way you can upgrade the contract without losing your data. There are some changes, for example you replace constructors with inializers.
 
 I'd suggest you read OpenZeppelin's Upgrades Plugin [How Plugins Work](https://docs.openzeppelin.com/upgrades-plugins/1.x/#how-plugins-work) to get more familiar. I also found this forum post helpful: <https://forum.openzeppelin.com/t/openzeppelin-upgrades-step-by-step-tutorial-for-hardhat/3580>.
@@ -75,11 +73,13 @@ Also **Upgradeable Contract** means there are two types of deploys:
 -   an initial deploy (only do once to setup initial 3 contracts), and
 -   an upgrade deploy on each subsequent release
 
-Please make sure that you have set the correct `SERVER_ADDRESS` in the `.env` file. The address should correspond to the associated webserver private key.
+**!!**
+**IMPORTANT: BEFORE AND AFTER DEPLOYING**
+**!!**
 
-Each environment should have their separate keypair - this is important.
+1. Before deploy or upgrade, please make sure that you have set the correct `SERVER_ADDRESS` in the `.env` file. The address should correspond to the associated webserver private key. Each environment should have their separate keypair - this is important. See `/web-server/README.md` for more information.
 
-See `/web-server/README.md` for more information.
+2. After deploy or upgrade, make sure you check-in the JSON file in `.openzeppelin` so that the contract can be upgraded next time.
 
 ### Compile contract
 
