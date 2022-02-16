@@ -103,7 +103,7 @@ or
 
 ```shell
 # make sure UPGRADEABLE_PROXY_ADDRESS .env has a value that points to OpenZeppelin Proxy contract.
-yarn compile && yarn upgrade
+yarn compile && yarn run upgrade
 ```
 
 **Polygon mainnet**
