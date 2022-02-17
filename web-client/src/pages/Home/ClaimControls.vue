@@ -151,7 +151,10 @@ watch(client.isConnected, async (isConnected) => {
             Error: {{ errorMessage }}
         </Alert>
 
-        <Alert v-if="availableTokens !== null && availableTokens.length === 0" class="mt-3">
+        <Alert
+            v-if="availableTokens !== null && availableTokens.length === 0"
+            class="mt-3"
+        >
             No genesis tokens are available on this address. You must own a
             genesis token before you can claim an avatar.
         </Alert>
