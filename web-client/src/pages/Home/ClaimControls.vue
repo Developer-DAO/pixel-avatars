@@ -1,5 +1,7 @@
 <script setup>
 import Alert from '../../components/ui/Alert.vue'
+import InsufficientFundsModal from '../../components/InsufficientFundsModal'
+import EmptyInventoryModal from '../../components/EmptyInventoryModal'
 import useAvatarContract from './useAvatarContract'
 import { computed, inject, ref, watch } from 'vue'
 import {
@@ -24,6 +26,7 @@ const claimToken = ref(null)
 const claimState = ref(CLAIMING_STATES.IDLE)
 const errorMessage = ref(null)
 const mintPriceEther = ref(null)
+const showModal = ref(null)
 const openSeaUrl = computed(
     () => `${OPEN_SEA_URL}/${client.connectedAddress.value}`
 )
@@ -36,10 +39,19 @@ async function startClaiming() {
 
         claimState.value = CLAIMING_STATES.SUCCESS
         errorMessage.value = null
+        showModal.value = null
     } catch (error) {
         claimState.value = CLAIMING_STATES.ERROR
         errorMessage.value = error.message
+
+        if (errorMessage.value.includes('insufficient funds')) {
+            showModal.value = 'insufficient_funds'
+        }
     }
+}
+
+function closeModal() {
+    showModal.value = null
 }
 
 function updatePreview() {
@@ -70,12 +82,16 @@ watch(previewState.developer, (developer) => {
 // Load available tokens + mint price when connected to wallet
 watch(client.isConnected, async (isConnected) => {
     if (isConnected) {
+        claimState.value = CLAIMING_STATES.IDLE
+        claimToken.value = null
+        errorMessage.value = null
         availableTokens.value = await avatarContract.getAvailableTokens()
         mintPriceEther.value = await avatarContract.getMintPriceInEther()
 
-        // If signer has at least one token, auto-pick the first one
-        // then refresh preview
-        if (availableTokens.value.length) {
+        if (availableTokens.value.length === 0) {
+            showModal.value = 'empty_inventory'
+        } else {
+            // Initially set first token for mint
             claimToken.value = availableTokens.value[0]
             updatePreview()
         }
@@ -135,51 +151,53 @@ watch(client.isConnected, async (isConnected) => {
             Error: {{ errorMessage }}
         </Alert>
 
-        <template v-if="availableTokens !== null">
-            <div v-if="availableTokens.length > 0">
-                <div class="mt-3 relative">
-                    <select
-                        v-model="claimToken"
-                        dir="rtl"
-                        class="input-select !pr-12"
-                        @change="updatePreview"
-                    >
-                        <option :value="null" />
-                        <option
-                            v-for="token in availableTokens"
-                            :key="token"
-                            :value="token"
-                            v-text="token"
-                        />
-                    </select>
-                    <div
-                        class="
-                            absolute
-                            left-0
-                            top-0
-                            bottom-1
-                            flex
-                            items-center
-                            text-sm text-gray-600
-                        "
-                    >
-                        <span>Your personal tokens</span>
-                    </div>
-                </div>
+        <Alert v-if="availableTokens !== null && availableTokens.length === 0" class="mt-3">
+            No genesis tokens are available on this address. You must own a
+            genesis token before you can claim an avatar.
+        </Alert>
 
-                <div v-if="mintPriceEther" class="mt-4 flex justify-between">
-                    <span class="text-sm text-gray-600">Mint price</span>
-                    <span>
-                        {{ mintPriceEther }}
-                        {{ PIXEL_AVATAR_NETWORK.currencySymbol }}
-                    </span>
-                </div>
+        <div class="mt-3 relative">
+            <select
+                v-model="claimToken"
+                dir="rtl"
+                class="input-select !pr-12"
+                :disabled="availableTokens === null"
+                @change="updatePreview"
+            >
+                <option
+                    :value="null"
+                    v-text="availableTokens === null ? 'Loading' : ''"
+                />
+                <option
+                    v-for="token in availableTokens ?? []"
+                    :key="token"
+                    :value="token"
+                    v-text="token"
+                />
+            </select>
+            <div
+                class="
+                    absolute
+                    left-0
+                    top-0
+                    bottom-1
+                    flex
+                    items-center
+                    text-sm text-gray-600
+                "
+            >
+                <span>Your personal tokens</span>
             </div>
-            <Alert v-else>
-                No genesis tokens are available on this address. You must own a
-                genesis token before you can claim an avatar.
-            </Alert>
-        </template>
+        </div>
+
+        <div class="mt-4 flex justify-between">
+            <span class="text-sm text-gray-600">Mint price</span>
+            <span class="flex items-center space-x-1">
+                <span v-if="mintPriceEther" v-text="mintPriceEther" />
+                <span v-else class="h-1 w-40 bg-blue-100 rounded-lg" />
+                <span v-text="PIXEL_AVATAR_NETWORK.currencySymbol" />
+            </span>
+        </div>
 
         <div class="mt-5 text-right">
             <button
@@ -208,5 +226,17 @@ watch(client.isConnected, async (isConnected) => {
                 <span v-else>Claim avatar</span>
             </button>
         </div>
+
+        <EmptyInventoryModal
+            :show="showModal === 'empty_inventory'"
+            @switchAccount="closeModal() || client.retryConnect(true)"
+            @disconnect="closeModal() || client.disconnect()"
+            @close="closeModal()"
+        />
+
+        <InsufficientFundsModal
+            :show="showModal === 'insufficient_funds'"
+            @close="closeModal()"
+        />
     </div>
 </template>

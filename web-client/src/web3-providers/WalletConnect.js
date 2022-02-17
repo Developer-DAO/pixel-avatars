@@ -22,12 +22,18 @@ export default class WalletConnect {
     async disconnect() {
         if (this.provider) {
             await this.provider.disconnect()
+
+            // It seems that Wallet Connect needs to wait a second before it fully disconnects.
+            // This is necessary in case we try to connect again immediately afterwards.
+            await new Promise((resolve) => setTimeout(resolve, 500))
         }
 
         this.provider = null
     }
 
     async changeNetwork() {
-        throw Error('Unsupported action')
+        alert(
+            'This method is currently only supported using MetaMask Chrome extension. Please change network manually and reconnect.'
+        )
     }
 }

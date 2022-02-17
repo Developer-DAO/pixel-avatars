@@ -5,7 +5,18 @@ export default class MetaMask {
         this.provider = window.ethereum
     }
 
-    async connect() {
+    async connect(triggerPrompt = false) {
+        if (triggerPrompt) {
+            await this.provider.request({
+                method: 'wallet_requestPermissions',
+                params: [
+                    {
+                        eth_accounts: {},
+                    },
+                ],
+            })
+        }
+
         const [address] = await this.provider.request({
             method: 'eth_requestAccounts',
         })
