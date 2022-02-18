@@ -176,7 +176,7 @@ watch(client.isConnected, async (isConnected) => {
                     v-text="availableTokens === null ? 'Loading' : ''"
                 />
                 <option
-                    v-for="({ token, minted }) in availableTokens ?? []"
+                    v-for="{ token, minted } in availableTokens ?? []"
                     :key="token"
                     :value="token"
                     v-text="token + (minted ? ' - Minted' : '')"

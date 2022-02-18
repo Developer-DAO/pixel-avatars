@@ -42,10 +42,10 @@ export default function useAvatarContract() {
                 `${SERVER_URL}/owners/${client.connectedAddress.value}/inventory`
             )
 
-            const promises = response.data.data.map(async token => {
+            const promises = response.data.data.map(async (token) => {
                 return {
                     token: token,
-                    minted: (await this.getOwnerOf(token)) !== null
+                    minted: (await this.getOwnerOf(token)) !== null,
                 }
             })
 
@@ -72,7 +72,7 @@ export default function useAvatarContract() {
                 .contract(PIXEL_AVATAR_TOKEN, PixelAvatarContract.abi)
                 .ownerOf(token)
                 .catch(() => null)
-        }
+        },
     }
 }
 
