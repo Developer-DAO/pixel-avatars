@@ -3,7 +3,7 @@ import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
 import { ChevronDownIcon, ExclamationIcon } from '@heroicons/vue/solid'
 import { inject } from 'vue'
 import Address from '../../components/ui/Address'
-import MetaMask from "../../web3-providers/MetaMask";
+import MetaMask from '../../web3-providers/MetaMask'
 
 const client = inject('web3client')
 </script>
@@ -60,7 +60,10 @@ const client = inject('web3client')
                 "
             >
                 <div class="py-1">
-                    <MenuItem v-slot="{ active }" :disabled="! MetaMask.isAvailable()">
+                    <MenuItem
+                        v-slot="{ active }"
+                        :disabled="!MetaMask.isAvailable()"
+                    >
                         <button
                             :class="[
                                 active
@@ -80,7 +83,10 @@ const client = inject('web3client')
                                 alt="MetaMask Logo"
                             />
                             <span class="flex-1">MetaMask</span>
-                            <ExclamationIcon class="w-4 h-4 text-gray-600" v-if="! MetaMask.isAvailable()" />
+                            <ExclamationIcon
+                                v-if="!MetaMask.isAvailable()"
+                                class="w-4 h-4 text-gray-600"
+                            />
                         </button>
                     </MenuItem>
                     <MenuItem v-slot="{ active }">

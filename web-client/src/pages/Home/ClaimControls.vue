@@ -111,7 +111,9 @@ watch(client.isConnected, async (isConnected) => {
         if (availableTokens.value.length === 0) {
             showModal.value = 'empty_inventory'
         } else {
-            claimToken.value = findTokenInInventory(previewState.developer.value)
+            claimToken.value = findTokenInInventory(
+                previewState.developer.value
+            )
                 ? previewState.developer.value
                 : availableTokens.value[0].token
 
