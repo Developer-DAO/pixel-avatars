@@ -40,6 +40,9 @@ async function startClaiming() {
         claimState.value = CLAIMING_STATES.SUCCESS
         errorMessage.value = null
         showModal.value = null
+
+        // Refresh available tokens
+        availableTokens.value = await avatarContract.getAvailableTokens()
     } catch (error) {
         claimState.value = CLAIMING_STATES.ERROR
         errorMessage.value = error.message
@@ -93,7 +96,7 @@ watch(client.isConnected, async (isConnected) => {
             showModal.value = 'empty_inventory'
         } else {
             // Initially set first token for mint
-            claimToken.value = availableTokens.value[0]
+            claimToken.value = availableTokens.value[0].token
             updatePreview()
         }
     }
@@ -173,10 +176,10 @@ watch(client.isConnected, async (isConnected) => {
                     v-text="availableTokens === null ? 'Loading' : ''"
                 />
                 <option
-                    v-for="token in availableTokens ?? []"
+                    v-for="({ token, minted }) in availableTokens ?? []"
                     :key="token"
                     :value="token"
-                    v-text="token"
+                    v-text="token + (minted ? ' - Minted' : '')"
                 />
             </select>
             <div
