@@ -43,6 +43,9 @@ async function startClaiming() {
 
         // Refresh available tokens
         availableTokens.value = await avatarContract.getAvailableTokens()
+
+        // Refresh owner status in preview
+        previewState.updateDeveloper()
     } catch (error) {
         claimState.value = CLAIMING_STATES.ERROR
         errorMessage.value = error.message

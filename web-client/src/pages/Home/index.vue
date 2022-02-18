@@ -51,7 +51,7 @@ provide('previewState', previewState)
         <div class="sm:w-3/5 bg-gray-100 border-l border-gray-200">
             <div class="flex flex-col sm:min-h-screen sm:sticky sm:top-0">
                 <div class="-mb-10 flex-1 flex items-center justify-center">
-                    <Preview :state="previewState" class="flex-1 max-w-md" />
+                    <Preview class="flex-1 max-w-md" />
                 </div>
 
                 <div class="flex justify-end p-4">

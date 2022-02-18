@@ -2,6 +2,7 @@
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
 import { ChevronDownIcon } from '@heroicons/vue/solid'
 import { inject } from 'vue'
+import Address from '../../components/ui/Address'
 
 const client = inject('web3client')
 </script>
@@ -110,9 +111,9 @@ const client = inject('web3client')
     <div v-else class="flex-1 min-w-0 flex flex-col items-end space-y-1">
         <span class="text-sm text-gray-500">Connected to</span>
         <div>
-            <span
+            <Address
+                v-model="client.connectedAddress.value"
                 class="text-sm font-semibold truncate"
-                v-text="client.connectedAddress.value.substr(0, 20) + '...'"
             />
         </div>
         <button
