@@ -23,11 +23,7 @@ const availableTokens = ref(null)
 const claimState = ref(CLAIMING_STATES.IDLE)
 const claimToken = ref(null)
 const claimTokenIsMinted = computed(() => {
-    return (
-        (availableTokens.value ?? []).find(
-            (obj) => obj.token === claimToken.value
-        )?.minted === true
-    )
+    return findTokenInInventory(claimToken.value)?.minted === true
 })
 const claimButtonDisabled = computed(() => {
     return (
@@ -74,11 +70,9 @@ function closeModal() {
     showModal.value = null
 }
 
-function hasTokenInInventory(token) {
-    return (
-        (availableTokens.value ?? []).findIndex(
-            (obj) => parseInt(obj.token) === parseInt(token)
-        ) > -1
+function findTokenInInventory(token) {
+    return (availableTokens.value ?? []).find(
+        (obj) => parseInt(obj.token) === parseInt(token)
     )
 }
 
@@ -98,7 +92,7 @@ watch(previewState.developer, (developer) => {
         return
     }
 
-    if (hasTokenInInventory(token)) {
+    if (findTokenInInventory(token)) {
         return (claimToken.value = token)
     }
 
@@ -117,7 +111,7 @@ watch(client.isConnected, async (isConnected) => {
         if (availableTokens.value.length === 0) {
             showModal.value = 'empty_inventory'
         } else {
-            claimToken.value = hasTokenInInventory(previewState.developer.value)
+            claimToken.value = findTokenInInventory(previewState.developer.value)
                 ? previewState.developer.value
                 : availableTokens.value[0].token
 

@@ -76,7 +76,7 @@ watchEffect(async () => {
                     </p>
                 </DialogDescription>
 
-                <div class="mt-4">
+                <div class="mt-4 bg-blue-100 rounded-md min-h-[16rem] md:min-h-[20rem]">
                     <img v-if="image" :src="image" class="w-full rounded-md" />
                 </div>
             </div>

@@ -59,4 +59,8 @@ export default class MetaMask {
             })
         }
     }
+
+    static isAvailable() {
+        return typeof window.ethereum !== 'undefined'
+    }
 }
