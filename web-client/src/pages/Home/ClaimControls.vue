@@ -2,13 +2,11 @@
 import Alert from '../../components/ui/Alert.vue'
 import InsufficientFundsModal from '../../components/InsufficientFundsModal'
 import EmptyInventoryModal from '../../components/EmptyInventoryModal'
+import ShareModal from '../../components/ShareModal'
 import useAvatarContract from './useAvatarContract'
-import { computed, inject, ref, watch } from 'vue'
-import {
-    OPEN_SEA_URL,
-    PIXEL_AVATAR_NETWORK,
-    TEST_MINT_GENESIS_URL,
-} from '../../constants'
+import { computed, inject, ref, watch, watchEffect } from 'vue'
+import { PIXEL_AVATAR_NETWORK, TEST_MINT_GENESIS_URL } from '../../constants'
+import { CheckIcon } from '@heroicons/vue/outline'
 
 const CLAIMING_STATES = Object.freeze({
     IDLE: 'idle',
@@ -22,14 +20,26 @@ const previewState = inject('previewState')
 const avatarContract = useAvatarContract()
 
 const availableTokens = ref(null)
-const claimToken = ref(null)
 const claimState = ref(CLAIMING_STATES.IDLE)
+const claimToken = ref(null)
+const claimTokenIsMinted = computed(() => {
+    return (
+        (availableTokens.value ?? []).find(
+            (obj) => obj.token === claimToken.value
+        )?.minted === true
+    )
+})
+const claimButtonDisabled = computed(() => {
+    return (
+        claimTokenIsMinted.value ||
+        [CLAIMING_STATES.LOADING, CLAIMING_STATES.SUCCESS].indexOf(
+            claimState.value
+        ) > -1
+    )
+})
 const errorMessage = ref(null)
 const mintPriceEther = ref(null)
 const showModal = ref(null)
-const openSeaUrl = computed(
-    () => `${OPEN_SEA_URL}/${client.connectedAddress.value}`
-)
 
 async function startClaiming() {
     try {
@@ -46,6 +56,9 @@ async function startClaiming() {
 
         // Refresh owner status in preview
         previewState.updateDeveloper()
+
+        // Show share modal
+        showModal.value = 'share'
     } catch (error) {
         claimState.value = CLAIMING_STATES.ERROR
         errorMessage.value = error.message
@@ -61,6 +74,14 @@ function closeModal() {
     showModal.value = null
 }
 
+function hasTokenInInventory(token) {
+    return (
+        (availableTokens.value ?? []).findIndex(
+            (obj) => parseInt(obj.token) === parseInt(token)
+        ) > -1
+    )
+}
+
 function updatePreview() {
     claimState.value = CLAIMING_STATES.IDLE
     errorMessage.value = null
@@ -71,16 +92,14 @@ function updatePreview() {
 
 // Automatically set claimToken based on previewState
 watch(previewState.developer, (developer) => {
-    if (claimToken.value === developer) {
+    const token = parseInt(developer)
+
+    if (token === parseInt(claimToken.value) && !isNaN(token)) {
         return
     }
 
-    if (
-        availableTokens.value &&
-        availableTokens.value.indexOf(developer) > -1
-    ) {
-        claimToken.value = developer
-        return
+    if (hasTokenInInventory(token)) {
+        return (claimToken.value = token)
     }
 
     claimToken.value = null
@@ -98,8 +117,10 @@ watch(client.isConnected, async (isConnected) => {
         if (availableTokens.value.length === 0) {
             showModal.value = 'empty_inventory'
         } else {
-            // Initially set first token for mint
-            claimToken.value = availableTokens.value[0].token
+            claimToken.value = hasTokenInInventory(previewState.developer.value)
+                ? previewState.developer.value
+                : availableTokens.value[0].token
+
             updatePreview()
         }
     }
@@ -141,17 +162,12 @@ watch(client.isConnected, async (isConnected) => {
         </Alert>
 
         <Alert
-            v-if="claimState === CLAIMING_STATES.SUCCESS"
-            class="mt-3 space-y-2"
+            v-if="claimTokenIsMinted"
+            class="mt-3 flex items-center space-x-1"
             color="green"
         >
-            <p><b>Congratulations!</b> 🎉🚀.</p>
-            <p>You are now the official owner of avatar #{{ claimToken }}.</p>
-            <p>
-                <a :href="openSeaUrl" target="_blank" class="text-blue-600">
-                    Check out your account on OpenSea ↗
-                </a>
-            </p>
+            <span>You have successfully minted this avatar.</span>
+            <CheckIcon class="w-4 h-4" />
         </Alert>
 
         <Alert v-if="errorMessage" class="mt-3" style="overflow-wrap: anywhere">
@@ -196,7 +212,7 @@ watch(client.isConnected, async (isConnected) => {
                     text-sm text-gray-600
                 "
             >
-                <span>Your personal tokens</span>
+                <span>Available tokens</span>
             </div>
         </div>
 
@@ -221,13 +237,9 @@ watch(client.isConnected, async (isConnected) => {
                     px-4
                     w-full
                     max-w-[12rem]
-                    disabled:bg-opacity-70
+                    disabled:bg-opacity-60 disabled:cursor-not-allowed
                 "
-                :disabled="
-                    [CLAIMING_STATES.LOADING, CLAIMING_STATES.SUCCESS].indexOf(
-                        claimState
-                    ) > -1
-                "
+                :disabled="claimButtonDisabled"
                 @click="startClaiming()"
             >
                 <span v-if="claimState === CLAIMING_STATES.LOADING">
@@ -246,6 +258,13 @@ watch(client.isConnected, async (isConnected) => {
 
         <InsufficientFundsModal
             :show="showModal === 'insufficient_funds'"
+            @close="closeModal()"
+        />
+
+        <ShareModal
+            v-if="claimToken"
+            :show="showModal === 'share'"
+            :token="claimToken"
             @close="closeModal()"
         />
     </div>

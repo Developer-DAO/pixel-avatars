@@ -73,6 +73,13 @@ export default function useAvatarContract() {
                 .ownerOf(token)
                 .catch(() => null)
         },
+
+        getTokenUri(token) {
+            return client
+                .contract(PIXEL_AVATAR_TOKEN, PixelAvatarContract.abi)
+                .tokenURI(token)
+                .catch(() => null)
+        },
     }
 }
 

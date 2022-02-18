@@ -1,13 +1,16 @@
 <script setup>
 import { computed, inject, ref, watchEffect } from 'vue'
-import { ExternalLinkIcon } from '@heroicons/vue/outline'
+import { ExternalLinkIcon, ShareIcon } from '@heroicons/vue/outline'
 import { OPEN_SEA_URL } from '../../constants'
 import useAvatarContract from './useAvatarContract'
 import Address from '../../components/ui/Address'
+import ShareModal from '../../components/ShareModal'
+import Button from '../../components/ui/Button'
 
 const avatarContract = useAvatarContract()
 const client = inject('web3client')
 const state = inject('previewState')
+const showModal = ref(false)
 const owner = ref(null)
 const ownerLink = computed(() =>
     owner.value ? `${OPEN_SEA_URL}/${owner.value}` : null
@@ -41,21 +44,39 @@ watchEffect(async () => {
 
         <div class="text-gray-500 text-sm">
             <span v-if="client.isConnected.value">
-                <span v-if="owner">
-                    <span>Owned by </span>
-                    <a
-                        class="text-blue-600 inline-flex space-x-1"
-                        :href="ownerLink"
-                        target="_blank"
-                    >
-                        <span v-if="ownedByUser">You</span>
-                        <Address v-else v-model="owner" />
-                        <ExternalLinkIcon class="h-4 w-4 text-blue-400" />
-                    </a>
+                <span v-if="owner" class="flex justify-between">
+                    <span>
+                        <span>Owned by </span>
+                        <a
+                            class="text-blue-600 inline-flex space-x-1"
+                            :href="ownerLink"
+                            target="_blank"
+                        >
+                            <span v-if="ownedByUser">You</span>
+                            <Address v-else v-model="owner" />
+                            <ExternalLinkIcon class="h-4 w-4 text-blue-400" />
+                        </a>
+                    </span>
+                    <span>
+                        <button
+                            class="flex items-center space-x-1"
+                            @click="showModal = true"
+                        >
+                            <span>Share</span>
+                            <ShareIcon class="h-4 w-4" />
+                        </button>
+                    </span>
                 </span>
-                <span v-else> Available for mint </span>
+                <span v-else> Not minted yet </span>
             </span>
             <span v-else> Connect wallet to check owner status </span>
         </div>
+
+        <ShareModal
+            v-if="client.isConnected.value"
+            :token="state.developer.value"
+            :show="showModal"
+            @close="showModal = false"
+        />
     </div>
 </template>
