@@ -45,6 +45,7 @@ async function startClaiming() {
         errorMessage.value = error.message
 
         if (errorMessage.value.includes('insufficient funds')) {
+            errorMessage.value = 'Insufficient funds in wallet.'
             showModal.value = 'insufficient_funds'
         }
     }
