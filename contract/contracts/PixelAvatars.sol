@@ -5,7 +5,6 @@ import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/token/ERC721/extensions/ERC721EnumerableUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/utils/StringsUpgradeable.sol";
-import "hardhat/console.sol";
 
 /// @author Developer DAO
 /// @title The Pixel Avatar smart contract that is compliant to ERC721 standard and is upgradeable
@@ -17,6 +16,14 @@ contract PixelAvatars is
     string public baseURI;
     uint256 public mintPrice;
     address public serverAddress;
+
+    event LogTokenMinted(address indexed minter, uint256 indexed tokenId);
+    event BaseURIUpdated(string indexed oldValue, string indexed newValue);
+    event MintPriceUpdated(uint256 indexed oldValue, uint256 indexed newValue);
+    event ServerAddressUpdated(
+        address indexed oldValue,
+        address indexed newValue
+    );
 
     function initialize() public initializer {
         __ERC721_init("Pixel Avatars", "PXLDEV");
@@ -30,20 +37,21 @@ contract PixelAvatars is
         return baseURI;
     }
 
-    function setBaseURI(string memory _newBaseURI) public onlyOwner {
+    function setBaseURI(string memory _newBaseURI) external onlyOwner {
+        emit BaseURIUpdated(baseURI, _newBaseURI);
         baseURI = _newBaseURI;
     }
 
-    function setMintPrice(uint256 _newPrice) public onlyOwner {
+    function setMintPrice(uint256 _newPrice) external onlyOwner {
         // Mint price in wei
+        emit MintPriceUpdated(mintPrice, _newPrice);
         mintPrice = _newPrice;
     }
 
-    function setServerAddress(address _address) public onlyOwner {
+    function setServerAddress(address _address) external onlyOwner {
+        emit ServerAddressUpdated(serverAddress, _address);
         serverAddress = _address;
     }
-
-    event LogTokenMinted(address minter, uint256 tokenId);
 
     modifier validServerSignature(
         uint256 tokenId,
@@ -76,19 +84,19 @@ contract PixelAvatars is
         bytes32 r,
         bytes32 s
     )
-        public
+        external
         payable
         nonReentrant
         validServerSignature(tokenId, deadline, v, r, s)
     {
-        require(mintPrice <= msg.value, "Not enough ether sent");
+        require(mintPrice <= msg.value, "Not enough MATIC sent");
 
         _safeMint(msg.sender, tokenId);
 
         emit LogTokenMinted(msg.sender, tokenId);
     }
 
-    function withdraw() public onlyOwner {
+    function withdraw() external onlyOwner {
         payable(msg.sender).transfer(address(this).balance);
     }
 }
