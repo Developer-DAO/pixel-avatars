@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 body {
-    @apply bg-gray-200 dark:bg-blue-900;
+    @apply bg-white dark:bg-gray-900;
 }
 
 .input-text,
