@@ -7,7 +7,11 @@ const state = inject('previewState')
 const show = ref(true)
 
 watchEffect(() => {
-    show.value = !client.isConnected.value
+    if (client.isConnected.value) {
+        setTimeout(() => (show.value = false), 200)
+    } else {
+        show.value = true
+    }
 })
 </script>
 
@@ -23,9 +27,10 @@ watchEffect(() => {
                 space-x-1
                 text-sm text-gray-600
                 w-full
-                bg-blue-50
+                bg-gray-100
                 rounded-full
                 p-1
+                dark:bg-gray-700 dark:bg-opacity-70 dark:text-gray-300
             "
             @click="show = !show"
         >
@@ -54,6 +59,7 @@ watchEffect(() => {
                             text-gray-600
                             uppercase
                             tracking-2
+                            dark:text-gray-300
                         "
                     >
                         Developer
@@ -77,6 +83,7 @@ watchEffect(() => {
                             text-gray-600
                             uppercase
                             tracking-2
+                            dark:text-gray-300
                         "
                     >
                         Traits
@@ -109,6 +116,7 @@ watchEffect(() => {
                                 flex
                                 items-center
                                 text-sm text-gray-600
+                                dark:text-gray-400
                             "
                         >
                             <span v-text="trait.name" />

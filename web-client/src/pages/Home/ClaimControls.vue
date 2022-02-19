@@ -1,5 +1,6 @@
 <script setup>
 import Alert from '../../components/ui/Alert.vue'
+import Button from '../../components/ui/Button.vue'
 import InsufficientFundsModal from '../../components/InsufficientFundsModal'
 import EmptyInventoryModal from '../../components/EmptyInventoryModal'
 import ShareModal from '../../components/ShareModal'
@@ -125,18 +126,27 @@ watch(client.isConnected, async (isConnected) => {
 
 <template>
     <div v-if="client.isConnected.value">
-        <h3 class="text-sm font-bold text-gray-600 uppercase tracking-2">
+        <h3
+            class="
+                text-sm
+                font-bold
+                text-gray-600
+                dark:text-gray-300
+                uppercase
+                tracking-2
+            "
+        >
             Your Pixel Devs
         </h3>
 
-        <p class="mt-2 text-gray-600 text-sm">
+        <p class="mt-2 text-gray-600 dark:text-gray-300 text-sm">
             Here is a list of genesis tokens owned by your connected account.
             <br />
             Please select the token number for which you wish to claim your
             Pixel Dev.
         </p>
 
-        <Alert v-if="TEST_MINT_GENESIS_URL" color="yellow">
+        <Alert v-if="TEST_MINT_GENESIS_URL" color="gray">
             <div class="space-y-2">
                 <p><b>TEST MODE</b></p>
                 <p>
@@ -152,7 +162,7 @@ watch(client.isConnected, async (isConnected) => {
                     <a
                         :href="TEST_MINT_GENESIS_URL"
                         target="_blank"
-                        class="text-blue-600"
+                        class="text-blue-700 dark:text-blue-300"
                     >Mint genesis tokens here ↗</a>
                 </p>
             </div>
@@ -207,6 +217,7 @@ watch(client.isConnected, async (isConnected) => {
                     flex
                     items-center
                     text-sm text-gray-600
+                    dark:text-gray-400
                 "
             >
                 <span>Available tokens</span>
@@ -214,7 +225,7 @@ watch(client.isConnected, async (isConnected) => {
         </div>
 
         <div class="mt-4 flex justify-between">
-            <span class="text-sm text-gray-600">Mint price</span>
+            <span class="text-sm text-gray-600 dark:text-gray-400">Mint price</span>
             <span class="flex items-center space-x-1">
                 <span v-if="mintPriceEther" v-text="mintPriceEther" />
                 <span v-else class="h-1 w-40 bg-blue-100 rounded-lg" />
@@ -223,19 +234,9 @@ watch(client.isConnected, async (isConnected) => {
         </div>
 
         <div class="mt-5 text-right">
-            <button
+            <Button
                 v-if="claimToken"
-                class="
-                    bg-black
-                    text-white
-                    rounded
-                    text-sm
-                    py-3
-                    px-4
-                    w-full
-                    max-w-[12rem]
-                    disabled:bg-opacity-60 disabled:cursor-not-allowed
-                "
+                class="w-full max-w-[12rem]"
                 :disabled="claimButtonDisabled"
                 @click="startClaiming()"
             >
@@ -243,7 +244,7 @@ watch(client.isConnected, async (isConnected) => {
                     Claiming...
                 </span>
                 <span v-else>Claim avatar</span>
-            </button>
+            </Button>
         </div>
 
         <EmptyInventoryModal

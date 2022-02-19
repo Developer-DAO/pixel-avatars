@@ -44,8 +44,10 @@ defineEmits(['close'])
                         class="
                             fixed
                             inset-0
+                            backdrop-blur-sm
                             bg-gray-500 bg-opacity-75
                             transition-opacity
+                            dark:bg-gray-900 dark:bg-opacity-75
                         "
                     />
                 </TransitionChild>
@@ -79,6 +81,7 @@ defineEmits(['close'])
                             transform
                             transition-all
                             sm:my-8 sm:align-middle sm:max-w-md sm:w-full sm:p-6
+                            dark:bg-gray-700
                         "
                     >
                         <slot />

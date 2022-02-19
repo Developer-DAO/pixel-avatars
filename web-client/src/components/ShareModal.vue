@@ -59,26 +59,35 @@ watchEffect(async () => {
                     w-12
                     rounded-full
                     bg-green-100
+                    text-green-600
+                    dark:bg-green-500 dark:text-green-100
                 "
             >
-                <CheckIcon class="h-6 w-6 text-green-600" aria-hidden="true" />
+                <CheckIcon class="h-6 w-6" aria-hidden="true" />
             </div>
             <div class="mt-3 text-center sm:mt-5">
                 <DialogTitle
                     as="h3"
-                    class="text-lg leading-6 font-medium text-gray-900"
+                    class="
+                        text-lg
+                        leading-6
+                        font-medium
+                        text-gray-900
+                        dark:text-gray-100
+                    "
                 >
-                    Congratulations! 🎉🚀
+                    Congratulations! 🎉
                 </DialogTitle>
-                <DialogDescription class="mt-2 text-sm text-gray-500">
+                <DialogDescription
+                    class="mt-3 text-sm text-gray-500 dark:text-gray-300"
+                >
                     <p>
                         You are the owner of <b>Pixel Dev #{{ token }}</b>. Here is the full JPEG ready to share on social media.
                     </p>
                 </DialogDescription>
-
                 <div
                     class="
-                        mt-4
+                        mt-5
                         bg-blue-100
                         rounded-md
                         min-h-[16rem]
@@ -103,7 +112,9 @@ watchEffect(async () => {
                 @click="$emit('close')"
             >
                 <span>OpenSea Account</span>
-                <ExternalLinkIcon class="h-4 w-4 text-gray-400" />
+                <ExternalLinkIcon
+                    class="h-4 w-4 text-gray-400 dark:text-gray-300"
+                />
             </Button>
         </div>
     </Modal>

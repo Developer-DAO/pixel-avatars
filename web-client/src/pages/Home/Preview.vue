@@ -32,7 +32,7 @@ watchEffect(async () => {
 
 <template>
     <div class="space-y-4">
-        <svg viewBox="0 0 500 510">
+        <svg viewBox="0 0 500 510" class="rounded-md">
             <g
                 v-for="layer in state.layers.value"
                 :key="layer"
@@ -42,13 +42,18 @@ watchEffect(async () => {
             </g>
         </svg>
 
-        <div class="text-gray-500 text-sm">
+        <div class="text-gray-500 dark:text-gray-400 text-sm">
             <span v-if="client.isConnected.value">
                 <span v-if="owner" class="flex justify-between">
                     <span>
                         <span>Owned by </span>
                         <a
-                            class="text-blue-600 inline-flex space-x-1"
+                            class="
+                                text-blue-600
+                                dark:text-blue-400
+                                inline-flex
+                                space-x-1
+                            "
                             :href="ownerLink"
                             target="_blank"
                         >

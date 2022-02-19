@@ -23,38 +23,56 @@ defineEmits(['switchAccount', 'disconnect', 'close'])
                     w-12
                     rounded-full
                     bg-red-100
+                    text-red-600
+                    dark:bg-red-500 dark:text-white
                 "
             >
-                <ExclamationIcon
-                    class="h-6 w-6 text-red-600"
-                    aria-hidden="true"
-                />
+                <ExclamationIcon class="h-6 w-6" aria-hidden="true" />
             </div>
             <div class="mt-3 text-center sm:mt-5">
                 <DialogTitle
                     as="h3"
-                    class="text-lg leading-6 font-medium text-gray-900"
+                    class="
+                        text-lg
+                        leading-6
+                        font-medium
+                        text-gray-900
+                        dark:text-gray-100
+                    "
                 >
-                    Whoops. No available Genesis NFT
+                    No available Genesis NFT
                 </DialogTitle>
-                <DialogDescription class="mt-2 text-sm text-gray-500">
+                <DialogDescription
+                    class="mt-3 text-sm text-gray-500 dark:text-gray-300"
+                >
                     <p>
-                        It appears the account you have connected with does hold
+                        It appears the account you have connected does not hold
                         any Developer Dao Genesis NFT.
                     </p>
                 </DialogDescription>
             </div>
         </div>
 
-        <div class="mt-5 text-sm text-gray-500 space-y-4">
+        <div
+            class="
+                my-5
+                border-t border-gray-200
+                dark:border-gray-400
+                w-32
+                mx-auto
+            "
+        />
+
+        <div class="text-sm text-gray-500 dark:text-gray-300 space-y-4">
             <p>
                 Only Developer DAO members currently holding a Genesis NFT are
                 eligible to mint the corresponding Pixel Dev.
             </p>
 
             <p>
-                If you are a Developer DAO member seeing this error message
-                please check that you have connected with the correct account.
+                If you are a Developer DAO member seeing this message please
+                check that you have connected with the same account that holds
+                your Genesis NFT on Ethereum.
             </p>
         </div>
 

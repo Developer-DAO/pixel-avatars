@@ -4,6 +4,7 @@ import { ChevronDownIcon, ExclamationIcon } from '@heroicons/vue/solid'
 import { inject } from 'vue'
 import Address from '../../components/ui/Address'
 import MetaMask from '../../web3-providers/MetaMask'
+import Button from '../../components/ui/Button'
 
 const client = inject('web3client')
 </script>
@@ -15,21 +16,8 @@ const client = inject('web3client')
         class="relative inline-block text-left"
     >
         <div>
-            <MenuButton
-                class="
-                    inline-flex
-                    justify-center
-                    w-full
-                    rounded-md
-                    border border-gray-300
-                    shadow-sm
-                    px-4
-                    py-2
-                    bg-black
-                    text-white text-sm
-                "
-            >
-                Connect wallet
+            <MenuButton :as="Button" class="inline-flex items-center">
+                <span>Connect wallet</span>
                 <ChevronDownIcon
                     class="-mr-1 ml-2 h-5 w-5"
                     aria-hidden="true"
@@ -56,6 +44,7 @@ const client = inject('web3client')
                     shadow-lg
                     bg-white
                     ring-1 ring-black ring-opacity-5
+                    dark:bg-gray-700
                     focus:outline-none
                 "
             >
@@ -67,8 +56,8 @@ const client = inject('web3client')
                         <button
                             :class="[
                                 active
-                                    ? 'bg-gray-100 text-gray-900'
-                                    : 'text-gray-700',
+                                    ? 'bg-gray-100 text-gray-900 dark:bg-gray-600 dark:text-gray-100'
+                                    : 'text-gray-700 dark:text-gray-300',
                                 'w-full flex items-center text-left px-4 py-2 text-sm disabled:opacity-70',
                             ]"
                             @click="
@@ -93,8 +82,8 @@ const client = inject('web3client')
                         <button
                             :class="[
                                 active
-                                    ? 'bg-gray-100 text-gray-900'
-                                    : 'text-gray-700',
+                                    ? 'bg-gray-100 text-gray-900 dark:bg-gray-600 dark:text-gray-100'
+                                    : 'text-gray-700 dark:text-gray-300',
                                 'w-full flex items-center text-left px-4 py-2 text-sm',
                             ]"
                             @click="
@@ -117,7 +106,7 @@ const client = inject('web3client')
     </Menu>
 
     <div v-else class="flex-1 min-w-0 flex flex-col items-end space-y-1">
-        <span class="text-sm text-gray-500">Connected to</span>
+        <span class="text-sm text-gray-500 dark:text-gray-400">Connected to</span>
         <div>
             <Address
                 v-model="client.connectedAddress.value"
@@ -125,7 +114,7 @@ const client = inject('web3client')
             />
         </div>
         <button
-            class="text-sm inline text-blue-500"
+            class="text-sm inline text-blue-600 dark:text-blue-400"
             @click="client.disconnect()"
         >
             Disconnect

@@ -23,21 +23,28 @@ defineEmits(['close'])
                     w-12
                     rounded-full
                     bg-red-100
+                    text-red-600
+                    dark:bg-red-500 dark:text-white
                 "
             >
-                <ExclamationIcon
-                    class="h-6 w-6 text-red-600"
-                    aria-hidden="true"
-                />
+                <ExclamationIcon class="h-6 w-6" aria-hidden="true" />
             </div>
             <div class="mt-3 text-center sm:mt-5">
                 <DialogTitle
                     as="h3"
-                    class="text-lg leading-6 font-medium text-gray-900"
+                    class="
+                        text-lg
+                        leading-6
+                        font-medium
+                        text-gray-900
+                        dark:text-gray-100
+                    "
                 >
                     Insufficient funds in wallet
                 </DialogTitle>
-                <DialogDescription class="mt-2 text-sm text-gray-500">
+                <DialogDescription
+                    class="mt-3 text-sm text-gray-500 dark:text-gray-300"
+                >
                     <p>
                         Unfortunately your wallet does not hold enough
                         <b>{{ PIXEL_AVATAR_NETWORK.currencySymbol }}</b> to
@@ -47,7 +54,17 @@ defineEmits(['close'])
             </div>
         </div>
 
-        <div class="mt-5 text-sm text-gray-500">
+        <div
+            class="
+                my-5
+                border-t border-gray-200
+                dark:border-gray-400
+                w-32
+                mx-auto
+            "
+        />
+
+        <div class="text-sm text-gray-500 dark:text-gray-300">
             Don't worry though! Here are some resources that might help get you
             started:
 
@@ -55,7 +72,13 @@ defineEmits(['close'])
                 <li>
                     <a
                         href="https://github.com/Developer-DAO/pixel-avatars/issues/83"
-                        class="text-blue-600 flex items-center space-x-1"
+                        class="
+                            text-blue-600
+                            dark:text-blue-300
+                            flex
+                            items-center
+                            space-x-1
+                        "
                         target="_blank"
                     >
                         <span>How to purchase
@@ -67,7 +90,13 @@ defineEmits(['close'])
                 <li>
                     <a
                         href="https://app.uniswap.org/#/swap?chain=mainnet"
-                        class="text-blue-600 flex items-center space-x-1"
+                        class="
+                            text-blue-600
+                            dark:text-blue-300
+                            flex
+                            items-center
+                            space-x-1
+                        "
                         target="_blank"
                     >
                         <span>Convert other crypto to
