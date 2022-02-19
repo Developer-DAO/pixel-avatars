@@ -16,12 +16,14 @@ const client = inject('web3client')
         class="relative inline-block text-left"
     >
         <div>
-            <MenuButton :as="Button" class="inline-flex items-center">
-                <span>Connect wallet</span>
-                <ChevronDownIcon
-                    class="-mr-1 ml-2 h-5 w-5"
-                    aria-hidden="true"
-                />
+            <MenuButton as="template" class="inline-flex items-center">
+                <Button type="button">
+                    <span>Connect wallet</span>
+                    <ChevronDownIcon
+                        class="-mr-1 ml-2 h-5 w-5"
+                        aria-hidden="true"
+                    />
+                </Button>
             </MenuButton>
         </div>
 

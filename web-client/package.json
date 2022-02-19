@@ -11,7 +11,7 @@
         "style": "npm run prettier && npm run lint"
     },
     "dependencies": {
-        "@headlessui/vue": "^1.4.2",
+        "@headlessui/vue": "1.4.3",
         "@heroicons/vue": "^1.0.5",
         "@tailwindcss/forms": "^0.3.3",
         "@tailwindcss/postcss7-compat": "^2.2.17",
