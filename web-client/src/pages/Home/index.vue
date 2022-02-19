@@ -73,6 +73,7 @@ provide('previewState', previewState)
                 <div
                     class="
                         bg-white
+                        dark:bg-gray-900
                         sm:bg-transparent
                         flex
                         justify-end
