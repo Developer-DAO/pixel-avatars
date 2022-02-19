@@ -19,7 +19,7 @@ provide('previewState', previewState)
 
 <template>
     <div class="min-h-screen flex flex-col sm:flex-row">
-        <div class="sm:w-2/5 bg-white py-10 px-4 flex">
+        <div class="sm:w-2/5 bg-white py-6 sm:py-10 px-4 flex">
             <div
                 class="
                     flex flex-col
@@ -51,10 +51,19 @@ provide('previewState', previewState)
         <div class="sm:w-3/5 bg-gray-100 border-l border-gray-200">
             <div class="flex flex-col sm:min-h-screen sm:sticky sm:top-0">
                 <div class="sm:-mb-12 flex-1 flex items-center justify-center">
-                    <Preview class="flex-1 max-w-md" />
+                    <Preview class="flex-1 max-w-md px-4 py-6 sm:py-10" />
                 </div>
 
-                <div class="bg-white sm:bg-transparent flex justify-end p-4">
+                <div
+                    class="
+                        bg-white
+                        sm:bg-transparent
+                        flex
+                        justify-end
+                        px-4
+                        py-6
+                    "
+                >
                     <a
                         target="_blank"
                         title="Github"

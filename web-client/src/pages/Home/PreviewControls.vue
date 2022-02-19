@@ -12,12 +12,11 @@ watchEffect(() => {
 </script>
 
 <template>
-    <div class="w-full">
+    <div class="w-full space-y-10">
         <button
             v-if="client.isConnected.value"
             type="button"
             class="
-                mb-10
                 flex
                 items-center
                 justify-center
@@ -46,7 +45,7 @@ watchEffect(() => {
             leave-from-class="transform scale-100 opacity-100"
             leave-to-class="transform scale-95 opacity-0"
         >
-            <div v-show="show" class="w-full space-y-10">
+            <div v-if="show" class="w-full space-y-10">
                 <div class="w-full flex flex-col space-y-1">
                     <h3
                         class="

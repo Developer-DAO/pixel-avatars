@@ -31,7 +31,7 @@ watchEffect(async () => {
 </script>
 
 <template>
-    <div class="p-4 space-y-4">
+    <div class="space-y-4">
         <svg viewBox="0 0 500 510">
             <g
                 v-for="layer in state.layers.value"
