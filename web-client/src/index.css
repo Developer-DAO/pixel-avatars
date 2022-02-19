@@ -23,6 +23,12 @@
     box-shadow: none !important;
 }
 
+@-moz-document url-prefix() {
+    .input-select {
+        @apply dark:bg-gray-900;
+    }
+}
+
 button:focus
 /*a:focus,*/
 /*input:focus,*/
