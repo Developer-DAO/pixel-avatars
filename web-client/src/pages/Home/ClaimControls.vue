@@ -5,7 +5,7 @@ import InsufficientFundsModal from '../../components/InsufficientFundsModal'
 import EmptyInventoryModal from '../../components/EmptyInventoryModal'
 import ShareModal from '../../components/ShareModal'
 import useAvatarContract from './useAvatarContract'
-import {computed, inject, ref, triggerRef, watch, watchEffect} from 'vue'
+import { computed, inject, ref, triggerRef, watch, watchEffect } from 'vue'
 import { PIXEL_AVATAR_NETWORK, TEST_MINT_GENESIS_URL } from '../../constants'
 import { CheckIcon } from '@heroicons/vue/outline'
 
