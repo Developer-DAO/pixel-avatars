@@ -38,19 +38,19 @@ contract PixelAvatars is
     }
 
     function setBaseURI(string memory _newBaseURI) external onlyOwner {
-        baseURI = _newBaseURI;
         emit BaseURIUpdated(baseURI, _newBaseURI);
+        baseURI = _newBaseURI;
     }
 
     function setMintPrice(uint256 _newPrice) external onlyOwner {
         // Mint price in wei
-        mintPrice = _newPrice;
         emit MintPriceUpdated(mintPrice, _newPrice);
+        mintPrice = _newPrice;
     }
 
     function setServerAddress(address _address) external onlyOwner {
-        serverAddress = _address;
         emit ServerAddressUpdated(serverAddress, _address);
+        serverAddress = _address;
     }
 
     modifier validServerSignature(
