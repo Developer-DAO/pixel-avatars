@@ -126,13 +126,13 @@ watch(client.isConnected, async (isConnected) => {
 <template>
     <div v-if="client.isConnected.value">
         <h3 class="text-sm font-bold text-gray-600 uppercase tracking-2">
-            Your personal avatars
+            Your Pixel Devs
         </h3>
 
         <p class="mt-2 text-gray-600 text-sm">
             Here is a list of genesis tokens owned by your connected account.
             <br />
-            Please select the token number you wish to claim.
+            Please select the token number for which you wish to claim your Pixel Dev.
         </p>
 
         <Alert v-if="TEST_MINT_GENESIS_URL" color="yellow">
@@ -162,7 +162,7 @@ watch(client.isConnected, async (isConnected) => {
             class="mt-3 flex items-center space-x-1"
             color="green"
         >
-            <span>You have successfully minted this avatar.</span>
+            <span>Successfully minted</span>
             <CheckIcon class="w-4 h-4" />
         </Alert>
 

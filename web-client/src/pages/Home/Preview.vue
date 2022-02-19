@@ -67,7 +67,7 @@ watchEffect(async () => {
                         </button>
                     </span>
                 </span>
-                <span v-else> Not minted yet </span>
+                <span v-else> Unclaimed </span>
             </span>
             <span v-else> Connect wallet to check owner status </span>
         </div>
