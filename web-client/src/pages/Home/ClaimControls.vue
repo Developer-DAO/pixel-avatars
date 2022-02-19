@@ -5,7 +5,7 @@ import InsufficientFundsModal from '../../components/InsufficientFundsModal'
 import EmptyInventoryModal from '../../components/EmptyInventoryModal'
 import ShareModal from '../../components/ShareModal'
 import useAvatarContract from './useAvatarContract'
-import { computed, inject, ref, watch, watchEffect } from 'vue'
+import {computed, inject, ref, triggerRef, watch, watchEffect} from 'vue'
 import { PIXEL_AVATAR_NETWORK, TEST_MINT_GENESIS_URL } from '../../constants'
 import { CheckIcon } from '@heroicons/vue/outline'
 
@@ -51,8 +51,8 @@ async function startClaiming() {
         // Refresh available tokens
         availableTokens.value = await avatarContract.getAvailableTokens()
 
-        // Refresh owner status in preview
-        previewState.updateDeveloper()
+        // Trigger a "developer changed" event to force refresh of owner in preview
+        triggerRef(previewState.developer)
 
         // Show share modal
         showModal.value = 'share'
