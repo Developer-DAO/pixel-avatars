@@ -14,7 +14,7 @@ const props = defineProps({
 
 const colorClass = computed(() => {
     const colors = {
-        black: 'bg-black text-white border-black dark:bg-gray-100 dark:border-gray-100 dark:text-black dark:font-medium',
+        black: 'bg-black text-white border-black dark:bg-gray-100 dark:border-gray-100 dark:text-black dark:font-medium disabled:border-0',
         blackOutline:
             'bg-white text-gray-900 border-black dark:bg-transparent dark:border-white dark:text-white',
     }

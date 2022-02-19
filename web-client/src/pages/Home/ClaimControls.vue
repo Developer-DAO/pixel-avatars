@@ -29,6 +29,7 @@ const claimTokenIsMinted = computed(() => {
 const claimButtonDisabled = computed(() => {
     return (
         claimTokenIsMinted.value ||
+        claimToken.value === null ||
         [CLAIMING_STATES.LOADING, CLAIMING_STATES.SUCCESS].indexOf(
             claimState.value
         ) > -1
@@ -125,145 +126,169 @@ watch(client.isConnected, async (isConnected) => {
 </script>
 
 <template>
-    <div v-if="client.isConnected.value">
-        <h3
-            class="
-                text-sm
-                font-bold
-                text-gray-600
-                dark:text-gray-300
-                uppercase
-                tracking-2
-            "
-        >
-            Your Pixel Devs
-        </h3>
-
-        <p class="mt-2 text-gray-600 dark:text-gray-300 text-sm">
-            Here is a list of genesis tokens owned by your connected account.
-            <br />
-            Please select the token number for which you wish to claim your
-            Pixel Dev.
-        </p>
-
-        <Alert v-if="TEST_MINT_GENESIS_URL" color="gray">
-            <div class="space-y-2">
-                <p><b>TEST MODE</b></p>
-                <p>
-                    Before you can claim any Pixel Avatars you must first make
-                    sure your currently connected address holds genesis tokens
-                    from the test contract.
-                </p>
-                <p>
-                    During test mode you may mint genesis tokens for free to
-                    test out the claim flow.
-                </p>
-                <p>
-                    <a
-                        :href="TEST_MINT_GENESIS_URL"
-                        target="_blank"
-                        class="text-blue-700 dark:text-blue-300"
-                    >Mint genesis tokens here ↗</a>
-                </p>
-            </div>
-        </Alert>
-
-        <Alert
-            v-if="claimTokenIsMinted"
-            class="mt-3 flex items-center space-x-1"
-            color="green"
-        >
-            <span>Successfully minted</span>
-            <CheckIcon class="w-4 h-4" />
-        </Alert>
-
-        <Alert v-if="errorMessage" class="mt-3" style="overflow-wrap: anywhere">
-            Error: {{ errorMessage }}
-        </Alert>
-
-        <Alert
-            v-if="availableTokens !== null && availableTokens.length === 0"
-            class="mt-3"
-        >
-            No genesis tokens are available on this address. You must own a
-            genesis token before you can claim an avatar.
-        </Alert>
-
-        <div class="mt-3 relative">
-            <select
-                v-model="claimToken"
-                dir="rtl"
-                class="input-select !pr-12"
-                :disabled="availableTokens === null"
-                @change="updatePreview"
-            >
-                <option
-                    :value="null"
-                    v-text="availableTokens === null ? 'Loading' : ''"
-                />
-                <option
-                    v-for="{ token, minted } in availableTokens ?? []"
-                    :key="token"
-                    :value="token"
-                    v-text="token + (minted ? ' - Minted' : '')"
-                />
-            </select>
-            <div
+    <transition
+        enter-active-class="transition duration-200 ease-out"
+        enter-from-class="transform scale-95 opacity-0"
+        enter-to-class="transform scale-100 opacity-100"
+        leave-active-class="transition duration-200 ease-out"
+        leave-from-class="transform scale-100 opacity-100"
+        leave-to-class="transform scale-95 opacity-0"
+    >
+        <div v-if="client.isConnected.value">
+            <h3
                 class="
-                    absolute
-                    left-0
-                    top-0
-                    bottom-1
-                    flex
-                    items-center
-                    text-sm text-gray-600
-                    dark:text-gray-400
+                    text-sm
+                    font-bold
+                    text-gray-600
+                    dark:text-gray-300
+                    uppercase
+                    tracking-2
                 "
             >
-                <span>Available tokens</span>
-            </div>
-        </div>
+                Your Pixel Devs
+            </h3>
 
-        <div class="mt-4 flex justify-between">
-            <span class="text-sm text-gray-600 dark:text-gray-400">Mint price</span>
-            <span class="flex items-center space-x-1">
-                <span v-if="mintPriceEther" v-text="mintPriceEther" />
-                <span v-else class="h-1 w-40 bg-blue-100 rounded-lg" />
-                <span v-text="PIXEL_AVATAR_NETWORK.currencySymbol" />
-            </span>
-        </div>
+            <p class="mt-2 text-gray-600 dark:text-gray-300 text-sm">
+                Here is a list of genesis tokens owned by your connected
+                account.
+                <br />
+                Please select the token number for which you wish to claim your
+                Pixel Dev.
+            </p>
 
-        <div class="mt-5 text-right">
-            <Button
-                v-if="claimToken"
-                class="w-full max-w-[12rem]"
-                :disabled="claimButtonDisabled"
-                @click="startClaiming()"
+            <Alert v-if="TEST_MINT_GENESIS_URL" color="gray">
+                <div class="space-y-2">
+                    <p><b>TEST MODE</b></p>
+                    <p>
+                        Before you can claim any Pixel Avatars you must first
+                        make sure your currently connected address holds genesis
+                        tokens from the test contract.
+                    </p>
+                    <p>
+                        During test mode you may mint genesis tokens for free to
+                        test out the claim flow.
+                    </p>
+                    <p>
+                        <a
+                            :href="TEST_MINT_GENESIS_URL"
+                            target="_blank"
+                            class="text-blue-700 dark:text-blue-300"
+                        >Mint genesis tokens here ↗</a>
+                    </p>
+                </div>
+            </Alert>
+
+            <transition-group
+                enter-active-class="transition duration-100 ease-out"
+                enter-from-class="transform scale-95 opacity-0"
+                enter-to-class="transform scale-100 opacity-100"
+                leave-active-class="transition duration-100 ease-out"
+                leave-from-class="transform scale-100 opacity-100"
+                leave-to-class="transform scale-95 opacity-0"
             >
-                <span v-if="claimState === CLAIMING_STATES.LOADING">
-                    Claiming...
+                <Alert
+                    v-if="claimTokenIsMinted"
+                    class="mt-3 flex items-center space-x-1"
+                    color="green"
+                >
+                    <span>Successfully minted</span>
+                    <CheckIcon class="w-4 h-4" />
+                </Alert>
+
+                <Alert
+                    v-if="errorMessage"
+                    class="mt-3"
+                    style="overflow-wrap: anywhere"
+                >
+                    Error: {{ errorMessage }}
+                </Alert>
+
+                <Alert
+                    v-if="
+                        availableTokens !== null && availableTokens.length === 0
+                    "
+                    class="mt-3"
+                >
+                    No genesis tokens are available on this address. You must
+                    own a genesis token before you can claim an avatar.
+                </Alert>
+            </transition-group>
+
+            <div class="mt-3 relative">
+                <select
+                    v-model="claimToken"
+                    dir="rtl"
+                    class="input-select !pr-12"
+                    :disabled="availableTokens === null"
+                    @change="updatePreview"
+                >
+                    <option
+                        :value="null"
+                        v-text="availableTokens === null ? 'Loading' : ''"
+                    />
+                    <option
+                        v-for="{ token, minted } in availableTokens ?? []"
+                        :key="token"
+                        :value="token"
+                        v-text="token + (minted ? ' - Minted' : '')"
+                    />
+                </select>
+                <div
+                    class="
+                        absolute
+                        left-0
+                        top-0
+                        bottom-1
+                        flex
+                        items-center
+                        text-sm text-gray-600
+                        dark:text-gray-400
+                    "
+                >
+                    <span>Available tokens</span>
+                </div>
+            </div>
+
+            <div class="mt-4 flex justify-between">
+                <span class="text-sm text-gray-600 dark:text-gray-400">Mint price</span>
+                <span class="flex items-center space-x-1">
+                    <span v-if="mintPriceEther" v-text="mintPriceEther" />
+                    <span v-else class="h-1 w-40 bg-blue-100 rounded-lg" />
+                    <span v-text="PIXEL_AVATAR_NETWORK.currencySymbol" />
                 </span>
-                <span v-else>Claim avatar</span>
-            </Button>
+            </div>
+
+            <div class="mt-5 text-right">
+                <Button
+                    class="w-full max-w-[12rem]"
+                    :disabled="claimButtonDisabled"
+                    @click="startClaiming()"
+                >
+                    <span v-if="claimState === CLAIMING_STATES.LOADING">
+                        Claiming...
+                    </span>
+                    <span v-else>Claim avatar</span>
+                </Button>
+            </div>
+
+            <EmptyInventoryModal
+                :show="showModal === 'empty_inventory'"
+                @switchAccount="closeModal() || client.retryConnect(true)"
+                @disconnect="closeModal() || client.disconnect()"
+                @close="closeModal()"
+            />
+
+            <InsufficientFundsModal
+                :show="showModal === 'insufficient_funds'"
+                @close="closeModal()"
+            />
+
+            <ShareModal
+                v-if="claimToken"
+                :show="showModal === 'share'"
+                :token="claimToken"
+                @close="closeModal()"
+            />
         </div>
-
-        <EmptyInventoryModal
-            :show="showModal === 'empty_inventory'"
-            @switchAccount="closeModal() || client.retryConnect(true)"
-            @disconnect="closeModal() || client.disconnect()"
-            @close="closeModal()"
-        />
-
-        <InsufficientFundsModal
-            :show="showModal === 'insufficient_funds'"
-            @close="closeModal()"
-        />
-
-        <ShareModal
-            v-if="claimToken"
-            :show="showModal === 'share'"
-            :token="claimToken"
-            @close="closeModal()"
-        />
-    </div>
+    </transition>
 </template>

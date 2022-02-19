@@ -7,11 +7,9 @@ const state = inject('previewState')
 const show = ref(true)
 
 watchEffect(() => {
-    if (client.isConnected.value) {
-        setTimeout(() => (show.value = false), 200)
-    } else {
-        show.value = true
-    }
+    const isConnected = client.isConnected.value
+
+    setTimeout(() => (show.value = !isConnected), 200)
 })
 </script>
 

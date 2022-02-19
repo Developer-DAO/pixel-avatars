@@ -109,7 +109,6 @@ watchEffect(async () => {
                 target="_blank"
                 color="blackOutline"
                 class="flex justify-center items-center space-x-2"
-                @click="$emit('close')"
             >
                 <span>OpenSea Account</span>
                 <ExternalLinkIcon
