@@ -42,7 +42,14 @@ export default function useAvatarContract() {
                 `${SERVER_URL}/owners/${client.connectedAddress.value}/inventory`
             )
 
-            return response.data.data
+            const promises = response.data.data.map(async (token) => {
+                return {
+                    token: token,
+                    minted: (await this.getOwnerOf(token)) !== null,
+                }
+            })
+
+            return await Promise.all(promises)
         },
 
         async getMintPrice() {
@@ -58,6 +65,20 @@ export default function useAvatarContract() {
 
         async getMintPriceInEther() {
             return ethers.utils.formatEther(await this.getMintPrice())
+        },
+
+        getOwnerOf(token) {
+            return client
+                .contract(PIXEL_AVATAR_TOKEN, PixelAvatarContract.abi)
+                .ownerOf(token)
+                .catch(() => null)
+        },
+
+        getTokenUri(token) {
+            return client
+                .contract(PIXEL_AVATAR_TOKEN, PixelAvatarContract.abi)
+                .tokenURI(token)
+                .catch(() => null)
         },
     }
 }

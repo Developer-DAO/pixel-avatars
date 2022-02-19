@@ -29,7 +29,7 @@ function useClient() {
         latestProviderName,
         supportedProviders,
 
-        async connect(providerName) {
+        async connect(providerName, triggerPrompt) {
             if (activeInstance.value) {
                 await this.disconnect()
             }
@@ -38,7 +38,7 @@ function useClient() {
             latestProviderName.value = providerName
             networkFailure.value = false
 
-            const address = await this._instance().connect()
+            const address = await this._instance().connect(triggerPrompt)
 
             if (await this._checkCorrectNetwork()) {
                 connectedAddress.value = address
@@ -49,8 +49,8 @@ function useClient() {
             return this
         },
 
-        retryConnect() {
-            return this.connect(latestProviderName.value)
+        async retryConnect(triggerPrompt) {
+            return this.connect(latestProviderName.value, triggerPrompt)
         },
 
         async changeNetwork() {

@@ -1,5 +1,9 @@
 {
     "version": 2,
+    "github": {
+        "enabled": false,
+        "silent": true
+    },
     "builds": [
         {
             "src": "./src/app.js",
