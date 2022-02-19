@@ -132,7 +132,8 @@ watch(client.isConnected, async (isConnected) => {
         <p class="mt-2 text-gray-600 text-sm">
             Here is a list of genesis tokens owned by your connected account.
             <br />
-            Please select the token number for which you wish to claim your Pixel Dev.
+            Please select the token number for which you wish to claim your
+            Pixel Dev.
         </p>
 
         <Alert v-if="TEST_MINT_GENESIS_URL" color="yellow">

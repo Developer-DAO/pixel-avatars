@@ -1,13 +1,13 @@
 <script setup>
-import {inject, ref, watchEffect} from 'vue'
-import { ChevronUpIcon } from "@heroicons/vue/outline";
+import { inject, ref, watchEffect } from 'vue'
+import { ChevronUpIcon } from '@heroicons/vue/outline'
 
 const client = inject('web3client')
 const state = inject('previewState')
 const show = ref(true)
 
 watchEffect(() => {
-    show.value = ! client.isConnected.value
+    show.value = !client.isConnected.value
 })
 </script>
 
@@ -16,12 +16,26 @@ watchEffect(() => {
         <button
             v-if="client.isConnected.value"
             type="button"
-            class="mb-10 flex items-center justify-center space-x-1 text-sm text-gray-600 w-full bg-blue-50 rounded-full p-1"
-            @click="show = ! show"
+            class="
+                mb-10
+                flex
+                items-center
+                justify-center
+                space-x-1
+                text-sm text-gray-600
+                w-full
+                bg-blue-50
+                rounded-full
+                p-1
+            "
+            @click="show = !show"
         >
             <span v-if="show">Hide controls</span>
             <span v-else>Show controls</span>
-            <ChevronUpIcon class="w-4 h-4 transform transition-all" :class="{ 'rotate-180': ! show }" />
+            <ChevronUpIcon
+                class="w-4 h-4 transform transition-all"
+                :class="{ 'rotate-180': !show }"
+            />
         </button>
 
         <transition
@@ -34,7 +48,15 @@ watchEffect(() => {
         >
             <div v-show="show" class="w-full space-y-10">
                 <div class="w-full flex flex-col space-y-1">
-                    <h3 class="text-sm font-bold text-gray-600 uppercase tracking-2">
+                    <h3
+                        class="
+                            text-sm
+                            font-bold
+                            text-gray-600
+                            uppercase
+                            tracking-2
+                        "
+                    >
                         Developer
                     </h3>
 
@@ -49,7 +71,15 @@ watchEffect(() => {
                 </div>
 
                 <div class="w-full flex flex-col space-y-2">
-                    <h3 class="text-sm font-bold text-gray-600 uppercase tracking-2">
+                    <h3
+                        class="
+                            text-sm
+                            font-bold
+                            text-gray-600
+                            uppercase
+                            tracking-2
+                        "
+                    >
                         Traits
                     </h3>
 
@@ -73,14 +103,14 @@ watchEffect(() => {
                         </select>
                         <div
                             class="
-                            absolute
-                            left-0
-                            top-0
-                            bottom-1
-                            flex
-                            items-center
-                            text-sm text-gray-600
-                        "
+                                absolute
+                                left-0
+                                top-0
+                                bottom-1
+                                flex
+                                items-center
+                                text-sm text-gray-600
+                            "
                         >
                             <span v-text="trait.name" />
                         </div>
