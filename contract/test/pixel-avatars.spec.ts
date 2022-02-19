@@ -95,7 +95,7 @@ describe('PixelAvatars contract', function () {
                         split.r,
                         split.s
                     )
-                ).to.be.revertedWith('Not enough ether sent')
+                ).to.be.revertedWith('Not enough MATIC sent')
             })
 
             it('should fail if deadline expires', async () => {
