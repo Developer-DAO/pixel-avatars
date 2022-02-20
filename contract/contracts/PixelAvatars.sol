@@ -31,6 +31,10 @@ contract PixelAvatars is
 
         baseURI = "ipfs://QmQK8MYcafSRLXTG8azwTs51B7vj7iZGVxGxdEHwUMDXUQ/";
         mintPrice = 12 ether;
+
+        // staging:
+        // baseURI = "ipfs://QmUVH51tigyENzwUhsTv14dV7eyaVo6oHoeCD3JHD9rFnV/";
+        // mintPrice = 0.01 ether;
     }
 
     function _baseURI() internal view virtual override returns (string memory) {
