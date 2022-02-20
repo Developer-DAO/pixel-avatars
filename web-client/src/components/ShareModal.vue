@@ -14,6 +14,7 @@ import {
     watchEffect,
     inject,
 } from 'vue'
+import Spinner from "./ui/Spinner";
 
 defineEmits(['close'])
 
@@ -25,24 +26,38 @@ const openSeaUrl = computed(
     () => `${OPEN_SEA_URL}/${client.connectedAddress.value}`
 )
 
-function cdnUrl(ipfs) {
-    return 'https://cloudflare-ipfs.com/ipfs/' + ipfs.replace('ipfs://', '')
+function ipfsCdnUrl(base, ipfs) {
+    return base + ipfs.replace('ipfs://', '')
+}
+
+async function getIpfs(ipfsUrl, method = 'get') {
+    return await Promise.race([
+        axios[method](ipfsCdnUrl('https://cloudflare-ipfs.com/ipfs/', ipfsUrl)),
+        axios[method](ipfsCdnUrl('https://ipfs.io/ipfs/', ipfsUrl)),
+    ])
+}
+
+async function getImageUrl(token) {
+    const ipfsMetaUrl = await avatarContract.getTokenUri(token)
+
+    if (ipfsMetaUrl) {
+        const meta = await getIpfs(ipfsMetaUrl)
+
+        // We'll send a HEAD request to two CDNs and see who replies first.
+        // Once the first replies we'll know that they have cached the image
+        // and we'll use that CDN to display the NFT in the HTML image tag.
+        const imageResponse = await getIpfs(meta.data.image, 'head')
+
+        return imageResponse.request.responseURL
+    }
+
+    return null
 }
 
 watchEffect(async () => {
-    if (props.token && props.show) {
-        const ipfs = await avatarContract.getTokenUri(props.token)
-
-        if (ipfs) {
-            const meta = await axios.get(cdnUrl(ipfs))
-
-            image.value = cdnUrl(meta.data.image)
-
-            return
-        }
-    }
-
-    image.value = null
+    image.value = props.token && props.show
+        ? await getImageUrl(props.token)
+        : null
 })
 </script>
 
@@ -92,9 +107,13 @@ watchEffect(async () => {
                         rounded-md
                         min-h-[16rem]
                         md:min-h-[20rem]
+                        flex
+                        items-center
+                        justify-center
                     "
                 >
                     <img v-if="image" :src="image" class="w-full rounded-md" />
+                    <Spinner v-else class="h-6 w-6 text-blue-800" />
                 </div>
             </div>
         </div>
