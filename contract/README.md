@@ -77,11 +77,13 @@ Also **Upgradeable Contract** means there are two types of deploys:
 **IMPORTANT: BEFORE AND AFTER DEPLOYING**
 **!!**
 
-1. Before deploy or upgrade, please make sure that you have set the correct `SERVER_ADDRESS` in the `.env` file. The address should correspond to the associated webserver private key. Each environment should have their separate keypair - this is important. See `/web-server/README.md` for more information.
+1. If doing a deploy for the first time, you may want to remove the corresponding JSON file in `.openzeppelin` if you want 3 fresh contracts. Otherwise it'll reuse the ProxyAdmin already deployed (which might actually be fine, just FYI).
 
-2. After deploy or upgrade, make sure you check-in the JSON file in `.openzeppelin` so that the contract can be upgraded next time.
+2. Before deploy or upgrade, please make sure that you have set the correct `SERVER_ADDRESS` in the `.env` file. The address should correspond to the associated webserver private key. Each environment should have their separate keypair - this is important. See `/web-server/README.md` for more information.
 
-3. To verify deployment visit https://polygonscan.com/ (or https://mumbai.polygonscan.com/ for Mumbai) and search for the account that deployed the contract. There should be 3 contracts upon initial deploy and then only 1 each time contract is upgraded.
+3. After deploy or upgrade, make sure you check-in the JSON file in `.openzeppelin` so that the contract can be upgraded next time.
+
+4. To verify deployment visit https://polygonscan.com/ (or https://mumbai.polygonscan.com/ for Mumbai) and search for the account that deployed the contract. There should be 3 contracts upon initial deploy and then only 1 each time contract is upgraded.
 
 ### Compile contract
 
@@ -155,8 +157,17 @@ If you want to upload contract source. You can't call contract directly, except 
     > await ethers.provider.listAccounts();
     > const Avatars = await ethers.getContractFactory('PixelAvatars');
     > const avatars = await Avatars.attach('<proxy address goes here>');
+
+    Some methods to try:
+
     > await avatars.mintPrice();
     > await avatars.baseURI();
     > await avatars.serverAddress();
+    > await avatars.setServerAddress('0x1111...');
     > await avatars.setMintPrice('2000000000000000');
+
     > await avatars.ownerOf('6860');
+    > await avatars.balanceOf('my public key here');
+    > await avatars.totalSupply();
+
+    > const contractBalance = await ethers.provider.getBalance("<proxy address goes here>")
