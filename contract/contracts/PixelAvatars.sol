@@ -55,10 +55,6 @@ contract PixelAvatars is
         serverAddress = _address;
     }
 
-    function brian() public pure returns (string memory) {
-        return "brian1";
-    }
-
     modifier validServerSignature(
         uint256 tokenId,
         uint256 deadline,
