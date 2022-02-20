@@ -293,6 +293,7 @@ watch(client.isConnected, async (isConnected) => {
                 v-if="claimToken"
                 :show="showModal === 'share'"
                 :token="claimToken"
+                :confetti="true"
                 @close="closeModal()"
             />
         </div>

@@ -15,10 +15,19 @@ import {
     inject,
 } from 'vue'
 import Spinner from "./ui/Spinner";
+import JSConfetti from "js-confetti";
 
 defineEmits(['close'])
 
-const props = defineProps({ show: Boolean, token: null })
+const props = defineProps({
+    show: Boolean,
+    token: null,
+    confetti: {
+        type: Boolean,
+        default: false
+    }
+})
+
 const client = inject('web3client')
 const avatarContract = useAvatarContract()
 const image = ref(null)
@@ -54,10 +63,18 @@ async function getImageUrl(token) {
     return null
 }
 
+const confetti = props.confetti
+    ? new JSConfetti()
+    : null
+
 watchEffect(async () => {
     image.value = props.token && props.show
         ? await getImageUrl(props.token)
         : null
+
+    if (image.value && typeof confetti !== 'undefined') {
+        setTimeout(() => confetti.addConfetti(), 500)
+    }
 })
 </script>
 
