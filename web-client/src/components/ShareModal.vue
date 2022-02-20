@@ -14,8 +14,8 @@ import {
     watchEffect,
     inject,
 } from 'vue'
-import Spinner from "./ui/Spinner";
-import JSConfetti from "js-confetti";
+import Spinner from './ui/Spinner'
+import JSConfetti from 'js-confetti'
 
 defineEmits(['close'])
 
@@ -24,8 +24,8 @@ const props = defineProps({
     token: null,
     confetti: {
         type: Boolean,
-        default: false
-    }
+        default: false,
+    },
 })
 
 const client = inject('web3client')
@@ -63,14 +63,11 @@ async function getImageUrl(token) {
     return null
 }
 
-const confetti = props.confetti
-    ? new JSConfetti()
-    : null
+const confetti = props.confetti ? new JSConfetti() : null
 
 watchEffect(async () => {
-    image.value = props.token && props.show
-        ? await getImageUrl(props.token)
-        : null
+    image.value =
+        props.token && props.show ? await getImageUrl(props.token) : null
 
     if (image.value && typeof confetti !== 'undefined') {
         setTimeout(() => confetti.addConfetti(), 500)

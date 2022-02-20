@@ -8,7 +8,7 @@ import useAvatarContract from './useAvatarContract'
 import { computed, inject, ref, triggerRef, watch, watchEffect } from 'vue'
 import { PIXEL_AVATAR_NETWORK, TEST_MINT_GENESIS_URL } from '../../constants'
 import { CheckIcon } from '@heroicons/vue/outline'
-import Spinner from "../../components/ui/Spinner";
+import Spinner from '../../components/ui/Spinner'
 
 const CLAIMING_STATES = Object.freeze({
     IDLE: 'idle',
