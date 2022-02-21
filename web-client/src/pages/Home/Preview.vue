@@ -6,7 +6,7 @@ import useAvatarContract from './useAvatarContract'
 import Address from '../../components/ui/Address'
 import ShareModal from '../../components/ShareModal'
 import Button from '../../components/ui/Button'
-import {useLaunchCounter} from "../../components/LaunchBanner";
+import { useLaunchCounter } from '../../components/LaunchBanner'
 
 const avatarContract = useAvatarContract()
 const client = inject('web3client')
@@ -78,7 +78,9 @@ watchEffect(async () => {
             </span>
             <span v-else>
                 <span> NFT Preview. </span>
-                <span v-if="launchCounter.launched.value"> Connect wallet to check owner status and mint. </span>
+                <span v-if="launchCounter.launched.value">
+                    Connect wallet to check owner status and mint.
+                </span>
             </span>
         </div>
 
