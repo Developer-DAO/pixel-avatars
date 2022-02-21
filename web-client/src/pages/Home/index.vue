@@ -99,13 +99,7 @@ provide('previewState', previewState)
                             />
                         </div>
                         <div
-                            class="
-                                hidden
-                                sm:inline-flex
-                                justify-end
-                                px-4
-                                py-6
-                            "
+                            class="hidden sm:inline-flex justify-end px-4 py-6"
                         >
                             <a
                                 href="#faq"

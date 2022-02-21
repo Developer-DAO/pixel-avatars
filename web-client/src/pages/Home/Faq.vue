@@ -96,7 +96,10 @@ const faqs = [
                     >
                         {{ faq.question }}
                     </dt>
-                    <dd class="mt-3 text-sm text-gray-500 dark:text-gray-400" v-html="faq.answer" />
+                    <dd
+                        class="mt-3 text-sm text-gray-500 dark:text-gray-400"
+                        v-html="faq.answer"
+                    />
                 </div>
             </dl>
         </div>
