@@ -26,10 +26,10 @@ contract PixelAvatars is
     );
 
     function initialize() public initializer {
-        __ERC721_init("Pixel Avatars", "PXLDEV");
+        __ERC721_init("Pixel Devs", "PXLDEV");
         __Ownable_init();
 
-        baseURI = "ipfs://QmQK8MYcafSRLXTG8azwTs51B7vj7iZGVxGxdEHwUMDXUQ/";
+        baseURI = "ipfs://QmZdT5R5XGQVwGnnpiS6dGjUHZh6z8JjpuHhsqcLMMeWiC/";
         mintPrice = 12 ether;
 
         // staging:
