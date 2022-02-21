@@ -24,7 +24,7 @@ const faqs = [
     },
     {
         question: 'How much does a Pixel Dev cost?',
-        answer: 'Each Pixel Dev costs 12 MATIC to mint.',
+        answer: 'Each Pixel Dev costs 12 MATIC plus gas fees to mint.',
     },
 ]
 </script>
