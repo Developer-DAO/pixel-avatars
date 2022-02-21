@@ -26,7 +26,7 @@ contract PixelAvatars is
     );
 
     function initialize() public initializer {
-        __ERC721_init("Pixel Devs", "PXLDEV");
+        __ERC721_init("Pixel Avatars", "PXLDEV");
         __Ownable_init();
 
         baseURI = "ipfs://QmZdT5R5XGQVwGnnpiS6dGjUHZh6z8JjpuHhsqcLMMeWiC/";
