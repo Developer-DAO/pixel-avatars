@@ -31,7 +31,7 @@ const faqs = [
 
 <template>
     <section
-        aria-labelledby="faq-heading"
+        aria-labelledby="faq"
         class="
             border-t-8
             bg-gray-50
@@ -51,7 +51,7 @@ const faqs = [
         >
             <div class="max-w-xl">
                 <h2
-                    id="faq-heading"
+                    id="faq"
                     class="
                         text-2xl
                         font-extrabold

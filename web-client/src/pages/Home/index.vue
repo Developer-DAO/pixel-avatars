@@ -6,6 +6,7 @@ import Preview from './Preview.vue'
 import PreviewControls from './PreviewControls.vue'
 import usePreviewState from './usePreviewState'
 import useRouteParameterSync from './useRouteParameterSync'
+import { ArrowCircleDownIcon } from '@heroicons/vue/outline'
 import { computed, provide } from 'vue'
 import { PIXEL_AVATAR_NETWORK } from '../../constants'
 import {
@@ -96,6 +97,28 @@ provide('previewState', previewState)
                             <Preview
                                 class="flex-1 max-w-md px-4 py-6 sm:py-10"
                             />
+                        </div>
+                        <div
+                            class="
+                                hidden
+                                sm:inline-flex
+                                justify-end
+                                px-4
+                                py-6
+                            "
+                        >
+                            <a
+                                href="#faq"
+                                class="
+                                    flex
+                                    items-center
+                                    space-x-3
+                                    dark:text-gray-300
+                                "
+                            >
+                                <span>FAQ</span>
+                                <ArrowCircleDownIcon class="w-6 h-6" />
+                            </a>
                         </div>
                     </div>
                 </section>
