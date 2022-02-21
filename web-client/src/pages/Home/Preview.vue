@@ -6,6 +6,7 @@ import useAvatarContract from './useAvatarContract'
 import Address from '../../components/ui/Address'
 import ShareModal from '../../components/ShareModal'
 import Button from '../../components/ui/Button'
+import { useLaunchCounter } from '../../components/LaunchBanner'
 
 const avatarContract = useAvatarContract()
 const client = inject('web3client')
@@ -20,6 +21,7 @@ const ownedByUser = computed(
         (owner.value ?? '').toLowerCase() ===
         (client.connectedAddress.value ?? '').toLowerCase()
 )
+const launchCounter = useLaunchCounter()
 
 watchEffect(async () => {
     const token = state.developer.value
@@ -74,7 +76,12 @@ watchEffect(async () => {
                 </span>
                 <span v-else> Unclaimed </span>
             </span>
-            <span v-else> Connect wallet to check owner status </span>
+            <span v-else>
+                <span> NFT Preview. </span>
+                <span v-if="launchCounter.launched.value">
+                    Connect wallet to check owner status and mint.
+                </span>
+            </span>
         </div>
 
         <ShareModal

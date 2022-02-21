@@ -27,6 +27,8 @@ export default function usePreviewState() {
             }
         })
 
+        _layers.push(`/traits/preview.png`)
+
         if (computer.value) {
             _layers.push(`/traits/computer.png`)
         }
