@@ -42,7 +42,10 @@ function ipfsCdnUrl(base, ipfs) {
 
 async function getIpfs(ipfsUrl, config = {}) {
     return await Promise.race([
-        axios.get(ipfsCdnUrl('https://cloudflare-ipfs.com/ipfs/', ipfsUrl), config),
+        axios.get(
+            ipfsCdnUrl('https://cloudflare-ipfs.com/ipfs/', ipfsUrl),
+            config
+        ),
         axios.get(ipfsCdnUrl('https://ipfs.io/ipfs/', ipfsUrl), config),
     ])
 }
@@ -79,7 +82,7 @@ watchEffect(async () => {
         }
     } else {
         // Reset image on close
-        setTimeout(() => image.value = null, 500)
+        setTimeout(() => (image.value = null), 500)
     }
 })
 </script>
@@ -136,7 +139,10 @@ watchEffect(async () => {
                     "
                 >
                     <img v-if="image" :src="image" class="w-full rounded-md" />
-                    <span v-else-if="loading" class="flex flex-col items-center space-y-4">
+                    <span
+                        v-else-if="loading"
+                        class="flex flex-col items-center space-y-4"
+                    >
                         <Spinner class="h-6 w-6 text-blue-800" />
                         <span class="text-blue-500 opacity-50">Please hang on while fetching image</span>
                     </span>
