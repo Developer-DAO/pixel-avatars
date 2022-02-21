@@ -12,8 +12,8 @@ import {
     default as LaunchBanner,
     useLaunchCounter,
 } from '../../components/LaunchBanner'
-import Faq from "./Faq";
-import Footer from "./Footer";
+import Faq from './Faq'
+import Footer from './Footer'
 
 const networkConfigured = PIXEL_AVATAR_NETWORK.chainId > 0
 const previewState = usePreviewState()
@@ -93,7 +93,9 @@ provide('previewState', previewState)
                                 justify-center
                             "
                         >
-                            <Preview class="flex-1 max-w-md px-4 py-6 sm:py-10" />
+                            <Preview
+                                class="flex-1 max-w-md px-4 py-6 sm:py-10"
+                            />
                         </div>
                     </div>
                 </section>
