@@ -8,6 +8,7 @@ import useAvatarContract from './useAvatarContract'
 import { computed, inject, ref, triggerRef, watch, watchEffect } from 'vue'
 import { PIXEL_AVATAR_NETWORK, TEST_MINT_GENESIS_URL } from '../../constants'
 import { CheckIcon } from '@heroicons/vue/outline'
+import Spinner from '../../components/ui/Spinner'
 
 const CLAIMING_STATES = Object.freeze({
     IDLE: 'idle',
@@ -258,7 +259,12 @@ watch(client.isConnected, async (isConnected) => {
                 </span>
             </div>
 
-            <div class="mt-5 text-right">
+            <div class="mt-5 flex items-center justify-end">
+                <Spinner
+                    v-if="claimState === CLAIMING_STATES.LOADING"
+                    class="w-4 h-4 mr-4"
+                />
+
                 <Button
                     class="w-full max-w-[12rem]"
                     :disabled="claimButtonDisabled"
@@ -287,6 +293,7 @@ watch(client.isConnected, async (isConnected) => {
                 v-if="claimToken"
                 :show="showModal === 'share'"
                 :token="claimToken"
+                :confetti="true"
                 @close="closeModal()"
             />
         </div>

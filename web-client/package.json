@@ -19,6 +19,7 @@
         "axios": "^0.24.0",
         "core-js": "^3.6.5",
         "ethers": "^5.5.1",
+        "js-confetti": "^0.10.2",
         "lodash-es": "^4.17.21",
         "tailwindcss": "npm:@tailwindcss/postcss7-compat",
         "vue": "^3.2.6",

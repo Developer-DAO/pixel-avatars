@@ -14,35 +14,76 @@ import {
     watchEffect,
     inject,
 } from 'vue'
+import Spinner from './ui/Spinner'
+import JSConfetti from 'js-confetti'
 
 defineEmits(['close'])
 
-const props = defineProps({ show: Boolean, token: null })
+const props = defineProps({
+    show: Boolean,
+    token: null,
+    confetti: {
+        type: Boolean,
+        default: false,
+    },
+})
+
 const client = inject('web3client')
 const avatarContract = useAvatarContract()
 const image = ref(null)
+const loading = ref(true)
 const openSeaUrl = computed(
     () => `${OPEN_SEA_URL}/${client.connectedAddress.value}`
 )
 
-function cdnUrl(ipfs) {
-    return 'https://cloudflare-ipfs.com/ipfs/' + ipfs.replace('ipfs://', '')
+function ipfsCdnUrl(base, ipfs) {
+    return base + ipfs.replace('ipfs://', '')
 }
+
+async function getIpfs(ipfsUrl, config = {}) {
+    return await Promise.race([
+        axios.get(
+            ipfsCdnUrl('https://cloudflare-ipfs.com/ipfs/', ipfsUrl),
+            config
+        ),
+        axios.get(ipfsCdnUrl('https://ipfs.io/ipfs/', ipfsUrl), config),
+    ])
+}
+
+async function getImageSrc(token) {
+    const ipfsMetaUrl = await avatarContract.getTokenUri(token)
+
+    if (ipfsMetaUrl) {
+        const meta = await getIpfs(ipfsMetaUrl)
+
+        // We'll send a HEAD request to two CDNs and see who replies first.
+        // Once the first replies we'll know that they have cached the image
+        // and we'll use that CDN to display the NFT in the HTML image tag.
+        const image = await getIpfs(meta.data.image, { responseType: 'blob' })
+
+        return window.URL.createObjectURL(image.data)
+    }
+
+    return null
+}
+
+const confetti = props.confetti ? new JSConfetti() : null
 
 watchEffect(async () => {
     if (props.token && props.show) {
-        const ipfs = await avatarContract.getTokenUri(props.token)
+        image.value = await getImageSrc(props.token)
 
-        if (ipfs) {
-            const meta = await axios.get(cdnUrl(ipfs))
-
-            image.value = cdnUrl(meta.data.image)
-
-            return
+        if (image.value) {
+            loading.value = false
         }
-    }
 
-    image.value = null
+        if (image.value && confetti) {
+            setTimeout(() => confetti.addConfetti(), 500)
+        }
+    } else {
+        // Reset image on close
+        setTimeout(() => (image.value = null), 500)
+    }
 })
 </script>
 
@@ -91,10 +132,20 @@ watchEffect(async () => {
                         bg-blue-100
                         rounded-md
                         min-h-[16rem]
-                        md:min-h-[20rem]
+                        md:min-h-[22rem]
+                        flex
+                        items-center
+                        justify-center
                     "
                 >
                     <img v-if="image" :src="image" class="w-full rounded-md" />
+                    <span
+                        v-else-if="loading"
+                        class="flex flex-col items-center space-y-4"
+                    >
+                        <Spinner class="h-6 w-6 text-blue-800" />
+                        <span class="text-blue-500 opacity-50">Please hang on while fetching image</span>
+                    </span>
                 </div>
             </div>
         </div>
