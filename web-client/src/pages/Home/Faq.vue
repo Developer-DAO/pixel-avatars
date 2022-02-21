@@ -20,7 +20,7 @@ const faqs = [
     },
     {
         question: 'How do i get MATIC on Polygon?',
-        answer: "Check out <a href='https://github.com/Developer-DAO/pixel-avatars/wiki/Polygon-MATIC' target='_blank'>this guide</a> on the different ways you may acquire MATIC.",
+        answer: "Check out <a href='https://github.com/Developer-DAO/pixel-avatars/wiki/Polygon-MATIC' target='_blank' class='underline'>this guide</a> on the different ways you may acquire MATIC.",
     },
     {
         question: 'How much does a Pixel Dev cost?',
@@ -96,9 +96,7 @@ const faqs = [
                     >
                         {{ faq.question }}
                     </dt>
-                    <dd class="mt-3 text-sm text-gray-500 dark:text-gray-400">
-                        {{ faq.answer }}
-                    </dd>
+                    <dd class="mt-3 text-sm text-gray-500 dark:text-gray-400" v-html="faq.answer" />
                 </div>
             </dl>
         </div>
