@@ -3,8 +3,7 @@ import { SpeakerphoneIcon } from '@heroicons/vue/outline'
 import { computed, onUnmounted, ref } from 'vue'
 
 export function useLaunchCounter() {
-    const launchDate = new Date('Feb 22, 2022 02:22:02').getTime()
-    // const launchDate = new Date("Feb 20, 2022 10:58:35").getTime();
+    const launchDate = new Date(Date.UTC(2022, 1, 22, 2, 22, 2)).getTime()
 
     const days = ref(null)
     const hours = ref(null)
