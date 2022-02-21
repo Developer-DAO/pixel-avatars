@@ -71,7 +71,7 @@ defineEmits(['close'])
             <ul class="mt-4 ml-4 space-y-2 list-disc">
                 <li>
                     <a
-                        href="https://github.com/Developer-DAO/pixel-avatars/issues/83"
+                        href="https://github.com/Developer-DAO/pixel-avatars/wiki/Polygon-MATIC"
                         class="
                             text-blue-600
                             dark:text-blue-300
