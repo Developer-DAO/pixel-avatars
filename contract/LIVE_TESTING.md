@@ -41,7 +41,7 @@ $ npx hardhat console --network mumbai
 > await avatars.serverAddress();
 ```
 
-## Back to testing, exercise the contract.
+## Exercise the contract
 
 As you try minting in the UI, verify those transactions are being recorded on the Proxy contract:
 
@@ -167,6 +167,41 @@ $ npx hardhat console --network mainnet
 Do the same for ProxyAdmin (which is at `0xF7f1169a58018AFCE763aD006d79e8Bb2CbbA293`):
 
 -   Head to https://polygonscan.com/address/0xF7f1169a58018AFCE763aD006d79e8Bb2CbbA293#writeContract
+-   In Browser, connect to original owners wallet.
+-   Call `transferOwnership` with `newOwner` field set to `0x7128f5ff32eD07Ce12E6a9deBE32BB40F9884b3C`.
+
+Ask DAO members to test withdrawal.
+
+### Scenario 3: Final Production change of ownership.
+
+```
+Server address is: 0x08C9c214063e387830B260139347ace14169A6Fa
+Deploying contracts with the account: 0x3FD30529632b9f7a2ad013C643F08Eb055a09345
+OpenZeppelin Proxy deployed to: 0x916B13FCa6192fE5e4E2cD58F712BA9Ade43CeD0
+
+Please add the following line to your "contract/.env": UPGRADEABLE_PROXY_ADDRESS=0x916B13FCa6192fE5e4E2cD58F712BA9Ade43CeD0
+Please add the following line to your "web-client/.env": VUE_APP_PIXEL_AVATAR_TOKEN=0x916B13FCa6192fE5e4E2cD58F712BA9Ade43CeD0
+✨  Done in 87.59s.
+```
+
+Main contract (proxy): `0x916B13FCa6192fE5e4E2cD58F712BA9Ade43CeD0`
+Pixel Devs contract: `0x49876df684d5bc682aa17729a5265a2717726c33#code`
+ProxyAdmin: `0x96C26Bd4e6013B6e201f443D657A475445F8e3f3`
+
+```
+$ npx hardhat console --network mainnet
+
+> const Avatars = await ethers.getContractFactory('PixelAvatars');
+> const avatars = await Avatars.attach('0x916B13FCa6192fE5e4E2cD58F712BA9Ade43CeD0');
+> await avatars.transferOwnership('0x7128f5ff32eD07Ce12E6a9deBE32BB40F9884b3C');
+
+# and now withdraw should fail for original owner:
+> await avatars.withdraw();
+```
+
+Do the same for ProxyAdmin (which is at `0x96C26Bd4e6013B6e201f443D657A475445F8e3f3`):
+
+-   Head to https://polygonscan.com/address/0x96C26Bd4e6013B6e201f443D657A475445F8e3f3#writeContract
 -   In Browser, connect to original owners wallet.
 -   Call `transferOwnership` with `newOwner` field set to `0x7128f5ff32eD07Ce12E6a9deBE32BB40F9884b3C`.
 
