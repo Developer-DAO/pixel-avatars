@@ -85,6 +85,8 @@ Also **Upgradeable Contract** means there are two types of deploys:
 
 4. To verify deployment visit https://polygonscan.com/ (or https://mumbai.polygonscan.com/ for Mumbai) and search for the account that deployed the contract. There should be 3 contracts upon initial deploy and then only 1 each time contract is upgraded.
 
+5. Make sure you actually run `hardhat verify` step too -- needed for Treasury to withdraw funds later.
+
 ### Compile contract
 
 This will lint and style your code, as well as create artifacts consumed by the frontend.
@@ -116,6 +118,7 @@ yarn compile && yarn run upgrade
 
 ```shell
 yarn compile && yarn deploy:mainnet
+npx hardhat verify --network mainnet PIXEL_AVATAR_CONTRACT_ADDRESS_HERE
 # IMPORTANT: Make sure you check-in the .JSON file in `.openzeppelin' which is needed for upgrades.
 ```
 
@@ -124,13 +127,14 @@ or
 ```shell
 # make sure UPGRADEABLE_PROXY_ADDRESS .env has a value that points to OpenZeppelin Proxy contract.
 yarn compile && yarn upgrade:mainnet
+npx hardhat verify --network mainnet PIXEL_AVATAR_CONTRACT_ADDRESS_HERE
 # IMPORTANT: Make sure you check-in the .JSON file in `.openzeppelin' which is needed for upgrades.
 ```
 
 If you want to upload contract source. You can't call contract directly, except through Proxy -- see below for Hardhat code to try the contract.
 
 -   Make sure `ETHERSCAN_API_KEY` .env key is set to API for polygonscan
--   Then to verify contract, run `npx hardhat verify --network mainnet CONTRACT_ADDRESS_HERE`.
+-   Then to verify contract, run `npx hardhat verify --network mainnet PIXEL_AVATAR_CONTRACT_ADDRESS_HERE`.
 
 **Mumbai testnet**
 
@@ -148,7 +152,7 @@ yarn compile && yarn upgrade:mumbai
 If you want to upload contract source. You can't call contract directly, except through Proxy -- see below for Hardhat code to try the contract.
 
 -   Make sure `ETHERSCAN_API_KEY` .env key is set to API for polygonscan
--   Then to verify contract, run `npx hardhat verify --network mumbai CONTRACT_ADDRESS_HERE`.
+-   Then to verify contract, run `npx hardhat verify --network mumbai PIXEL_AVATAR_CONTRACT_ADDRESS_HERE`.
 
 ## To play with contract via Proxy in Hardhat
 
