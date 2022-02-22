@@ -41,7 +41,7 @@ $ npx hardhat console --network mumbai
 > await avatars.serverAddress();
 ```
 
-## Back to testing, exercise the contract.
+## Exercise the contract
 
 As you try minting in the UI, verify those transactions are being recorded on the Proxy contract:
 
@@ -73,15 +73,12 @@ Ok, we have owners of all 3 contracts:
 
 Ensure MUMBAI_PRIVATE_KEY in `hardhat.config.ts` points to original owners wallet.
 
-'0x7128f5ff32eD07Ce12E6a9deBE32BB40F9884b3C' is the official DAO GnosisSafeProxy address.
-
 ```
 $ npx hardhat console --network mumbai
 
 > const Avatars = await ethers.getContractFactory('PixelAvatars');
 > const avatars = await Avatars.attach('0xF2AeA16553Ef83Ea4C7d9503DD647F902a792889');
 > await avatars.transferOwnership('0x53bB089cb6e7E556210857a5429B82Fe741fE551');
-// > await avatars.transferOwnership('0x7128f5ff32eD07Ce12E6a9deBE32BB40F9884b3C');
 
 # and now withdraw should fail for original owner:
 > await avatars.withdraw();
@@ -131,3 +128,81 @@ Interestingly removing code, the **tool was smart enough to point** to a previou
 So if you won't find a new contract deployed, but if you visit `ProxyAdmin` logs (https://mumbai.polygonscan.com/address/0x6ba89df52ef3d5d37c684dbdf81900835aecb74d) and see what it has set the contract to a previously deployed one.
 
 Lastly, after those upgrades, make sure the minting still works in the UI.
+
+### Scenario 2: Create brand new contract deploy on mainnet to test ownership change to DAO Treasury
+
+-   Change contact back to staging IPFS and low mintPrice -- just uncomment in contract
+-   Move the `.openzeppelin/unknown-137.json` somewhere so that we don't mess the real one up
+-   In case we want to hook up web server, make sure SERVER_ADDRESS is the production one
+-   Ensure MAINNET_PRIVATE_KEY in `hardhat.config.ts` is the desired wallet to deploy initial contracts.
+-   Deploy with `yarn compile && yarn deploy:mainnet`
+
+```
+Server address is: 0x08C9c214063e387830B260139347ace14169A6Fa
+Deploying contracts with the account: 0x3FD30529632b9f7a2ad013C643F08Eb055a09345
+Account balance: 19857260245469297355
+OpenZeppelin Proxy deployed to: 0x874B8951d7D864c0e57Fe39f36000dC91C4851E1
+```
+
+Transfer some test MATIC to `0x874B8951d7D864c0e57Fe39f36000dC91C4851E1`.
+
+Our contract is at `0xb5EaB62881fC9845b2051C9eb2Ac1FFBC213F434`
+
+-   `npx hardhat verify --network mainnet 0xb5EaB62881fC9845b2051C9eb2Ac1FFBC213F434`
+-   Go through these steps to change owner to '0x7128f5ff32eD07Ce12E6a9deBE32BB40F9884b3C' which is the official DAO GnosisSafeProxy address.
+
+```
+$ npx hardhat console --network mainnet
+
+> const Avatars = await ethers.getContractFactory('PixelAvatars');
+> const avatars = await Avatars.attach('0x874B8951d7D864c0e57Fe39f36000dC91C4851E1');
+> await avatars.setServerAddress('0x08C9c214063e387830B260139347ace14169A6Fa');
+> await avatars.serverAddress();
+> await avatars.transferOwnership('0x7128f5ff32eD07Ce12E6a9deBE32BB40F9884b3C');
+
+# and now withdraw should fail for original owner:
+> await avatars.withdraw();
+```
+
+Do the same for ProxyAdmin (which is at `0xF7f1169a58018AFCE763aD006d79e8Bb2CbbA293`):
+
+-   Head to https://polygonscan.com/address/0xF7f1169a58018AFCE763aD006d79e8Bb2CbbA293#writeContract
+-   In Browser, connect to original owners wallet.
+-   Call `transferOwnership` with `newOwner` field set to `0x7128f5ff32eD07Ce12E6a9deBE32BB40F9884b3C`.
+
+Ask DAO members to test withdrawal.
+
+### Scenario 3: Final Production change of ownership.
+
+```
+Server address is: 0x08C9c214063e387830B260139347ace14169A6Fa
+Deploying contracts with the account: 0x3FD30529632b9f7a2ad013C643F08Eb055a09345
+OpenZeppelin Proxy deployed to: 0x916B13FCa6192fE5e4E2cD58F712BA9Ade43CeD0
+
+Please add the following line to your "contract/.env": UPGRADEABLE_PROXY_ADDRESS=0x916B13FCa6192fE5e4E2cD58F712BA9Ade43CeD0
+Please add the following line to your "web-client/.env": VUE_APP_PIXEL_AVATAR_TOKEN=0x916B13FCa6192fE5e4E2cD58F712BA9Ade43CeD0
+✨  Done in 87.59s.
+```
+
+Main contract (proxy): `0x916B13FCa6192fE5e4E2cD58F712BA9Ade43CeD0`
+Pixel Devs contract: `0x49876df684d5bc682aa17729a5265a2717726c33#code`
+ProxyAdmin: `0x96C26Bd4e6013B6e201f443D657A475445F8e3f3`
+
+```
+$ npx hardhat console --network mainnet
+
+> const Avatars = await ethers.getContractFactory('PixelAvatars');
+> const avatars = await Avatars.attach('0x916B13FCa6192fE5e4E2cD58F712BA9Ade43CeD0');
+> await avatars.transferOwnership('0x7128f5ff32eD07Ce12E6a9deBE32BB40F9884b3C');
+
+# and now withdraw should fail for original owner:
+> await avatars.withdraw();
+```
+
+Do the same for ProxyAdmin (which is at `0x96C26Bd4e6013B6e201f443D657A475445F8e3f3`):
+
+-   Head to https://polygonscan.com/address/0x96C26Bd4e6013B6e201f443D657A475445F8e3f3#writeContract
+-   In Browser, connect to original owners wallet.
+-   Call `transferOwnership` with `newOwner` field set to `0x7128f5ff32eD07Ce12E6a9deBE32BB40F9884b3C`.
+
+Ask DAO members to test withdrawal.
