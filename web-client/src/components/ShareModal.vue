@@ -40,8 +40,8 @@ const loadingText = computed(() => {
         'Did you know IPFS stands for InterPlanetary File System?',
         'IPFS works on a peer-to-peer basis making it completely decentralized.',
         'Unfortunately this can also occasionally make it very slow...',
-        'Literally it can take several minutes to download a photo',
-        'However the delay you are seeing know is unusual even for IPFS',
+        'Literally it can take several minutes to download a JPEG',
+        'However the delay you are seeing now is unusual even for IPFS',
         'This is actually getting quite embarrassing...',
         'Rest assured you NFT is working and has successfully been claimed',
         'We might be experiencing CDN issues. You may try to close this modal, and click "Share" to fetch it again again.'
