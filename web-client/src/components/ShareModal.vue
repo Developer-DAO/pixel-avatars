@@ -44,7 +44,7 @@ const loadingText = computed(() => {
         'However the delay you are seeing now is unusual even for IPFS',
         'This is actually getting quite embarrassing...',
         'Rest assured you NFT is working and has successfully been claimed',
-        'We might be experiencing CDN issues. You may try to close this modal, and click "Share" to fetch it again again.',
+        'We might be experiencing CDN issues. You may try to close this modal, and click "Share" to fetch it again.',
     ]
 
     return texts[Math.min(texts.length - 1, loadingAttempts.value)]
