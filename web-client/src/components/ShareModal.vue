@@ -1,8 +1,10 @@
 <script setup>
 import axios from 'axios'
+import useAvatarContract from '../pages/Home/useAvatarContract'
 import Button from './ui/Button'
 import Modal from './ui/Modal'
-import useAvatarContract from '../pages/Home/useAvatarContract'
+import Spinner from './ui/Spinner'
+import JSConfetti from 'js-confetti'
 import { DialogTitle, DialogDescription } from '@headlessui/vue'
 import { CheckIcon, ExternalLinkIcon } from '@heroicons/vue/outline'
 import { OPEN_SEA_URL } from '../constants'
@@ -14,8 +16,6 @@ import {
     watchEffect,
     inject,
 } from 'vue'
-import Spinner from './ui/Spinner'
-import JSConfetti from 'js-confetti'
 
 defineEmits(['close'])
 
@@ -24,7 +24,7 @@ const props = defineProps({
     token: null,
     confetti: {
         type: Boolean,
-        default: false,
+        default: true,
     },
 })
 
@@ -32,6 +32,23 @@ const client = inject('web3client')
 const avatarContract = useAvatarContract()
 const image = ref(null)
 const loading = ref(true)
+const loadingAttempts = ref(0)
+const loadingText = computed(() => {
+    const texts = [
+        'Please hang on while fetching image from IPFS',
+        'Still loading. This can sometimes take a while...',
+        'Did you know IPFS stands for InterPlanetary File System?',
+        'IPFS works on a peer-to-peer basis making it completely decentralized.',
+        'Unfortunately this can also occasionally make it very slow...',
+        'Literally it can take several minutes to download a photo',
+        'However the delay you are seeing know is unusual even for IPFS',
+        'This is actually getting quite embarrassing...',
+        'Rest assured you NFT is working and has successfully been claimed',
+        'We might be experiencing CDN issues. You may try to close this modal, and click "Share" to fetch it again again.'
+    ]
+
+    return texts[Math.min(texts.length - 1, loadingAttempts.value)]
+})
 const openSeaUrl = computed(
     () => `${OPEN_SEA_URL}/${client.connectedAddress.value}`
 )
@@ -41,13 +58,22 @@ function ipfsCdnUrl(base, ipfs) {
 }
 
 async function getIpfs(ipfsUrl, config = {}) {
-    return await Promise.race([
-        axios.get(
-            ipfsCdnUrl('https://cloudflare-ipfs.com/ipfs/', ipfsUrl),
-            config
-        ),
-        axios.get(ipfsCdnUrl('https://ipfs.io/ipfs/', ipfsUrl), config),
-    ])
+    config.timeout = 30000
+
+    try {
+        return await Promise.any([
+            axios.get(ipfsCdnUrl('https://cloudflare-ipfs.com/ipfs/', ipfsUrl), config),
+            axios.get(ipfsCdnUrl('https://ipfs.io/ipfs/', ipfsUrl), config),
+        ])
+    } catch (e) {
+        if (props.show && loadingAttempts.value <= 10) {
+            loadingAttempts.value++
+
+            return getIpfs(ipfsUrl, config)
+        }
+
+        throw e
+    }
 }
 
 async function getImageSrc(token) {
@@ -82,7 +108,11 @@ watchEffect(async () => {
         }
     } else {
         // Reset image on close
-        setTimeout(() => (image.value = null), 500)
+        setTimeout(() => {
+            image.value = null
+            loading.value = true
+            loadingAttempts.value = 0
+        }, 500)
     }
 })
 </script>
@@ -144,7 +174,7 @@ watchEffect(async () => {
                         class="flex flex-col items-center space-y-4"
                     >
                         <Spinner class="h-6 w-6 text-blue-800" />
-                        <span class="text-blue-500 opacity-50">Please hang on while fetching image</span>
+                        <span class="text-blue-500 opacity-50 px-3" v-text="loadingText" />
                     </span>
                 </div>
             </div>
