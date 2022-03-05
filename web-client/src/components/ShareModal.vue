@@ -44,7 +44,7 @@ const loadingText = computed(() => {
         'However the delay you are seeing now is unusual even for IPFS',
         'This is actually getting quite embarrassing...',
         'Rest assured you NFT is working and has successfully been claimed',
-        'We might be experiencing CDN issues. You may try to close this modal, and click "Share" to fetch it again again.'
+        'We might be experiencing CDN issues. You may try to close this modal, and click "Share" to fetch it again again.',
     ]
 
     return texts[Math.min(texts.length - 1, loadingAttempts.value)]
@@ -62,7 +62,10 @@ async function getIpfs(ipfsUrl, config = {}) {
 
     try {
         return await Promise.any([
-            axios.get(ipfsCdnUrl('https://cloudflare-ipfs.com/ipfs/', ipfsUrl), config),
+            axios.get(
+                ipfsCdnUrl('https://cloudflare-ipfs.com/ipfs/', ipfsUrl),
+                config
+            ),
             axios.get(ipfsCdnUrl('https://ipfs.io/ipfs/', ipfsUrl), config),
         ])
     } catch (e) {
@@ -174,7 +177,10 @@ watchEffect(async () => {
                         class="flex flex-col items-center space-y-4"
                     >
                         <Spinner class="h-6 w-6 text-blue-800" />
-                        <span class="text-blue-500 opacity-50 px-3" v-text="loadingText" />
+                        <span
+                            class="text-blue-500 opacity-50 px-3"
+                            v-text="loadingText"
+                        />
                     </span>
                 </div>
             </div>
