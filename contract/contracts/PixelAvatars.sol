@@ -31,7 +31,7 @@ contract PixelAvatars is
         __ERC721_init("Pixel Avatars", "PXLDEV");
         __Ownable_init();
 
-        setRoyalties(10000); // On initialize set 10% royalty fee
+        setRoyalties(1000); // On initialize set 10% royalty fee
 
         baseURI = "ipfs://QmZdT5R5XGQVwGnnpiS6dGjUHZh6z8JjpuHhsqcLMMeWiC/";
         mintPrice = 12 ether;
