@@ -41,9 +41,7 @@ contract PixelAvatars is
         // mintPrice = 0.01 ether;
     }
 
-    /**
-     * @param amount The amount of royalties to be set.
-     */
+    /// @param amount The amount of royalties to be set
     function setRoyalties(uint256 amount) external onlyOwner {
         _setRoyalties(msg.sender, amount);
     }
