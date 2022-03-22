@@ -5,13 +5,15 @@ import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/token/ERC721/extensions/ERC721EnumerableUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/utils/StringsUpgradeable.sol";
+import "./@eip2981/ERC2981ContractWideRoyalties.sol";
 
 /// @author Developer DAO
 /// @title The Pixel Avatar smart contract that is compliant to ERC721 standard and is upgradeable
 contract PixelAvatars is
     ERC721EnumerableUpgradeable,
     ReentrancyGuardUpgradeable,
-    OwnableUpgradeable
+    OwnableUpgradeable,
+    ERC2981ContractWideRoyalties
 {
     string public baseURI;
     uint256 public mintPrice;
@@ -29,6 +31,8 @@ contract PixelAvatars is
         __ERC721_init("Pixel Avatars", "PXLDEV");
         __Ownable_init();
 
+        setRoyalties(1000); // On initialize set 10% royalty fee
+
         baseURI = "ipfs://QmZdT5R5XGQVwGnnpiS6dGjUHZh6z8JjpuHhsqcLMMeWiC/";
         mintPrice = 12 ether;
 
@@ -37,8 +41,9 @@ contract PixelAvatars is
         // mintPrice = 0.01 ether;
     }
 
-    function _baseURI() internal view virtual override returns (string memory) {
-        return baseURI;
+    /// @param amount The amount of royalties to be set
+    function setRoyalties(uint256 amount) external onlyOwner {
+        _setRoyalties(msg.sender, amount);
     }
 
     function setBaseURI(string memory _newBaseURI) external onlyOwner {
@@ -102,5 +107,9 @@ contract PixelAvatars is
 
     function withdraw() external onlyOwner {
         payable(msg.sender).transfer(address(this).balance);
+    }
+
+    function _baseURI() internal view virtual override returns (string memory) {
+        return baseURI;
     }
 }
